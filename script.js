@@ -149,6 +149,39 @@
   }
 
   /* =====================================================
+     PARALLAX DA MÍDIA DO HERO — leve deslocamento vertical
+     ligado ao scroll, junto com o zoom contínuo (Ken Burns)
+     que já vem do CSS. Só translada o cartão em si (nunca a
+     página), então não tem risco de reabrir o bug de overflow
+     horizontal do carrossel da equipe.
+     ===================================================== */
+  function initHeroParallax() {
+    var media = document.querySelector('.hero-media');
+    if (!media || reduceMotion) return;
+
+    var RANGE = 26; // px de percurso total
+    var ticking = false;
+
+    var update = function () {
+      var rect = media.getBoundingClientRect();
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      var center = rect.top + rect.height / 2;
+      var progress = 1 - Math.min(1, Math.max(0, center / vh));
+      var shift = (progress - 0.5) * RANGE;
+      media.style.setProperty('--parallax-y', shift.toFixed(1) + 'px');
+      ticking = false;
+    };
+
+    window.addEventListener('scroll', function () {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(update);
+    }, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  }
+
+  /* =====================================================
      CARROSSEL DE VÍDEOS — scroll-snap nativo
      ===================================================== */
   function initVideoCarousel() {
@@ -871,6 +904,7 @@
   document.addEventListener('DOMContentLoaded', function () {
     safeInit('initIntro', initIntro);
     safeInit('initHeroVideo', initHeroVideo);
+    safeInit('initHeroParallax', initHeroParallax);
     safeInit('initVideoCarousel', initVideoCarousel);
     safeInit('initVideoLightbox', initVideoLightbox);
     safeInit('initTeamCarousel', initTeamCarousel);

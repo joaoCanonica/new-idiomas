@@ -287,8 +287,56 @@
         <span class="eyebrow reveal">06</span>
         <h2 class="section-title reveal">Localização</h2>
       </header>
-      <div class="section-body reveal">
-        <!-- Conteúdo da seção "Localização" entra aqui -->
+      <div class="section-body location-grid reveal">
+        <div class="location-info">
+          <address class="location-address">
+            R. Caetano Vieira da Costa, 190 — Centro<br>
+            Lages – SC, 88502-070
+          </address>
+
+          <dl class="location-hours">
+            <div class="location-hours__row">
+              <dt>Seg – Sex</dt>
+              <dd>8h às 22h</dd>
+            </div>
+            <div class="location-hours__row">
+              <dt>Sábado</dt>
+              <dd>8h às 12h</dd>
+            </div>
+          </dl>
+
+          <div class="location-actions">
+            <a
+              class="btn btn--solid btn--whatsapp"
+              href="https://api.whatsapp.com/send?phone=5549984100055&text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es."
+              target="_blank"
+              rel="noopener"
+            >
+              <svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path fill="currentColor" d="M17.47 14.38c-.29-.15-1.71-.85-1.98-.94-.27-.1-.46-.15-.66.15-.2.29-.76.94-.93 1.13-.17.2-.34.22-.63.07-.29-.15-1.22-.45-2.32-1.43-.86-.76-1.44-1.71-1.6-2-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.2-.29.29-.49.1-.2.05-.37-.02-.51-.07-.15-.66-1.59-.9-2.18-.24-.57-.48-.5-.66-.5h-.56c-.2 0-.51.07-.78.37-.27.29-1.02 1-1.02 2.43 0 1.43 1.04 2.82 1.19 3.01.15.2 2.05 3.13 4.96 4.39.69.3 1.23.48 1.65.61.69.22 1.32.19 1.82.11.55-.08 1.71-.7 1.96-1.37.24-.68.24-1.26.17-1.38-.07-.13-.27-.2-.56-.35z"/>
+                <path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.87.5 3.62 1.42 5.13L2 22l5.13-1.51a9.9 9.9 0 0 0 4.91 1.3h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm0 18.02h-.01a8.1 8.1 0 0 1-4.12-1.13l-.3-.18-3.05.9.91-2.98-.19-.31a8.08 8.08 0 0 1-1.25-4.4c0-4.46 3.63-8.09 8.1-8.09 2.16 0 4.19.85 5.72 2.38a8.05 8.05 0 0 1 2.37 5.72c0 4.46-3.63 8.09-8.18 8.09z"/>
+              </svg>
+              Falar no WhatsApp
+            </a>
+            <a
+              class="btn btn--ghost"
+              href="https://www.google.com/maps?q=R.+Caetano+Vieira+da+Costa,+190,+Centro,+Lages+-+SC,+88502-070"
+              target="_blank"
+              rel="noopener"
+            >
+              Ver rota no mapa
+            </a>
+          </div>
+        </div>
+
+        <div class="location-map">
+          <iframe
+            src="https://www.google.com/maps?q=R.+Caetano+Vieira+da+Costa,+190,+Centro,+Lages+-+SC,+88502-070&output=embed"
+            title="Mapa — New Idiomas, R. Caetano Vieira da Costa, 190, Centro, Lages-SC"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
       </div>
     </div>
   </section>
@@ -298,12 +346,22 @@
   <!-- ===================================================== -->
   <section id="cta-final" class="section section--cta">
     <div class="container section-inner">
-      <header class="section-head">
-        <span class="eyebrow reveal">07</span>
-        <h2 class="section-title reveal">CTA final</h2>
-      </header>
-      <div class="section-body reveal">
-        <!-- Conteúdo do CTA final entra aqui -->
+      <div class="cta-final__body">
+        <span class="eyebrow reveal">Matrícula aberta</span>
+        <h2 class="cta-final__title reveal">Comece a viver o idioma,<br>não a decorá-lo.</h2>
+        <p class="cta-final__lead reveal">Turmas de inglês, espanhol, alemão e italiano em Lages — presenciais, online ou em aulas VIP. Fale com a gente e encontre o horário certo pra você.</p>
+        <a
+          class="btn btn--solid btn--whatsapp cta-final__btn reveal"
+          href="https://api.whatsapp.com/send?phone=5549984100055&text=Ol%C3%A1!%20Quero%20fazer%20minha%20matr%C3%ADcula%20na%20New%20Idiomas."
+          target="_blank"
+          rel="noopener"
+        >
+          <svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path fill="currentColor" d="M17.47 14.38c-.29-.15-1.71-.85-1.98-.94-.27-.1-.46-.15-.66.15-.2.29-.76.94-.93 1.13-.17.2-.34.22-.63.07-.29-.15-1.22-.45-2.32-1.43-.86-.76-1.44-1.71-1.6-2-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.2-.29.29-.49.1-.2.05-.37-.02-.51-.07-.15-.66-1.59-.9-2.18-.24-.57-.48-.5-.66-.5h-.56c-.2 0-.51.07-.78.37-.27.29-1.02 1-1.02 2.43 0 1.43 1.04 2.82 1.19 3.01.15.2 2.05 3.13 4.96 4.39.69.3 1.23.48 1.65.61.69.22 1.32.19 1.82.11.55-.08 1.71-.7 1.96-1.37.24-.68.24-1.26.17-1.38-.07-.13-.27-.2-.56-.35z"/>
+            <path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.87.5 3.62 1.42 5.13L2 22l5.13-1.51a9.9 9.9 0 0 0 4.91 1.3h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm0 18.02h-.01a8.1 8.1 0 0 1-4.12-1.13l-.3-.18-3.05.9.91-2.98-.19-.31a8.08 8.08 0 0 1-1.25-4.4c0-4.46 3.63-8.09 8.1-8.09 2.16 0 4.19.85 5.72 2.38a8.05 8.05 0 0 1 2.37 5.72c0 4.46-3.63 8.09-8.18 8.09z"/>
+          </svg>
+          Fazer minha matrícula
+        </a>
       </div>
     </div>
   </section>

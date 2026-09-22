@@ -17,6 +17,91 @@
     { foto: 'assets/10-funcionarios.png', nome: 'Suelen Medeiros', cargo: 'Gestora administrativa', bio: '20+ anos de experiência em atendimento e rotinas administrativas' }
   ];
 
+  /* 8 perguntas, dificuldade crescente, misturando bandeira e texto */
+  var perguntas = [
+    {
+      nivel: 'Fácil', tipo: 'flag',
+      texto: 'Qual bandeira representa o idioma inglês?',
+      opcoes: [
+        { rotulo: 'Estados Unidos', flag: 'assets/bandeira-eua.png', correta: true },
+        { rotulo: 'Espanha', flag: 'assets/bandeira-espanha.png' },
+        { rotulo: 'Alemanha', flag: 'assets/bandeira-alemanha.png' },
+        { rotulo: 'Itália', flag: 'assets/bandeira-italia.png' }
+      ]
+    },
+    {
+      nivel: 'Fácil', tipo: 'texto',
+      texto: 'Como se diz "obrigado" em inglês?',
+      opcoes: [
+        { rotulo: 'Thank you', correta: true },
+        { rotulo: 'Danke' },
+        { rotulo: 'Grazie' },
+        { rotulo: 'Gracias' }
+      ]
+    },
+    {
+      nivel: 'Fácil', tipo: 'flag',
+      texto: 'Essa bandeira representa qual idioma?',
+      flagPergunta: 'assets/bandeira-italia.png',
+      opcoes: [
+        { rotulo: 'Italiano', correta: true },
+        { rotulo: 'Espanhol' },
+        { rotulo: 'Alemão' },
+        { rotulo: 'Inglês' }
+      ]
+    },
+    {
+      nivel: 'Médio', tipo: 'texto',
+      texto: 'O que significa "Buongiorno" em italiano?',
+      opcoes: [
+        { rotulo: 'Bom dia', correta: true },
+        { rotulo: 'Boa noite' },
+        { rotulo: 'Obrigado' },
+        { rotulo: 'Por favor' }
+      ]
+    },
+    {
+      nivel: 'Médio', tipo: 'texto',
+      texto: 'Complete em alemão: "Ich ___ Student."',
+      opcoes: [
+        { rotulo: 'bin', correta: true },
+        { rotulo: 'bist' },
+        { rotulo: 'ist' },
+        { rotulo: 'sind' }
+      ]
+    },
+    {
+      nivel: 'Médio', tipo: 'texto',
+      texto: 'Qual é o plural de "child" em inglês?',
+      opcoes: [
+        { rotulo: 'children', correta: true },
+        { rotulo: 'childs' },
+        { rotulo: 'childes' },
+        { rotulo: 'childrens' }
+      ]
+    },
+    {
+      nivel: 'Difícil', tipo: 'texto',
+      texto: 'Qual é a tradução correta pro espanhol de "Eu gostaria de uma xícara de café"?',
+      opcoes: [
+        { rotulo: 'Me gustaría una taza de café', correta: true },
+        { rotulo: 'Me gustaría una copa de café' },
+        { rotulo: 'Yo quiero un café taza' },
+        { rotulo: 'Quisiera una taza para café' }
+      ]
+    },
+    {
+      nivel: 'Difícil', tipo: 'texto',
+      texto: 'Qual frase está gramaticalmente correta em alemão?',
+      opcoes: [
+        { rotulo: 'Ich habe einen Hund', correta: true },
+        { rotulo: 'Ich habe ein Hund' },
+        { rotulo: 'Ich hat einen Hund' },
+        { rotulo: 'Ich haben einen Hund' }
+      ]
+    }
+  ];
+
   /* =====================================================
      TELA DE ENTRADA — exibida uma vez por sessão
      ===================================================== */
@@ -282,9 +367,28 @@
     var isScrolling = false;
     var isHovering = false;
     var hasOpenCard = false;
+    /* só reage ao scroll quando o carrossel está perto da tela —
+       sem isso, rolar a página longe da Equipe ainda girava o
+       anel, porque o listener de scroll não checava visibilidade. */
+    var isNearViewport = false;
     var lastScrollY = window.scrollY;
     var scrollTimer = null;
     var rafId = null;
+
+    if ('IntersectionObserver' in window) {
+      var visibilityObserver = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            isNearViewport = entry.isIntersecting;
+            if (isNearViewport) lastScrollY = window.scrollY;
+          });
+        },
+        { rootMargin: '35% 0px 35% 0px' }
+      );
+      visibilityObserver.observe(carousel);
+    } else {
+      isNearViewport = true;
+    }
 
     var cards = equipe.map(function (person) {
       var card = document.createElement('div');
@@ -337,7 +441,7 @@
     /* ---- posicionamento do anel 3D ---- */
     var computeRadius = function () {
       var w = carousel.clientWidth || 900;
-      return Math.max(200, Math.min(420, w * 0.32));
+      return Math.max(280, Math.min(560, w * 0.42));
     };
 
     var layoutRing = function () {
@@ -368,10 +472,13 @@
       stage.style.transform = '';
     };
 
-    /* ---- scroll: atualiza rotação pelo delta ---- */
+    /* ---- scroll: atualiza rotação pelo delta, só quando perto da tela ---- */
     var onScroll = function () {
-      if (!ringMQ.matches) return;
       var y = window.scrollY;
+      if (!ringMQ.matches || !isNearViewport) {
+        lastScrollY = y;
+        return;
+      }
       var delta = y - lastScrollY;
       lastScrollY = y;
       rotation += delta * SCROLL_SENSITIVITY;
@@ -385,7 +492,7 @@
 
     /* ---- auto-rotate via requestAnimationFrame quando parado ---- */
     var tick = function () {
-      if (ringMQ.matches && !isScrolling && !isHovering && !hasOpenCard && !reduceMotion) {
+      if (ringMQ.matches && isNearViewport && !isScrolling && !isHovering && !hasOpenCard && !reduceMotion) {
         rotation += AUTO_SPEED;
         updateRingRotation();
       }
@@ -419,6 +526,125 @@
         if (ringMQ.matches) layoutRing();
       }, 150);
     });
+  }
+
+  /* =====================================================
+     JOGO — desafio de idiomas, 8 perguntas, dificuldade
+     crescente; termina com CTA piscando pro WhatsApp
+     ===================================================== */
+  function initJogo() {
+    var card = document.getElementById('jogo-card');
+    if (!card || !perguntas.length) return;
+
+    var index = 0;
+    var score = 0;
+    var answered = false;
+
+    var escapeHtml = function (str) {
+      return String(str).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+      });
+    };
+
+    var renderIntro = function () {
+      card.innerHTML =
+        '<div class="jogo-intro">' +
+          '<span class="jogo-intro__icon">' +
+            '<svg viewBox="0 0 24 24" fill="none"><path d="M12 21c4.97 0 9-3.58 9-8s-4.03-8-9-8-9 3.58-9 8c0 1.85.68 3.55 1.83 4.93L4 21l4.5-1.31A10 10 0 0 0 12 21Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M8.5 11h.01M12 11h.01M15.5 11h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>' +
+          '</span>' +
+          '<h3 class="jogo-intro__title">Pronto pra jogar?</h3>' +
+          '<p class="jogo-intro__text">8 perguntas sobre inglês, espanhol, alemão e italiano — começa fácil e vai ficando mais difícil. Não vale colar.</p>' +
+          '<button type="button" class="btn btn--solid" id="jogo-start">Começar desafio</button>' +
+        '</div>';
+      var startBtn = document.getElementById('jogo-start');
+      if (startBtn) startBtn.addEventListener('click', function () { index = 0; score = 0; renderQuestion(); });
+    };
+
+    var renderQuestion = function () {
+      answered = false;
+      var q = perguntas[index];
+      var pct = Math.round((index / perguntas.length) * 100);
+
+      var optionsHtml = q.opcoes.map(function (opt, i) {
+        if (q.tipo === 'flag' && opt.flag) {
+          return (
+            '<button type="button" class="jogo-option jogo-option--flag" data-i="' + i + '">' +
+              '<span class="jogo-option__flag"><img src="' + opt.flag + '" alt="" loading="lazy"></span>' +
+              '<span>' + escapeHtml(opt.rotulo) + '</span>' +
+            '</button>'
+          );
+        }
+        return '<button type="button" class="jogo-option" data-i="' + i + '">' + escapeHtml(opt.rotulo) + '</button>';
+      }).join('');
+
+      var flagPerguntaHtml = q.flagPergunta
+        ? '<div class="jogo-option__flag" style="width:72px;height:72px;margin-bottom:1rem;"><img src="' + q.flagPergunta + '" alt="" loading="lazy"></div>'
+        : '';
+
+      card.innerHTML =
+        '<div class="jogo-progress">' +
+          '<span class="jogo-progress__count">' + (index + 1) + ' / ' + perguntas.length + '</span>' +
+          '<span class="jogo-progress__track"><span class="jogo-progress__fill" style="width:' + pct + '%"></span></span>' +
+          '<span class="jogo-progress__difficulty">' + escapeHtml(q.nivel) + '</span>' +
+        '</div>' +
+        '<div class="jogo-question">' +
+          flagPerguntaHtml +
+          '<p class="jogo-question__text">' + escapeHtml(q.texto) + '</p>' +
+          '<div class="jogo-options">' + optionsHtml + '</div>' +
+        '</div>';
+
+      card.querySelectorAll('.jogo-option').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (answered) return;
+          answered = true;
+          var i = Number(btn.getAttribute('data-i'));
+          var correct = q.opcoes[i].correta === true;
+          if (correct) score++;
+
+          card.querySelectorAll('.jogo-option').forEach(function (b, bi) {
+            b.setAttribute('disabled', 'true');
+            if (q.opcoes[bi].correta) b.classList.add('is-correct');
+            else if (bi === i) b.classList.add('is-wrong');
+          });
+
+          window.setTimeout(function () {
+            index++;
+            if (index < perguntas.length) renderQuestion();
+            else renderResult();
+          }, reduceMotion ? 250 : 900);
+        });
+      });
+    };
+
+    var renderResult = function () {
+      var total = perguntas.length;
+      var msg;
+      if (score >= 7) msg = 'Mandou muito bem! Bora colocar isso pra funcionar de verdade numa conversa?';
+      else if (score >= 4) msg = 'Você já tem base — falta destravar a fala. É exatamente aí que a gente entra.';
+      else msg = 'Todo mundo começa de algum lugar. Bora montar um plano pra você sair do zero de verdade?';
+
+      var waText = encodeURIComponent('Olá! Fiz o desafio de idiomas no site e tirei ' + score + '/' + total + ' — quero saber mais sobre as aulas.');
+
+      card.innerHTML =
+        '<div class="jogo-result">' +
+          '<span class="jogo-result__score">' + score + '/' + total + '</span>' +
+          '<h3 class="jogo-result__title">Resultado</h3>' +
+          '<p class="jogo-result__msg">' + msg + '</p>' +
+          '<a class="btn btn--solid btn--whatsapp jogo-result__cta" target="_blank" rel="noopener" href="https://api.whatsapp.com/send?phone=5549984100055&text=' + waText + '">' +
+            '<svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+              '<path fill="currentColor" d="M17.47 14.38c-.29-.15-1.71-.85-1.98-.94-.27-.1-.46-.15-.66.15-.2.29-.76.94-.93 1.13-.17.2-.34.22-.63.07-.29-.15-1.22-.45-2.32-1.43-.86-.76-1.44-1.71-1.6-2-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.2-.29.29-.49.1-.2.05-.37-.02-.51-.07-.15-.66-1.59-.9-2.18-.24-.57-.48-.5-.66-.5h-.56c-.2 0-.51.07-.78.37-.27.29-1.02 1-1.02 2.43 0 1.43 1.04 2.82 1.19 3.01.15.2 2.05 3.13 4.96 4.39.69.3 1.23.48 1.65.61.69.22 1.32.19 1.82.11.55-.08 1.71-.7 1.96-1.37.24-.68.24-1.26.17-1.38-.07-.13-.27-.2-.56-.35z"/>' +
+              '<path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.87.5 3.62 1.42 5.13L2 22l5.13-1.51a9.9 9.9 0 0 0 4.91 1.3h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm0 18.02h-.01a8.1 8.1 0 0 1-4.12-1.13l-.3-.18-3.05.9.91-2.98-.19-.31a8.08 8.08 0 0 1-1.25-4.4c0-4.46 3.63-8.09 8.1-8.09 2.16 0 4.19.85 5.72 2.38a8.05 8.05 0 0 1 2.37 5.72c0 4.46-3.63 8.09-8.18 8.09z"/>' +
+            '</svg>' +
+            'Falar no WhatsApp' +
+          '</a>' +
+          '<button type="button" class="jogo-result__retry" id="jogo-retry">Jogar de novo</button>' +
+        '</div>';
+
+      var retryBtn = document.getElementById('jogo-retry');
+      if (retryBtn) retryBtn.addEventListener('click', renderIntro);
+    };
+
+    renderIntro();
   }
 
   /* =====================================================
@@ -523,6 +749,7 @@
     initHeroVideo();
     initVideoCarousel();
     initTeamCarousel();
+    initJogo();
     initHeader();
     initMobileNav();
     initScrollSpy();

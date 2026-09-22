@@ -645,3 +645,165 @@ html.no-intro #intro-screen { display: none !important; }
 }
 .video-lightbox__close svg { width: 18px; height: 18px; }
 .video-lightbox__close:hover { background: rgba(247, 241, 230, 0.12); border-color: var(--gold); transform: rotate(90deg); }
+
+/* =========================================================
+   EQUIPE — carrossel 3D (rotateY + translateZ); em telas
+   <768px vira carrossel linear com scroll-snap nativo
+   ========================================================= */
+.team-hint {
+  font-size: 0.875rem;
+  color: var(--ink-45);
+  margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.team-carousel {
+  position: relative;
+  margin-inline: calc(var(--side-pad) * -1);
+}
+
+/* ---- mobile-first: fileira linear com scroll-snap ---- */
+.team-carousel__stage {
+  display: flex;
+  gap: 1.25rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding-inline: var(--side-pad);
+  padding-block: 0.5rem 1.25rem;
+  margin: 0;
+  list-style: none;
+  scrollbar-width: none;
+}
+.team-carousel__stage::-webkit-scrollbar { display: none; }
+
+.team-card {
+  --card-w: clamp(180px, 55vw, 230px);
+  --card-h: calc(var(--card-w) * 4 / 3);
+  position: relative;
+  flex: 0 0 auto;
+  width: var(--card-w);
+  height: var(--card-h);
+  scroll-snap-align: center;
+  overflow: hidden;
+  border: 1px solid var(--ink-12);
+  background: var(--ink);
+  cursor: pointer;
+}
+
+.team-card__photo-wrap {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.team-card__photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 10%;
+  transform: scale(1.6);
+  transform-origin: center 8%;
+}
+
+.team-card__caption {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 1rem 1.1rem;
+  background: linear-gradient(to top, rgba(28, 22, 19, 0.86), rgba(28, 22, 19, 0));
+  color: var(--offwhite);
+  transition: opacity 0.4s var(--ease-out);
+}
+
+.team-card__name {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.0625rem;
+  line-height: 1.2;
+}
+
+.team-card__role {
+  font-size: 0.8125rem;
+  color: rgba(247, 241, 230, 0.75);
+  margin-top: 0.2rem;
+}
+
+.team-card__bio {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 1.4rem;
+  background: rgba(20, 15, 13, 0.94);
+  color: var(--offwhite);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.45s var(--ease-out), transform 0.45s var(--ease-out);
+  pointer-events: none;
+  overflow-y: auto;
+}
+
+.team-card__bio .team-card__name { font-size: 1.125rem; }
+.team-card__bio .team-card__role { color: var(--gold); }
+
+.team-card__bio-text {
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: rgba(247, 241, 230, 0.88);
+}
+
+.team-card:hover .team-card__bio,
+.team-card.is-open .team-card__bio,
+.team-card:focus-visible .team-card__bio {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.team-card:hover .team-card__caption,
+.team-card.is-open .team-card__caption {
+  opacity: 0;
+}
+
+.team-card:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+/* ---- >=768px: anel 3D ---- */
+@media (min-width: 768px) {
+  .team-carousel {
+    height: clamp(420px, 42vw, 560px);
+    margin-inline: 0;
+  }
+
+  .team-carousel__stage {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    padding: 0;
+  }
+
+  .team-carousel[data-mode="ring"] {
+    perspective: 1600px;
+  }
+
+  .team-carousel[data-mode="ring"] .team-carousel__stage {
+    transform-style: preserve-3d;
+  }
+
+  .team-carousel[data-mode="ring"] .team-card {
+    --card-w: clamp(150px, 15vw, 200px);
+    --card-h: calc(var(--card-w) * 4 / 3);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: calc(var(--card-w) / -2);
+    margin-top: calc(var(--card-h) / -2);
+    scroll-snap-align: none;
+    transition: opacity 0.4s var(--ease-out);
+    backface-visibility: hidden;
+  }
+}

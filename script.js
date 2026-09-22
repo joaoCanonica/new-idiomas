@@ -79,6 +79,176 @@
   }
 
   /* =====================================================
+     CARROSSEL DE VÍDEOS — scroll-snap nativo
+     ===================================================== */
+  function initVideoCarousel() {
+    var carousel = document.getElementById('video-carousel');
+    var track = document.getElementById('video-track');
+    if (!carousel || !track) return;
+
+    var frames = Array.prototype.slice.call(track.querySelectorAll('.video-slide__frame'));
+    var prevBtn = carousel.querySelector('[data-carousel-prev]');
+    var nextBtn = carousel.querySelector('[data-carousel-next]');
+    var lightbox = document.getElementById('video-lightbox');
+    var lightboxVideo = document.getElementById('lightbox-video');
+
+    /* ---- play/pause conforme visibilidade real na tela ----
+       debounced pra não reagir a flickers de entrada/saída durante
+       o assentamento do layout (scroll programático, fontes). */
+    var playTimers = new WeakMap();
+    var setPlaying = function (frame, playing) {
+      window.clearTimeout(playTimers.get(frame));
+      var timer = window.setTimeout(function () {
+        var video = frame.querySelector('.video-slide__video');
+        var source = video && video.querySelector('source');
+        frame.classList.toggle('is-playing', playing);
+        if (!video || !source) return;
+        if (playing && !reduceMotion) {
+          if (!video.dataset.loaded || video.error) {
+            source.src = source.dataset.src;
+            video.load();
+            video.dataset.loaded = '1';
+          }
+          video.play().catch(function () {});
+        } else if (video.dataset.loaded) {
+          video.pause();
+        }
+      }, 120);
+      playTimers.set(frame, timer);
+    };
+
+    if ('IntersectionObserver' in window) {
+      var observer = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            setPlaying(entry.target, entry.isIntersecting);
+          });
+        },
+        { threshold: 0.6 }
+      );
+      frames.forEach(function (frame) { observer.observe(frame); });
+    }
+
+    /* ---- destaque de profundidade do slide central (independente do play) ---- */
+    var updateCenterSlide = function () {
+      var trackRect = track.getBoundingClientRect();
+      var trackCenter = trackRect.left + trackRect.width / 2;
+      var closest = null;
+      var closestDist = Infinity;
+
+      frames.forEach(function (frame) {
+        var rect = frame.getBoundingClientRect();
+        var dist = Math.abs((rect.left + rect.width / 2) - trackCenter);
+        if (dist < closestDist) {
+          closestDist = dist;
+          closest = frame;
+        }
+      });
+
+      frames.forEach(function (frame) { frame.classList.toggle('is-center', frame === closest); });
+    };
+
+    var centerTicking = false;
+    var requestCenterUpdate = function () {
+      if (centerTicking) return;
+      centerTicking = true;
+      window.requestAnimationFrame(function () {
+        updateCenterSlide();
+        centerTicking = false;
+      });
+    };
+
+    track.addEventListener('scroll', requestCenterUpdate, { passive: true });
+    window.addEventListener('resize', requestCenterUpdate);
+    requestCenterUpdate();
+
+    /* ---- setas de navegação ---- */
+    var slideStep = function () {
+      var slide = track.querySelector('.video-slide');
+      if (!slide) return 260;
+      var style = getComputedStyle(track);
+      return slide.getBoundingClientRect().width + parseFloat(style.columnGap || style.gap || 0);
+    };
+
+    var updateArrows = function () {
+      var max = track.scrollWidth - track.clientWidth - 1;
+      if (prevBtn) prevBtn.classList.toggle('is-disabled', track.scrollLeft <= 1);
+      if (nextBtn) nextBtn.classList.toggle('is-disabled', track.scrollLeft >= max);
+    };
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', function () {
+        track.scrollBy({ left: -slideStep(), behavior: reduceMotion ? 'auto' : 'smooth' });
+      });
+    }
+    if (nextBtn) {
+      nextBtn.addEventListener('click', function () {
+        track.scrollBy({ left: slideStep(), behavior: reduceMotion ? 'auto' : 'smooth' });
+      });
+    }
+
+    var scrollTicking = false;
+    track.addEventListener('scroll', function () {
+      if (scrollTicking) return;
+      scrollTicking = true;
+      window.requestAnimationFrame(function () {
+        updateArrows();
+        scrollTicking = false;
+      });
+    }, { passive: true });
+    updateArrows();
+    window.addEventListener('resize', updateArrows);
+
+    /* ---- lightbox com áudio ---- */
+    if (!lightbox || !lightboxVideo) return;
+
+    var pauseAllSlides = function () {
+      frames.forEach(function (frame) {
+        var video = frame.querySelector('.video-slide__video');
+        frame.classList.remove('is-playing');
+        if (video) video.pause();
+      });
+    };
+
+    var lightboxSource = document.getElementById('lightbox-video-source');
+
+    var openLightbox = function (src) {
+      pauseAllSlides();
+      lightboxSource.src = src;
+      lightboxVideo.load();
+      lightbox.classList.add('is-open');
+      lightbox.setAttribute('aria-hidden', 'false');
+      root.classList.add('intro-lock');
+      lightboxVideo.play().catch(function () {});
+    };
+
+    var closeLightbox = function () {
+      lightbox.classList.remove('is-open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      root.classList.remove('intro-lock');
+      lightboxVideo.pause();
+      lightboxSource.removeAttribute('src');
+      lightboxVideo.load();
+    };
+
+    frames.forEach(function (frame) {
+      var hit = frame.querySelector('.video-slide__hit');
+      if (!hit) return;
+      hit.addEventListener('click', function () {
+        openLightbox(frame.getAttribute('data-video-src'));
+      });
+    });
+
+    lightbox.querySelectorAll('[data-lightbox-dismiss]').forEach(function (el) {
+      el.addEventListener('click', closeLightbox);
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && lightbox.classList.contains('is-open')) closeLightbox();
+    });
+  }
+
+  /* =====================================================
      HEADER — estado sólido ao rolar
      ===================================================== */
   function initHeader() {
@@ -178,6 +348,7 @@
   document.addEventListener('DOMContentLoaded', function () {
     initIntro();
     initHeroVideo();
+    initVideoCarousel();
     initHeader();
     initMobileNav();
     initScrollSpy();

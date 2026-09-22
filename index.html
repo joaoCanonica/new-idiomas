@@ -164,8 +164,83 @@
         <span class="eyebrow reveal">03</span>
         <h2 class="section-title reveal">Vídeos</h2>
       </header>
+
       <div class="section-body reveal">
-        <!-- Conteúdo da seção "Vídeos" entra aqui -->
+        <div class="video-carousel" id="video-carousel">
+          <button type="button" class="carousel-arrow carousel-arrow--prev" data-carousel-prev aria-label="Vídeo anterior">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" d="M15 5l-7 7 7 7"/></svg>
+          </button>
+
+          <ul class="video-carousel__track" id="video-track">
+            <li class="video-slide" data-video-title="Mito ou verdade">
+              <div class="video-slide__frame" data-video-src="videos/Mito-ou-verdade.mp4">
+                <video class="video-slide__video" muted loop playsinline preload="none" poster="assets/video-posters/mito-ou-verdade.jpg" aria-hidden="true">
+                  <source data-src="videos/Mito-ou-verdade.mp4" type="video/mp4">
+                </video>
+                <span class="video-slide__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M8 5v14l11-7z"/></svg></span>
+                <button type="button" class="video-slide__hit" aria-label="Assistir: Mito ou verdade"></button>
+              </div>
+            </li>
+            <li class="video-slide" data-video-title="Aprender um novo idioma demora?">
+              <div class="video-slide__frame" data-video-src="videos/aprender-novo-idioma-demora.mp4">
+                <video class="video-slide__video" muted loop playsinline preload="none" poster="assets/video-posters/aprender-novo-idioma-demora.jpg" aria-hidden="true">
+                  <source data-src="videos/aprender-novo-idioma-demora.mp4" type="video/mp4">
+                </video>
+                <span class="video-slide__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M8 5v14l11-7z"/></svg></span>
+                <button type="button" class="video-slide__hit" aria-label="Assistir: Aprender um novo idioma demora?"></button>
+              </div>
+            </li>
+            <li class="video-slide" data-video-title="Aprender um novo idioma demora? — parte 2">
+              <div class="video-slide__frame" data-video-src="videos/aprender-novo-idioma-demora2.mp4">
+                <video class="video-slide__video" muted loop playsinline preload="none" poster="assets/video-posters/aprender-novo-idioma-demora2.jpg" aria-hidden="true">
+                  <source data-src="videos/aprender-novo-idioma-demora2.mp4" type="video/mp4">
+                </video>
+                <span class="video-slide__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M8 5v14l11-7z"/></svg></span>
+                <button type="button" class="video-slide__hit" aria-label="Assistir: Aprender um novo idioma demora? parte 2"></button>
+              </div>
+            </li>
+            <li class="video-slide" data-video-title="Travando ao aprender inglês">
+              <div class="video-slide__frame" data-video-src="videos/travando-aprendendo-ingles.mp4">
+                <video class="video-slide__video" muted loop playsinline preload="none" poster="assets/video-posters/travando-aprendendo-ingles.jpg" aria-hidden="true">
+                  <source data-src="videos/travando-aprendendo-ingles.mp4" type="video/mp4">
+                </video>
+                <span class="video-slide__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M8 5v14l11-7z"/></svg></span>
+                <button type="button" class="video-slide__hit" aria-label="Assistir: Travando ao aprender inglês"></button>
+              </div>
+            </li>
+            <li class="video-slide" data-video-title="Passaria numa entrevista de emprego em espanhol?">
+              <div class="video-slide__frame" data-video-src="videos/passaria-entrevista-emprego-espanhol.mp4">
+                <video class="video-slide__video" muted loop playsinline preload="none" poster="assets/video-posters/passaria-entrevista-emprego-espanhol.jpg" aria-hidden="true">
+                  <source data-src="videos/passaria-entrevista-emprego-espanhol.mp4" type="video/mp4">
+                </video>
+                <span class="video-slide__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M8 5v14l11-7z"/></svg></span>
+                <button type="button" class="video-slide__hit" aria-label="Assistir: Passaria numa entrevista de emprego em espanhol?"></button>
+              </div>
+            </li>
+            <li class="video-slide" data-video-title="Curso de italiano">
+              <div class="video-slide__frame" data-video-src="videos/curso-italiano.mp4">
+                <video class="video-slide__video" muted loop playsinline preload="none" poster="assets/video-posters/curso-italiano.jpg" aria-hidden="true">
+                  <source data-src="videos/curso-italiano.mp4" type="video/mp4">
+                </video>
+                <span class="video-slide__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M8 5v14l11-7z"/></svg></span>
+                <button type="button" class="video-slide__hit" aria-label="Assistir: Curso de italiano"></button>
+              </div>
+            </li>
+            <li class="video-slide" data-video-title="Relato de aluna">
+              <div class="video-slide__frame" data-video-src="videos/relato-aluna.mp4">
+                <video class="video-slide__video" muted loop playsinline preload="none" poster="assets/video-posters/relato-aluna.jpg" aria-hidden="true">
+                  <source data-src="videos/relato-aluna.mp4" type="video/mp4">
+                </video>
+                <span class="video-slide__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M8 5v14l11-7z"/></svg></span>
+                <button type="button" class="video-slide__hit" aria-label="Assistir: Relato de aluna"></button>
+              </div>
+            </li>
+          </ul>
+
+          <button type="button" class="carousel-arrow carousel-arrow--next" data-carousel-next aria-label="Próximo vídeo">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+          </button>
+        </div>
       </div>
     </div>
   </section>
@@ -238,6 +313,18 @@
     <p class="site-footer__copy">&copy; <span id="year"></span> New Idiomas. Todos os direitos reservados.</p>
   </div>
 </footer>
+
+<div class="video-lightbox" id="video-lightbox" aria-hidden="true">
+  <div class="video-lightbox__backdrop" data-lightbox-dismiss></div>
+  <div class="video-lightbox__panel" role="dialog" aria-modal="true" aria-label="Vídeo ampliado">
+    <button type="button" class="video-lightbox__close" data-lightbox-dismiss aria-label="Fechar vídeo">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <video class="video-lightbox__video" id="lightbox-video" controls playsinline>
+      <source id="lightbox-video-source" type="video/mp4">
+    </video>
+  </div>
+</div>
 
 <script src="script.js"></script>
 </body>

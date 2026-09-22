@@ -42,14 +42,20 @@
     </a>
 
     <nav class="main-nav" id="main-nav">
-      <ul class="main-nav__list">
-        <li><a href="#idiomas">Idiomas</a></li>
-        <li><a href="#metodologia">Metodologia</a></li>
-        <li><a href="#videos">Vídeos</a></li>
-        <li><a href="#equipe">Equipe</a></li>
-        <li><a href="#depoimentos">Depoimentos</a></li>
-        <li><a href="#localizacao">Localização</a></li>
-      </ul>
+      <div class="main-nav__inner">
+        <ul class="main-nav__list">
+          <li><a href="#idiomas">Idiomas</a></li>
+          <li><a href="#metodologia">Metodologia</a></li>
+          <li><a href="#videos">Vídeos</a></li>
+          <li><a href="#equipe">Equipe</a></li>
+          <li><a href="#depoimentos">Depoimentos</a></li>
+          <li><a href="#localizacao">Localização</a></li>
+        </ul>
+        <a class="btn btn--solid btn--whatsapp main-nav__cta" href="https://api.whatsapp.com/send?phone=5549984100055&text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20os%20cursos%20da%20New%20Idiomas." target="_blank" rel="noopener">
+          <svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M17.47 14.38c-.29-.15-1.71-.85-1.98-.94-.27-.1-.46-.15-.66.15-.2.29-.76.94-.93 1.13-.17.2-.34.22-.63.07-.29-.15-1.22-.45-2.32-1.43-.86-.76-1.44-1.71-1.6-2-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.2-.29.29-.49.1-.2.05-.37-.02-.51-.07-.15-.66-1.59-.9-2.18-.24-.57-.48-.5-.66-.5h-.56c-.2 0-.51.07-.78.37-.27.29-1.02 1-1.02 2.43 0 1.43 1.04 2.82 1.19 3.01.15.2 2.05 3.13 4.96 4.39.69.3 1.23.48 1.65.61.69.22 1.32.19 1.82.11.55-.08 1.71-.7 1.96-1.37.24-.68.24-1.26.17-1.38-.07-.13-.27-.2-.56-.35z"/><path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.87.5 3.62 1.42 5.13L2 22l5.13-1.51a9.9 9.9 0 0 0 4.91 1.3h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm0 18.02h-.01a8.1 8.1 0 0 1-4.12-1.13l-.3-.18-3.05.9.91-2.98-.19-.31a8.08 8.08 0 0 1-1.25-4.4c0-4.46 3.63-8.09 8.1-8.09 2.16 0 4.19.85 5.72 2.38a8.05 8.05 0 0 1 2.37 5.72c0 4.46-3.63 8.09-8.18 8.09z"/></svg>
+          Falar no WhatsApp
+        </a>
+      </div>
     </nav>
 
     <div class="site-header__actions">
@@ -149,8 +155,31 @@
         <span class="eyebrow reveal">02</span>
         <h2 class="section-title reveal">Metodologia</h2>
       </header>
-      <div class="section-body reveal">
-        <!-- Conteúdo da seção "Metodologia" entra aqui -->
+      <div class="section-body">
+        <p class="method-intro reveal">A New não nasceu de uma franquia nem de uma apostila importada. Nasceu de quem morou 7 anos nos Estados Unidos, estudou em Harvard e voltou pra Lages decidido a ensinar do jeito que aprendeu — falando.</p>
+
+        <div class="method-grid reveal">
+          <article class="method-card">
+            <span class="method-card__num">01</span>
+            <h3 class="method-card__title">Imersão, não tradução</h3>
+            <p class="method-card__text">Você aprende a pensar no idioma, não a traduzir frase por frase. É o método formado fora da sala de aula tradicional — na vivência real, não na teoria de apostila.</p>
+          </article>
+          <article class="method-card">
+            <span class="method-card__num">02</span>
+            <h3 class="method-card__title">Conversação desde a aula 1</h3>
+            <p class="method-card__text">Você fala desde o primeiro dia — não só depois de meses decorando regras gramaticais. Erro faz parte, silêncio não.</p>
+          </article>
+          <article class="method-card">
+            <span class="method-card__num">03</span>
+            <h3 class="method-card__title">Turmas por objetivo</h3>
+            <p class="method-card__text">Presencial, online ou aula VIP individual. O formato muda pra caber na sua rotina — o método por trás continua o mesmo.</p>
+          </article>
+          <article class="method-card">
+            <span class="method-card__num">04</span>
+            <h3 class="method-card__title">Professores que viveram o idioma</h3>
+            <p class="method-card__text">7 anos nos EUA, 7 anos no Paraguai, formação na Venezuela, temporadas na Áustria e na Alemanha — nossa equipe não aprendeu só na teoria.</p>
+          </article>
+        </div>
       </div>
     </div>
   </section>
@@ -180,6 +209,10 @@
                 <span class="video-slide__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M8 5v14l11-7z"/></svg></span>
                 <button type="button" class="video-slide__hit" aria-label="Assistir: Mito ou verdade"></button>
               </div>
+              <div class="video-slide__context">
+                <h3 class="video-slide__title">Mito ou verdade?</h3>
+                <p class="video-slide__desc">Testamos crenças comuns sobre aprender idioma — o que é lenda e o que é real.</p>
+              </div>
             </li>
             <li class="video-slide" data-video-title="Aprender um novo idioma demora?">
               <div class="video-slide__frame" data-video-src="videos/aprender-novo-idioma-demora.mp4">
@@ -188,6 +221,10 @@
                 </video>
                 <span class="video-slide__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M8 5v14l11-7z"/></svg></span>
                 <button type="button" class="video-slide__hit" aria-label="Assistir: Aprender um novo idioma demora?"></button>
+              </div>
+              <div class="video-slide__context">
+                <h3 class="video-slide__title">Aprender um idioma demora?</h3>
+                <p class="video-slide__desc">Quanto tempo leva de verdade pra sair falando — sem enrolação.</p>
               </div>
             </li>
             <li class="video-slide" data-video-title="Aprender um novo idioma demora? — parte 2">
@@ -198,6 +235,10 @@
                 <span class="video-slide__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M8 5v14l11-7z"/></svg></span>
                 <button type="button" class="video-slide__hit" aria-label="Assistir: Aprender um novo idioma demora? parte 2"></button>
               </div>
+              <div class="video-slide__context">
+                <h3 class="video-slide__title">Continuando o papo</h3>
+                <p class="video-slide__desc">Parte 2: o que realmente muda o tempo de aprendizado na prática.</p>
+              </div>
             </li>
             <li class="video-slide" data-video-title="Travando ao aprender inglês">
               <div class="video-slide__frame" data-video-src="videos/travando-aprendendo-ingles.mp4">
@@ -206,6 +247,10 @@
                 </video>
                 <span class="video-slide__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M8 5v14l11-7z"/></svg></span>
                 <button type="button" class="video-slide__hit" aria-label="Assistir: Travando ao aprender inglês"></button>
+              </div>
+              <div class="video-slide__context">
+                <h3 class="video-slide__title">Travando no inglês?</h3>
+                <p class="video-slide__desc">Por que você entende tudo mas trava na hora de falar — e como destravar.</p>
               </div>
             </li>
             <li class="video-slide" data-video-title="Passaria numa entrevista de emprego em espanhol?">
@@ -216,6 +261,10 @@
                 <span class="video-slide__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M8 5v14l11-7z"/></svg></span>
                 <button type="button" class="video-slide__hit" aria-label="Assistir: Passaria numa entrevista de emprego em espanhol?"></button>
               </div>
+              <div class="video-slide__context">
+                <h3 class="video-slide__title">Entrevista em espanhol</h3>
+                <p class="video-slide__desc">Você passaria numa entrevista de emprego em espanhol hoje? A gente testou.</p>
+              </div>
             </li>
             <li class="video-slide" data-video-title="Curso de italiano">
               <div class="video-slide__frame" data-video-src="videos/curso-italiano.mp4">
@@ -225,14 +274,9 @@
                 <span class="video-slide__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M8 5v14l11-7z"/></svg></span>
                 <button type="button" class="video-slide__hit" aria-label="Assistir: Curso de italiano"></button>
               </div>
-            </li>
-            <li class="video-slide" data-video-title="Relato de aluna">
-              <div class="video-slide__frame" data-video-src="videos/relato-aluna.mp4">
-                <video class="video-slide__video" muted loop playsinline preload="none" poster="assets/video-posters/relato-aluna.jpg" aria-hidden="true">
-                  <source data-src="videos/relato-aluna.mp4" type="video/mp4">
-                </video>
-                <span class="video-slide__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M8 5v14l11-7z"/></svg></span>
-                <button type="button" class="video-slide__hit" aria-label="Assistir: Relato de aluna"></button>
+              <div class="video-slide__context">
+                <h3 class="video-slide__title">Curso de italiano</h3>
+                <p class="video-slide__desc">Como funcionam as turmas — reduzidas, pensadas pra quem busca a cidadania.</p>
               </div>
             </li>
           </ul>
@@ -255,9 +299,15 @@
         <h2 class="section-title reveal">Equipe</h2>
       </header>
       <div class="section-body reveal">
-        <p class="team-hint">Passe o mouse ou toque em um card para ler a bio.</p>
+        <p class="team-hint">Passe o mouse ou toque em um card para ler a bio — ou use as setas pra navegar.</p>
         <div class="team-carousel" id="team-carousel">
+          <button type="button" class="carousel-arrow carousel-arrow--prev" data-team-prev aria-label="Pessoa anterior">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" d="M15 5l-7 7 7 7"/></svg>
+          </button>
           <div class="team-carousel__stage" id="team-stage" role="list" aria-label="Equipe da New Idiomas"></div>
+          <button type="button" class="carousel-arrow carousel-arrow--next" data-team-next aria-label="Próxima pessoa">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+          </button>
         </div>
       </div>
     </div>
@@ -272,8 +322,64 @@
         <span class="eyebrow reveal">05</span>
         <h2 class="section-title reveal">Depoimentos</h2>
       </header>
-      <div class="section-body reveal">
-        <!-- Conteúdo da seção "Depoimentos" entra aqui -->
+      <div class="section-body">
+        <div class="testimonial-video reveal">
+          <div class="testimonial-video__frame" data-video-src="videos/relato-aluna.mp4">
+            <video class="video-slide__video" muted loop playsinline preload="none" poster="assets/video-posters/relato-aluna.jpg" aria-hidden="true">
+              <source data-src="videos/relato-aluna.mp4" type="video/mp4">
+            </video>
+            <span class="video-slide__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M8 5v14l11-7z"/></svg></span>
+            <button type="button" class="video-slide__hit" aria-label="Assistir: relato de aluna"></button>
+          </div>
+          <div class="testimonial-video__copy">
+            <span class="eyebrow">Direto de quem estuda aqui</span>
+            <h3 class="testimonial-video__title">O relato de uma aluna, sem edição.</h3>
+            <p class="testimonial-video__text">Antes de qualquer print de avaliação, o depoimento em vídeo de uma aluna da New sobre o que mudou desde que começou.</p>
+          </div>
+        </div>
+
+        <div class="testimonial-grid reveal">
+          <article class="testimonial-card">
+            <span class="testimonial-card__stars">★★★★★</span>
+            <p class="testimonial-card__quote">"Ótimo preço. Amei a escola, super indico, os professores são ótimos."</p>
+            <span class="testimonial-card__name">Karoline Mendes</span>
+          </article>
+          <article class="testimonial-card">
+            <span class="testimonial-card__stars">★★★★★</span>
+            <p class="testimonial-card__quote">"Método excelente, melhor escola!!!"</p>
+            <span class="testimonial-card__name">Jennifer Da Costa Cavani de Souza · 10 avaliações</span>
+          </article>
+          <article class="testimonial-card">
+            <span class="testimonial-card__stars">★★★★★</span>
+            <p class="testimonial-card__quote">"A escola tem professores incríveis e é uma ótima opção para quem busca fluência com qualidade."</p>
+            <span class="testimonial-card__name">Laura Sa</span>
+          </article>
+          <article class="testimonial-card">
+            <span class="testimonial-card__stars">★★★★★</span>
+            <p class="testimonial-card__quote">"Excelente escola, somos bem atendidos, ótimos profissionais."</p>
+            <span class="testimonial-card__name">Priscila Hanssen</span>
+          </article>
+          <article class="testimonial-card">
+            <span class="testimonial-card__stars">★★★★★</span>
+            <p class="testimonial-card__quote">"Professores qualificados, escola de alto padrão, material atualizado, nota mil."</p>
+            <span class="testimonial-card__name">Wagner Hanssen · 3 avaliações</span>
+          </article>
+          <article class="testimonial-card">
+            <span class="testimonial-card__stars">★★★★★</span>
+            <p class="testimonial-card__quote">"Ótima estrutura, método de ensino bem dinâmico e atualizado, professores simples, participativos e bem acessíveis."</p>
+            <span class="testimonial-card__name">Diogo Soares Dias · 3 avaliações</span>
+          </article>
+          <article class="testimonial-card">
+            <span class="testimonial-card__stars">★★★★★</span>
+            <p class="testimonial-card__quote">"Clima da escola é incrível, me sinto motivado todos os dias."</p>
+            <span class="testimonial-card__name">Reiner Dias Sena</span>
+          </article>
+          <article class="testimonial-card">
+            <span class="testimonial-card__stars">★★★★★</span>
+            <p class="testimonial-card__quote">"Muito boa a escola, indico demais."</p>
+            <span class="testimonial-card__name">Roni22 · 3 avaliações, 11 fotos</span>
+          </article>
+        </div>
       </div>
     </div>
   </section>
@@ -342,26 +448,61 @@
   </section>
 
   <!-- ===================================================== -->
-  <!-- 07 · CTA FINAL -->
+  <!-- 07 · TESTE SEU NÍVEL (substitui o CTA genérico) -->
   <!-- ===================================================== -->
   <section id="cta-final" class="section section--cta">
     <div class="container section-inner">
       <div class="cta-final__body">
-        <span class="eyebrow reveal">Matrícula aberta</span>
-        <h2 class="cta-final__title reveal">Comece a viver o idioma,<br>não a decorá-lo.</h2>
-        <p class="cta-final__lead reveal">Turmas de inglês, espanhol, alemão e italiano em Lages — presenciais, online ou em aulas VIP. Fale com a gente e encontre o horário certo pra você.</p>
-        <a
-          class="btn btn--solid btn--whatsapp cta-final__btn reveal"
-          href="https://api.whatsapp.com/send?phone=5549984100055&text=Ol%C3%A1!%20Quero%20fazer%20minha%20matr%C3%ADcula%20na%20New%20Idiomas."
-          target="_blank"
-          rel="noopener"
-        >
-          <svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-            <path fill="currentColor" d="M17.47 14.38c-.29-.15-1.71-.85-1.98-.94-.27-.1-.46-.15-.66.15-.2.29-.76.94-.93 1.13-.17.2-.34.22-.63.07-.29-.15-1.22-.45-2.32-1.43-.86-.76-1.44-1.71-1.6-2-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.2-.29.29-.49.1-.2.05-.37-.02-.51-.07-.15-.66-1.59-.9-2.18-.24-.57-.48-.5-.66-.5h-.56c-.2 0-.51.07-.78.37-.27.29-1.02 1-1.02 2.43 0 1.43 1.04 2.82 1.19 3.01.15.2 2.05 3.13 4.96 4.39.69.3 1.23.48 1.65.61.69.22 1.32.19 1.82.11.55-.08 1.71-.7 1.96-1.37.24-.68.24-1.26.17-1.38-.07-.13-.27-.2-.56-.35z"/>
-            <path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.87.5 3.62 1.42 5.13L2 22l5.13-1.51a9.9 9.9 0 0 0 4.91 1.3h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm0 18.02h-.01a8.1 8.1 0 0 1-4.12-1.13l-.3-.18-3.05.9.91-2.98-.19-.31a8.08 8.08 0 0 1-1.25-4.4c0-4.46 3.63-8.09 8.1-8.09 2.16 0 4.19.85 5.72 2.38a8.05 8.05 0 0 1 2.37 5.72c0 4.46-3.63 8.09-8.18 8.09z"/>
-          </svg>
-          Fazer minha matrícula
-        </a>
+        <span class="eyebrow reveal">Teste seu nível</span>
+        <h2 class="cta-final__title reveal">Você já sabe mais do que pensa.</h2>
+        <p class="cta-final__lead reveal">5 perguntas rápidas pra descobrir onde você está. Escolha o idioma:</p>
+
+        <div class="quiz reveal" id="language-quiz" data-state="pick">
+          <div class="quiz__langs" id="quiz-langs" role="list">
+            <button type="button" class="quiz__lang" data-lang="ingles">
+              <img src="assets/bandeira-eua.png" alt="" aria-hidden="true">
+              <span>Inglês</span>
+            </button>
+            <button type="button" class="quiz__lang" data-lang="espanhol">
+              <img src="assets/bandeira-espanha.png" alt="" aria-hidden="true">
+              <span>Espanhol</span>
+            </button>
+            <button type="button" class="quiz__lang" data-lang="alemao">
+              <img src="assets/bandeira-alemanha.png" alt="" aria-hidden="true">
+              <span>Alemão</span>
+            </button>
+            <button type="button" class="quiz__lang" data-lang="italiano">
+              <img src="assets/bandeira-italia.png" alt="" aria-hidden="true">
+              <span>Italiano</span>
+            </button>
+          </div>
+
+          <div class="quiz__question" id="quiz-question" hidden>
+            <div class="quiz__progress"><span id="quiz-progress-fill"></span></div>
+            <p class="quiz__count" id="quiz-count"></p>
+            <h3 class="quiz__prompt" id="quiz-prompt"></h3>
+            <div class="quiz__options" id="quiz-options"></div>
+          </div>
+
+          <div class="quiz__result" id="quiz-result" hidden>
+            <h3 class="quiz__result-title" id="quiz-result-title"></h3>
+            <p class="quiz__result-text" id="quiz-result-text"></p>
+            <a
+              class="btn btn--solid btn--whatsapp"
+              id="quiz-result-cta"
+              href="https://api.whatsapp.com/send?phone=5549984100055"
+              target="_blank"
+              rel="noopener"
+            >
+              <svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path fill="currentColor" d="M17.47 14.38c-.29-.15-1.71-.85-1.98-.94-.27-.1-.46-.15-.66.15-.2.29-.76.94-.93 1.13-.17.2-.34.22-.63.07-.29-.15-1.22-.45-2.32-1.43-.86-.76-1.44-1.71-1.6-2-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.2-.29.29-.49.1-.2.05-.37-.02-.51-.07-.15-.66-1.59-.9-2.18-.24-.57-.48-.5-.66-.5h-.56c-.2 0-.51.07-.78.37-.27.29-1.02 1-1.02 2.43 0 1.43 1.04 2.82 1.19 3.01.15.2 2.05 3.13 4.96 4.39.69.3 1.23.48 1.65.61.69.22 1.32.19 1.82.11.55-.08 1.71-.7 1.96-1.37.24-.68.24-1.26.17-1.38-.07-.13-.27-.2-.56-.35z"/>
+                <path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.87.5 3.62 1.42 5.13L2 22l5.13-1.51a9.9 9.9 0 0 0 4.91 1.3h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm0 18.02h-.01a8.1 8.1 0 0 1-4.12-1.13l-.3-.18-3.05.9.91-2.98-.19-.31a8.08 8.08 0 0 1-1.25-4.4c0-4.46 3.63-8.09 8.1-8.09 2.16 0 4.19.85 5.72 2.38a8.05 8.05 0 0 1 2.37 5.72c0 4.46-3.63 8.09-8.18 8.09z"/>
+              </svg>
+              Falar no WhatsApp
+            </a>
+            <button type="button" class="quiz__retry" id="quiz-retry">Testar outro idioma</button>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -370,8 +511,35 @@
 
 <footer class="site-footer">
   <div class="container site-footer__inner">
-    <img src="logo-horizontal.png" alt="New Idiomas" class="site-footer__logo">
-    <p class="site-footer__copy">&copy; <span id="year"></span> New Idiomas. Todos os direitos reservados.</p>
+    <div class="site-footer__col">
+      <img src="logo-horizontal.png" alt="New Idiomas" class="site-footer__logo">
+      <p class="site-footer__tagline">Escola de idiomas em Lages/SC. Inglês, espanhol, alemão e italiano — ensinados por gente que viveu o idioma, não só estudou.</p>
+    </div>
+
+    <div class="site-footer__col">
+      <p class="site-footer__heading">Navegação</p>
+      <nav class="site-footer__list">
+        <a href="#idiomas">Idiomas</a>
+        <a href="#metodologia">Metodologia</a>
+        <a href="#equipe">Equipe</a>
+        <a href="#depoimentos">Depoimentos</a>
+        <a href="#localizacao">Localização</a>
+      </nav>
+    </div>
+
+    <div class="site-footer__col">
+      <p class="site-footer__heading">Fale com a gente</p>
+      <div class="site-footer__list">
+        <a href="https://api.whatsapp.com/send?phone=5549984100055" target="_blank" rel="noopener">(49) 3222-0566 · WhatsApp</a>
+        <a href="https://www.instagram.com/new_idiomaslages" target="_blank" rel="noopener">@new_idiomaslages</a>
+        <address>R. Caetano Vieira da Costa, 190 — Centro<br>Lages – SC, 88502-070</address>
+      </div>
+    </div>
+
+    <div class="site-footer__bottom">
+      <p class="site-footer__copy">&copy; <span id="year"></span> New Idiomas. Todos os direitos reservados.</p>
+      <p class="site-footer__credit">Site por <a href="https://waxlo.com.br" target="_blank" rel="noopener">WAXLO</a></p>
+    </div>
   </div>
 </footer>
 

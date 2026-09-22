@@ -115,9 +115,10 @@
   }
 
   /* =====================================================
-     HERO VIDEO — roda em qualquer tamanho de tela; só fica no
+     HERO VIDEO — roda em qualquer tamanho de tela; fica no
      still parado com quem pediu "reduzir movimento" ou está no
-     modo Economia de Dados do navegador.
+     modo Economia de Dados. Pausa fora da viewport, retoma ao
+     voltar — nunca continua rodando fora de vista.
      ===================================================== */
   function initHeroVideo() {
     var video = document.getElementById('hero-video');
@@ -128,20 +129,37 @@
 
     if (reduceMotion || saveData) return;
 
-    if (!video.dataset.loaded) {
-      source.src = source.dataset.src;
-      video.load();
-      video.dataset.loaded = '1';
+    var ensureLoaded = function () {
+      if (!video.dataset.loaded) {
+        source.src = source.dataset.src;
+        video.load();
+        video.dataset.loaded = '1';
+      }
+    };
+
+    if ('IntersectionObserver' in window) {
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            ensureLoaded();
+            video.play().catch(function () {});
+          } else {
+            video.pause();
+          }
+        });
+      }, { threshold: 0.2 });
+      observer.observe(video);
+    } else {
+      ensureLoaded();
+      video.play().catch(function () {});
     }
-    video.play().catch(function () {});
   }
 
   /* =====================================================
      PARALLAX DA MÍDIA DO HERO — leve deslocamento vertical
      ligado ao scroll, junto com o zoom contínuo (Ken Burns)
      que já vem do CSS. Só translada o cartão em si (nunca a
-     página), então não tem risco de reabrir o bug de overflow
-     horizontal do carrossel da equipe.
+     página).
      ===================================================== */
   function initHeroParallax() {
     var media = document.querySelector('.hero-media');
@@ -170,131 +188,81 @@
   }
 
   /* =====================================================
-     CARROSSEL DE VÍDEOS — scroll-snap nativo
+     VÍDEOS — player principal + trilho de miniaturas. Só o
+     vídeo selecionado carrega (preload="none" + load() sob
+     demanda); os outros ficam só no poster. Pausa fora da
+     viewport, retoma ao voltar.
      ===================================================== */
-  function initVideoCarousel() {
-    var carousel = document.getElementById('video-carousel');
-    var track = document.getElementById('video-track');
-    if (!carousel || !track) return;
+  function initVideosPlayer() {
+    var mainVideo = document.getElementById('videos-main-video');
+    var mainSource = document.getElementById('videos-main-source');
+    var titleEl = document.getElementById('videos-info-title');
+    var descEl = document.getElementById('videos-info-desc');
+    var rail = document.getElementById('videos-rail');
+    if (!mainVideo || !mainSource || !rail) return;
 
-    var frames = Array.prototype.slice.call(track.querySelectorAll('.video-slide__frame'));
-    var prevBtn = carousel.querySelector('[data-carousel-prev]');
-    var nextBtn = carousel.querySelector('[data-carousel-next]');
+    var items = Array.prototype.slice.call(rail.querySelectorAll('.videos-rail__item'));
+    if (!items.length) return;
 
-    /* ---- play/pause conforme visibilidade real na tela ----
-       debounced pra não reagir a flickers de entrada/saída durante
-       o assentamento do layout (scroll programático, fontes). */
-    var playTimers = new WeakMap();
-    var setPlaying = function (frame, playing) {
-      window.clearTimeout(playTimers.get(frame));
-      var timer = window.setTimeout(function () {
-        var video = frame.querySelector('.video-slide__video');
-        var source = video && video.querySelector('source');
-        frame.classList.toggle('is-playing', playing);
-        if (!video || !source) return;
-        if (playing && !reduceMotion) {
-          if (!video.dataset.loaded || video.error) {
-            source.src = source.dataset.src;
-            video.load();
-            video.dataset.loaded = '1';
-          }
-          video.play().catch(function () {});
-        } else if (video.dataset.loaded) {
-          video.pause();
-        }
-      }, 120);
-      playTimers.set(frame, timer);
+    var loadVideo = function (btn, moveFocus) {
+      var src = btn.getAttribute('data-video-src');
+      var poster = btn.getAttribute('data-video-poster');
+      var title = btn.getAttribute('data-video-title');
+      var desc = btn.getAttribute('data-video-desc');
+
+      mainVideo.pause();
+      mainSource.src = src;
+      mainVideo.poster = poster;
+      mainVideo.load();
+      if (!reduceMotion) mainVideo.play().catch(function () {});
+
+      if (titleEl) titleEl.textContent = title;
+      if (descEl) descEl.textContent = desc;
+
+      items.forEach(function (it) {
+        var active = it === btn;
+        it.classList.toggle('is-active', active);
+        it.setAttribute('aria-selected', active ? 'true' : 'false');
+        it.setAttribute('tabindex', active ? '0' : '-1');
+      });
+
+      if (moveFocus) btn.focus();
     };
+
+    items.forEach(function (btn) {
+      btn.addEventListener('click', function () { loadVideo(btn, false); });
+    });
+
+    rail.addEventListener('keydown', function (e) {
+      var current = e.target.closest('.videos-rail__item');
+      if (!current) return;
+      var i = items.indexOf(current);
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        loadVideo(items[(i + 1) % items.length], true);
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        loadVideo(items[(i - 1 + items.length) % items.length], true);
+      }
+    });
 
     if ('IntersectionObserver' in window) {
-      var observer = new IntersectionObserver(
-        function (entries) {
-          entries.forEach(function (entry) {
-            setPlaying(entry.target, entry.isIntersecting);
-          });
-        },
-        { threshold: 0.6 }
-      );
-      frames.forEach(function (frame) { observer.observe(frame); });
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            if (!reduceMotion && mainSource.src) mainVideo.play().catch(function () {});
+          } else {
+            mainVideo.pause();
+          }
+        });
+      }, { threshold: 0.25 });
+      observer.observe(mainVideo);
     }
-
-    /* ---- destaque de profundidade do slide central (independente do play) ---- */
-    var updateCenterSlide = function () {
-      var trackRect = track.getBoundingClientRect();
-      var trackCenter = trackRect.left + trackRect.width / 2;
-      var closest = null;
-      var closestDist = Infinity;
-
-      frames.forEach(function (frame) {
-        var rect = frame.getBoundingClientRect();
-        var dist = Math.abs((rect.left + rect.width / 2) - trackCenter);
-        if (dist < closestDist) {
-          closestDist = dist;
-          closest = frame;
-        }
-      });
-
-      frames.forEach(function (frame) { frame.classList.toggle('is-center', frame === closest); });
-    };
-
-    var centerTicking = false;
-    var requestCenterUpdate = function () {
-      if (centerTicking) return;
-      centerTicking = true;
-      window.requestAnimationFrame(function () {
-        updateCenterSlide();
-        centerTicking = false;
-      });
-    };
-
-    track.addEventListener('scroll', requestCenterUpdate, { passive: true });
-    window.addEventListener('resize', requestCenterUpdate);
-    requestCenterUpdate();
-
-    /* ---- setas de navegação ---- */
-    var slideStep = function () {
-      var slide = track.querySelector('.video-slide');
-      if (!slide) return 260;
-      var style = getComputedStyle(track);
-      return slide.getBoundingClientRect().width + parseFloat(style.columnGap || style.gap || 0);
-    };
-
-    var updateArrows = function () {
-      var max = track.scrollWidth - track.clientWidth - 1;
-      if (prevBtn) prevBtn.classList.toggle('is-disabled', track.scrollLeft <= 1);
-      if (nextBtn) nextBtn.classList.toggle('is-disabled', track.scrollLeft >= max);
-    };
-
-    if (prevBtn) {
-      prevBtn.addEventListener('click', function () {
-        track.scrollBy({ left: -slideStep(), behavior: reduceMotion ? 'auto' : 'smooth' });
-      });
-    }
-    if (nextBtn) {
-      nextBtn.addEventListener('click', function () {
-        track.scrollBy({ left: slideStep(), behavior: reduceMotion ? 'auto' : 'smooth' });
-      });
-    }
-
-    var scrollTicking = false;
-    track.addEventListener('scroll', function () {
-      if (scrollTicking) return;
-      scrollTicking = true;
-      window.requestAnimationFrame(function () {
-        updateArrows();
-        scrollTicking = false;
-      });
-    }, { passive: true });
-    updateArrows();
-    window.addEventListener('resize', updateArrows);
-
   }
 
   /* =====================================================
-     LIGHTBOX DE VÍDEO — delegado no document, então funciona
-     pra qualquer ".video-slide__frame[data-video-src]" na
-     página (carrossel de vídeos E o vídeo de depoimento),
-     não só o que estiver dentro do carrossel.
+     LIGHTBOX DE VÍDEO — delegado no document; usado hoje só
+     pelo vídeo de depoimento (".video-slide__frame[data-video-src]").
      ===================================================== */
   function initVideoLightbox() {
     var lightbox = document.getElementById('video-lightbox');
@@ -308,6 +276,8 @@
         frame.classList.remove('is-playing');
         if (video) video.pause();
       });
+      var mainVideo = document.getElementById('videos-main-video');
+      if (mainVideo) mainVideo.pause();
     };
 
     var openLightbox = function (src) {
@@ -346,262 +316,129 @@
   }
 
   /* =====================================================
-     EQUIPE — carrossel 3D (perspective + rotateY/translateZ),
-     atualizado por scroll e auto-rotate via rAF quando parado.
-     Em telas <768px vira carrossel linear com scroll-snap.
+     EQUIPE — "Mesa da equipe": painel do integrante ativo +
+     índice acessível (tablist). Clique, teclado (Enter/Espaço/
+     setas) e os botões Anterior/Próximo. Sem autoplay.
      ===================================================== */
-  function initTeamCarousel() {
-    var carousel = document.getElementById('team-carousel');
-    var stage = document.getElementById('team-stage');
-    if (!carousel || !stage || !equipe.length) return;
+  function initEquipeMesa() {
+    var mesa = document.getElementById('equipe-mesa');
+    var indice = document.getElementById('equipe-indice');
+    var painel = document.getElementById('equipe-painel');
+    if (!mesa || !indice || !painel || !equipe.length) return;
 
-    var AUTO_SPEED = 0.06;
-    var MIN_OPACITY = 0.3;
+    var fotoImg = document.getElementById('equipe-painel-foto');
+    var fotoWebp = document.getElementById('equipe-painel-webp');
+    var numEl = document.getElementById('equipe-painel-num');
+    var nomeEl = document.getElementById('equipe-painel-nome');
+    var cargoEl = document.getElementById('equipe-painel-cargo');
+    var bioEl = document.getElementById('equipe-painel-bio');
+    var prevBtn = document.getElementById('equipe-prev');
+    var nextBtn = document.getElementById('equipe-next');
 
-    var ringMQ = window.matchMedia('(min-width: 768px)');
-    var angleStep = 360 / equipe.length;
-    var rotation = 0;
-    var radius = 260;
-    var isHovering = false;
-    var isDragging = false;
-    var hasOpenCard = false;
-    /* auto-rotate e auto-avanço só ligam quando o carrossel está
-       perto da tela, pra não gastar ciclo animando fora de vista. */
-    var isNearViewport = false;
-    var lastInteraction = 0;
-    var rafId = null;
+    var pad2 = function (n) { return n < 10 ? '0' + n : String(n); };
+    var activeIndex = 0;
+    var tabs = [];
 
-    if ('IntersectionObserver' in window) {
-      var visibilityObserver = new IntersectionObserver(
-        function (entries) {
-          entries.forEach(function (entry) {
-            isNearViewport = entry.isIntersecting;
-          });
-        },
-        { rootMargin: '35% 0px 35% 0px' }
-      );
-      visibilityObserver.observe(carousel);
-    } else {
-      isNearViewport = true;
-    }
+    equipe.forEach(function (person, i) {
+      var li = document.createElement('li');
+      li.setAttribute('role', 'presentation');
 
-    var cards = equipe.map(function (person) {
-      var card = document.createElement('div');
-      card.className = 'team-card';
-      card.setAttribute('role', 'listitem');
-      card.setAttribute('tabindex', '0');
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'equipe-indice__item';
+      btn.setAttribute('role', 'tab');
+      btn.id = 'equipe-tab-' + i;
+      btn.setAttribute('aria-controls', 'equipe-painel');
+      btn.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+      btn.setAttribute('tabindex', i === 0 ? '0' : '-1');
+      btn.innerHTML =
+        '<span class="equipe-indice__num">' + pad2(i + 1) + '</span>' +
+        '<span class="equipe-indice__text">' +
+          '<span class="equipe-indice__nome">' + person.nome + '</span>' +
+          '<span class="equipe-indice__cargo">' + person.cargo + '</span>' +
+        '</span>';
+      btn.addEventListener('click', function () { setActive(i, false); });
 
-      card.innerHTML =
-        '<div class="team-card__photo-wrap">' +
-          '<img class="team-card__photo" src="' + person.foto + '" alt="' + person.nome + '" loading="lazy">' +
-        '</div>' +
-        '<div class="team-card__caption">' +
-          '<h3 class="team-card__name">' + person.nome + '</h3>' +
-          '<p class="team-card__role">' + person.cargo + '</p>' +
-        '</div>' +
-        '<div class="team-card__bio">' +
-          '<h3 class="team-card__name">' + person.nome + '</h3>' +
-          '<p class="team-card__role">' + person.cargo + '</p>' +
-          '<p class="team-card__bio-text">' + person.bio + '</p>' +
-        '</div>';
-
-      stage.appendChild(card);
-      return card;
+      li.appendChild(btn);
+      indice.appendChild(li);
+      tabs.push(btn);
     });
 
-    var toggleCard = function (card) {
-      var wasOpen = card.classList.contains('is-open');
-      cards.forEach(function (c) { c.classList.remove('is-open'); });
-      card.classList.toggle('is-open', !wasOpen);
-      hasOpenCard = !wasOpen;
-    };
+    painel.setAttribute('role', 'tabpanel');
+    painel.setAttribute('aria-labelledby', tabs[0].id);
 
-    stage.addEventListener('click', function (e) {
-      var card = e.target.closest('.team-card');
-      if (card) toggleCard(card);
-    });
+    var setActive = function (i, moveFocus) {
+      var next = ((i % equipe.length) + equipe.length) % equipe.length;
+      if (next === activeIndex) { if (moveFocus) tabs[next].focus(); return; }
+      activeIndex = next;
+      var person = equipe[activeIndex];
 
-    stage.addEventListener('keydown', function (e) {
-      var card = e.target.closest('.team-card');
-      if (!card) return;
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        toggleCard(card);
-      }
-    });
-
-    carousel.addEventListener('mouseenter', function () { isHovering = true; });
-    carousel.addEventListener('mouseleave', function () { isHovering = false; });
-
-    /* ---- posicionamento do anel 3D ---- */
-    var computeRadius = function () {
-      var w = carousel.clientWidth || 900;
-      return Math.max(280, Math.min(560, w * 0.42));
-    };
-
-    var layoutRing = function () {
-      radius = computeRadius();
-      cards.forEach(function (card, i) {
-        card.style.transform = 'rotateY(' + (i * angleStep) + 'deg) translateZ(' + radius + 'px)';
+      tabs.forEach(function (tab, ti) {
+        var isActive = ti === activeIndex;
+        tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        tab.setAttribute('tabindex', isActive ? '0' : '-1');
       });
-    };
+      painel.setAttribute('aria-labelledby', tabs[activeIndex].id);
 
-    var updateRingRotation = function () {
-      stage.style.transform = 'rotateY(' + rotation + 'deg)';
-      cards.forEach(function (card, i) {
-        var itemAngle = i * angleStep;
-        var relative = ((itemAngle + rotation) % 360 + 360) % 360;
-        var normalized = relative > 180 ? 360 - relative : relative;
-        var opacity = Math.max(MIN_OPACITY, 1 - normalized / 180);
-        card.style.opacity = opacity;
-        card.style.pointerEvents = opacity < 0.5 ? 'none' : '';
-      });
-    };
-
-    var clearRingStyles = function () {
-      cards.forEach(function (card) {
-        card.style.transform = '';
-        card.style.opacity = '';
-        card.style.pointerEvents = '';
-      });
-      stage.style.transform = '';
-    };
-
-    /* ---- auto-rotate via requestAnimationFrame quando parado ----
-       a rotação nunca mais é ligada ao scroll da página: era isso
-       que fazia rolar rápido ou até longe da seção "pegar" o anel
-       e girar de forma brusca. Agora só gira sozinho (ambient) ou
-       por interação direta (setas/arraste). */
-    var tick = function () {
-      if (ringMQ.matches && isNearViewport && !isDragging && !isHovering && !hasOpenCard && !reduceMotion) {
-        rotation += AUTO_SPEED;
-        updateRingRotation();
-      }
-      rafId = window.requestAnimationFrame(tick);
-    };
-    rafId = window.requestAnimationFrame(tick);
-
-    /* ---- alterna modo anel 3D / linear conforme breakpoint ---- */
-    var applyMode = function () {
-      cards.forEach(function (c) { c.classList.remove('is-open'); });
-      hasOpenCard = false;
-
-      if (ringMQ.matches) {
-        carousel.setAttribute('data-mode', 'ring');
-        layoutRing();
-        updateRingRotation();
-      } else {
-        carousel.setAttribute('data-mode', 'linear');
-        clearRingStyles();
-      }
-    };
-
-    applyMode();
-    if (ringMQ.addEventListener) ringMQ.addEventListener('change', applyMode);
-    else ringMQ.addListener(applyMode);
-
-    var resizeTimer = null;
-    window.addEventListener('resize', function () {
-      window.clearTimeout(resizeTimer);
-      resizeTimer = window.setTimeout(function () {
-        if (ringMQ.matches) layoutRing();
-      }, 150);
-    });
-
-    /* ---- setas manuais: giram o anel (desktop) ou rolam a fileira (mobile) ---- */
-    var prevBtn = carousel.querySelector('[data-team-prev]');
-    var nextBtn = carousel.querySelector('[data-team-next]');
-
-    var animateRotationBy = function (delta) {
-      var start = rotation;
-      var startTime = null;
-      var DURATION = 550;
-      var ease = function (t) { return 1 - Math.pow(1 - t, 3); };
-      var frame = function (ts) {
-        if (!startTime) startTime = ts;
-        var t = Math.min(1, (ts - startTime) / DURATION);
-        rotation = start + delta * ease(t);
-        updateRingRotation();
-        if (t < 1) window.requestAnimationFrame(frame);
+      var swap = function () {
+        fotoImg.src = person.foto;
+        fotoImg.alt = person.nome;
+        if (fotoWebp) fotoWebp.srcset = person.foto.replace('.png', '.webp');
+        numEl.textContent = pad2(activeIndex + 1);
+        nomeEl.textContent = person.nome;
+        cargoEl.textContent = person.cargo;
+        bioEl.textContent = person.bio;
+        painel.classList.remove('is-transitioning');
+        if (moveFocus) tabs[activeIndex].focus();
       };
-      window.requestAnimationFrame(frame);
-    };
 
-    var teamStep = function () {
-      var card = stage.querySelector('.team-card');
-      if (!card) return 260;
-      var style = getComputedStyle(stage);
-      return card.getBoundingClientRect().width + parseFloat(style.columnGap || style.gap || 0);
-    };
-
-    if (prevBtn) {
-      prevBtn.addEventListener('click', function () {
-        if (ringMQ.matches) animateRotationBy(-angleStep);
-        else stage.scrollBy({ left: -teamStep(), behavior: reduceMotion ? 'auto' : 'smooth' });
-      });
-    }
-    if (nextBtn) {
-      nextBtn.addEventListener('click', function () {
-        if (ringMQ.matches) animateRotationBy(angleStep);
-        else stage.scrollBy({ left: teamStep(), behavior: reduceMotion ? 'auto' : 'smooth' });
-      });
-    }
-
-    /* ---- arrastar com o dedo/mouse gira o anel (modo desktop/tablet).
-       Em modo linear (mobile) não faz nada aqui — o scroll nativo com
-       scroll-snap já deixa passar o dedo por cima dos cards sozinho. */
-    var drag = null;
-    carousel.addEventListener('pointerdown', function (e) {
-      if (!ringMQ.matches) return;
-      if (e.pointerType === 'mouse' && e.button !== 0) return;
-      drag = { lastX: e.clientX, moved: false };
-      isDragging = true;
-      if (carousel.setPointerCapture) {
-        try { carousel.setPointerCapture(e.pointerId); } catch (err) {}
-      }
-    });
-    carousel.addEventListener('pointermove', function (e) {
-      if (!drag) return;
-      var dx = e.clientX - drag.lastX;
-      drag.lastX = e.clientX;
-      if (Math.abs(dx) > 1) drag.moved = true;
-      rotation -= dx * 0.35;
-      updateRingRotation();
-    });
-    var endDrag = function (e) {
-      if (!drag) return;
-      var moved = drag.moved;
-      drag = null;
-      isDragging = false;
-      if (moved) {
-        /* impede que o "soltar" do arraste seja lido como clique
-           e abra a bio do card logo abaixo do dedo/cursor. */
-        var suppressClick = function (ev) {
-          ev.stopPropagation();
-          ev.preventDefault();
-          carousel.removeEventListener('click', suppressClick, true);
-        };
-        carousel.addEventListener('click', suppressClick, true);
+      if (reduceMotion) {
+        swap();
+      } else {
+        painel.classList.add('is-transitioning');
+        window.setTimeout(swap, 180);
       }
     };
-    carousel.addEventListener('pointerup', endDrag);
-    carousel.addEventListener('pointercancel', endDrag);
 
-    /* ---- modo linear (mobile): desliza sozinho a cada poucos
-       segundos, pausando quando a pessoa mexe na fileira na mão. */
-    var markInteraction = function () { lastInteraction = Date.now(); };
-    stage.addEventListener('pointerdown', markInteraction, { passive: true });
-    stage.addEventListener('touchstart', markInteraction, { passive: true });
-    stage.addEventListener('wheel', markInteraction, { passive: true });
+    indice.addEventListener('keydown', function (e) {
+      var tab = e.target.closest('.equipe-indice__item');
+      if (!tab) return;
+      if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+        e.preventDefault();
+        setActive(activeIndex + 1, true);
+      } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+        e.preventDefault();
+        setActive(activeIndex - 1, true);
+      } else if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        var i = tabs.indexOf(tab);
+        if (i > -1) setActive(i, false);
+      }
+    });
 
-    if (!reduceMotion) {
-      window.setInterval(function () {
-        if (ringMQ.matches || !isNearViewport) return;
-        if (Date.now() - lastInteraction < 4000) return;
-        var atEnd = stage.scrollLeft + stage.clientWidth >= stage.scrollWidth - 4;
-        stage.scrollTo({ left: atEnd ? 0 : stage.scrollLeft + teamStep(), behavior: 'smooth' });
-      }, 3200);
-    }
+    if (prevBtn) prevBtn.addEventListener('click', function () { setActive(activeIndex - 1, false); });
+    if (nextBtn) nextBtn.addEventListener('click', function () { setActive(activeIndex + 1, false); });
+  }
+
+  /* =====================================================
+     LOCALIZAÇÃO — mapa do Google só carrega quando pedido
+     (o iframe é pesado); até lá é um placeholder leve com
+     altura reservada e um link direto como alternativa.
+     ===================================================== */
+  function initLocationMap() {
+    var mapWrap = document.getElementById('location-map');
+    var loadBtn = document.getElementById('location-map-load');
+    if (!mapWrap || !loadBtn) return;
+
+    loadBtn.addEventListener('click', function () {
+      var iframe = document.createElement('iframe');
+      iframe.src = 'https://www.google.com/maps?q=R.+Caetano+Vieira+da+Costa,+190,+Centro,+Lages+-+SC,+88502-070&output=embed';
+      iframe.title = 'Mapa — New Idiomas, R. Caetano Vieira da Costa, 190, Centro, Lages-SC';
+      iframe.loading = 'lazy';
+      iframe.referrerPolicy = 'no-referrer-when-downgrade';
+      mapWrap.appendChild(iframe);
+      mapWrap.classList.add('is-loaded');
+    });
   }
 
   /* =====================================================
@@ -694,7 +531,7 @@
           '<span class="jogo-progress__track"><span class="jogo-progress__fill" style="width:' + pct + '%"></span></span>' +
           '<span class="jogo-progress__count">' + (index + 1) + '/' + perguntas.length + '</span>' +
         '</div>' +
-        '<div class="jogo-question">' +
+        '<div class="jogo-question" aria-live="polite">' +
           '<span class="jogo-progress__difficulty">' + escapeHtml(q.nivel) + '</span>' +
           '<p class="jogo-question__text">' + escapeHtml(q.texto) + '</p>' +
           '<div class="jogo-options">' + optionsHtml + '</div>' +
@@ -731,12 +568,16 @@
       else if (score >= 4) msg = 'Você já tem base — falta destravar a fala. É exatamente aí que a gente entra.';
       else msg = 'Todo mundo começa de algum lugar. Bora montar um plano pra você sair do zero de verdade?';
 
-      var waText = encodeURIComponent('Olá! Fiz o desafio de ' + lang.nome.toLowerCase() + ' no site e tirei ' + score + '/' + total + ' — quero saber mais sobre as aulas.');
+      /* só idioma + placar — nada de nome, e-mail, telefone ou
+         respostas individuais na mensagem. */
+      var waText = encodeURIComponent(
+        'Olá! Fiz o desafio de ' + lang.nome.toLowerCase() + ' no site da New e acertei ' + score + ' de ' + total + ' perguntas. Gostaria de saber qual curso é mais indicado para mim.'
+      );
 
       card.innerHTML =
-        '<div class="jogo-result">' +
+        '<div class="jogo-result" aria-live="polite">' +
           '<span class="jogo-result__flag"><img src="' + lang.bandeira + '" alt="" loading="lazy"></span>' +
-          '<span class="jogo-result__score">' + score + '/' + total + '</span>' +
+          '<span class="jogo-result__score" id="jogo-score">' + (reduceMotion ? score : 0) + '/' + total + '</span>' +
           '<h3 class="jogo-result__title">Resultado em ' + escapeHtml(lang.nome) + '</h3>' +
           '<p class="jogo-result__msg">' + msg + '</p>' +
           '<a class="btn btn--solid btn--whatsapp jogo-result__cta" target="_blank" rel="noopener" href="https://api.whatsapp.com/send?phone=5549984100055&text=' + waText + '">' +
@@ -744,7 +585,7 @@
               '<path fill="currentColor" d="M17.47 14.38c-.29-.15-1.71-.85-1.98-.94-.27-.1-.46-.15-.66.15-.2.29-.76.94-.93 1.13-.17.2-.34.22-.63.07-.29-.15-1.22-.45-2.32-1.43-.86-.76-1.44-1.71-1.6-2-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.2-.29.29-.49.1-.2.05-.37-.02-.51-.07-.15-.66-1.59-.9-2.18-.24-.57-.48-.5-.66-.5h-.56c-.2 0-.51.07-.78.37-.27.29-1.02 1-1.02 2.43 0 1.43 1.04 2.82 1.19 3.01.15.2 2.05 3.13 4.96 4.39.69.3 1.23.48 1.65.61.69.22 1.32.19 1.82.11.55-.08 1.71-.7 1.96-1.37.24-.68.24-1.26.17-1.38-.07-.13-.27-.2-.56-.35z"/>' +
               '<path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.87.5 3.62 1.42 5.13L2 22l5.13-1.51a9.9 9.9 0 0 0 4.91 1.3h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm0 18.02h-.01a8.1 8.1 0 0 1-4.12-1.13l-.3-.18-3.05.9.91-2.98-.19-.31a8.08 8.08 0 0 1-1.25-4.4c0-4.46 3.63-8.09 8.1-8.09 2.16 0 4.19.85 5.72 2.38a8.05 8.05 0 0 1 2.37 5.72c0 4.46-3.63 8.09-8.18 8.09z"/>' +
             '</svg>' +
-            'Falar no WhatsApp' +
+            'Quero conversar sobre meu resultado' +
           '</a>' +
           '<div class="jogo-result__actions">' +
             '<button type="button" class="jogo-result__retry" id="jogo-retry">Jogar de novo</button>' +
@@ -756,6 +597,22 @@
       if (retryBtn) retryBtn.addEventListener('click', function () { index = 0; score = 0; renderQuestion(); });
       var outroBtn = document.getElementById('jogo-outro');
       if (outroBtn) outroBtn.addEventListener('click', renderLangSelect);
+
+      /* placar sobe contando até o valor final — um toque de jogo,
+         sem exagero (só na revelação do resultado, uma vez). */
+      if (!reduceMotion && score > 0) {
+        var scoreEl = document.getElementById('jogo-score');
+        var startTime = null;
+        var DURATION = 700;
+        var countUp = function (ts) {
+          if (!startTime) startTime = ts;
+          var t = Math.min(1, (ts - startTime) / DURATION);
+          var current = Math.round(t * score);
+          scoreEl.textContent = current + '/' + total;
+          if (t < 1) window.requestAnimationFrame(countUp);
+        };
+        window.requestAnimationFrame(countUp);
+      }
     };
 
     renderLangSelect();
@@ -776,23 +633,39 @@
   }
 
   /* =====================================================
-     MENU MOBILE
+     MENU MOBILE — fecha por botão, link, overlay (clique fora
+     da lista) e Escape; bloqueia o scroll do body enquanto aberto.
      ===================================================== */
   function initMobileNav() {
     var toggle = document.getElementById('nav-toggle');
     var nav = document.getElementById('main-nav');
     if (!toggle || !nav) return;
 
+    var close = function () {
+      nav.classList.remove('is-open');
+      toggle.setAttribute('aria-expanded', 'false');
+      root.classList.remove('intro-lock');
+    };
+    var open = function () {
+      nav.classList.add('is-open');
+      toggle.setAttribute('aria-expanded', 'true');
+      root.classList.add('intro-lock');
+    };
+
     toggle.addEventListener('click', function () {
-      var isOpen = nav.classList.toggle('is-open');
-      toggle.setAttribute('aria-expanded', String(isOpen));
+      if (nav.classList.contains('is-open')) close(); else open();
     });
 
     nav.querySelectorAll('a').forEach(function (link) {
-      link.addEventListener('click', function () {
-        nav.classList.remove('is-open');
-        toggle.setAttribute('aria-expanded', 'false');
-      });
+      link.addEventListener('click', close);
+    });
+
+    nav.addEventListener('click', function (e) {
+      if (e.target === nav) close();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && nav.classList.contains('is-open')) close();
     });
   }
 
@@ -893,9 +766,10 @@
     safeInit('initIntro', initIntro);
     safeInit('initHeroVideo', initHeroVideo);
     safeInit('initHeroParallax', initHeroParallax);
-    safeInit('initVideoCarousel', initVideoCarousel);
+    safeInit('initVideosPlayer', initVideosPlayer);
     safeInit('initVideoLightbox', initVideoLightbox);
-    safeInit('initTeamCarousel', initTeamCarousel);
+    safeInit('initEquipeMesa', initEquipeMesa);
+    safeInit('initLocationMap', initLocationMap);
     safeInit('initJogo', initJogo);
     safeInit('initHeader', initHeader);
     safeInit('initMobileNav', initMobileNav);

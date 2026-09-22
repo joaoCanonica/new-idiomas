@@ -393,13 +393,8 @@ html.no-intro #intro-screen { display: none !important; }
   to   { transform: scale(1.08); }
 }
 
-.hero-still { display: block; }
-.hero-video { display: none; }
-
-@media (min-width: 860px) {
-  .hero-still { display: none; }
-  .hero-video { display: block; }
-}
+.hero-still { display: none; }
+.hero-video { display: block; }
 
 @media (prefers-reduced-motion: reduce) {
   .hero-still { display: block !important; }
@@ -410,7 +405,7 @@ html.no-intro #intro-screen { display: none !important; }
 
 @media (max-width: 860px) {
   .hero-grid { grid-template-columns: 1fr; }
-  .section--hero { padding-top: 5.5rem; }
+  .section--hero { padding-top: 7.5rem; }
 
   /* texto primeiro, vídeo/foto como cartão arredondado logo
      abaixo, bandeiras em seguida — vídeo em tela cheia no topo

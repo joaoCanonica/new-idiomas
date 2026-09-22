@@ -187,8 +187,6 @@
     var frames = Array.prototype.slice.call(track.querySelectorAll('.video-slide__frame'));
     var prevBtn = carousel.querySelector('[data-carousel-prev]');
     var nextBtn = carousel.querySelector('[data-carousel-next]');
-    var lightbox = document.getElementById('video-lightbox');
-    var lightboxVideo = document.getElementById('lightbox-video');
 
     /* ---- play/pause conforme visibilidade real na tela ----
        debounced pra não reagir a flickers de entrada/saída durante
@@ -297,21 +295,30 @@
     updateArrows();
     window.addEventListener('resize', updateArrows);
 
-    /* ---- lightbox com áudio ---- */
-    if (!lightbox || !lightboxVideo) return;
+  }
 
-    var pauseAllSlides = function () {
-      frames.forEach(function (frame) {
+  /* =====================================================
+     LIGHTBOX DE VÍDEO — delegado no document, então funciona
+     pra qualquer ".video-slide__frame[data-video-src]" na
+     página (carrossel de vídeos E o vídeo de depoimento),
+     não só o que estiver dentro do carrossel.
+     ===================================================== */
+  function initVideoLightbox() {
+    var lightbox = document.getElementById('video-lightbox');
+    var lightboxVideo = document.getElementById('lightbox-video');
+    var lightboxSource = document.getElementById('lightbox-video-source');
+    if (!lightbox || !lightboxVideo || !lightboxSource) return;
+
+    var pauseAllVideos = function () {
+      document.querySelectorAll('.video-slide__frame').forEach(function (frame) {
         var video = frame.querySelector('.video-slide__video');
         frame.classList.remove('is-playing');
         if (video) video.pause();
       });
     };
 
-    var lightboxSource = document.getElementById('lightbox-video-source');
-
     var openLightbox = function (src) {
-      pauseAllSlides();
+      pauseAllVideos();
       lightboxSource.src = src;
       lightboxVideo.load();
       lightbox.classList.add('is-open');
@@ -329,12 +336,11 @@
       lightboxVideo.load();
     };
 
-    frames.forEach(function (frame) {
-      var hit = frame.querySelector('.video-slide__hit');
+    document.addEventListener('click', function (e) {
+      var hit = e.target.closest('.video-slide__hit');
       if (!hit) return;
-      hit.addEventListener('click', function () {
-        openLightbox(frame.getAttribute('data-video-src'));
-      });
+      var frame = hit.closest('[data-video-src]');
+      if (frame) openLightbox(frame.getAttribute('data-video-src'));
     });
 
     lightbox.querySelectorAll('[data-lightbox-dismiss]').forEach(function (el) {
@@ -748,6 +754,7 @@
     initIntro();
     initHeroVideo();
     initVideoCarousel();
+    initVideoLightbox();
     initTeamCarousel();
     initJogo();
     initHeader();

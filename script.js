@@ -725,21 +725,40 @@
     var items = document.querySelectorAll('.reveal');
     if (!items.length) return;
 
-    if (!('IntersectionObserver' in window) || reduceMotion) {
-      items.forEach(function (el) { el.classList.add('is-visible'); });
-      return;
-    }
+    /* sem IntersectionObserver ou com prefers-reduced-motion, nem
+       tenta esconder — o conteúdo já está visível por padrão (CSS),
+       então basta não mexer em nada. */
+    if (!('IntersectionObserver' in window) || reduceMotion) return;
 
     var observer = new IntersectionObserver(function (entries, obs) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
+          entry.target.classList.remove('is-hidden');
           entry.target.classList.add('is-visible');
           obs.unobserve(entry.target);
         }
       });
     }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
 
-    items.forEach(function (el) { observer.observe(el); });
+    /* só esconde um item depois que o observer já está pronto pra
+       vigiá-lo — nunca existe um momento em que algo fica
+       escondido sem alguém garantindo que vai revelar de novo. */
+    items.forEach(function (el) {
+      el.classList.add('is-hidden');
+      observer.observe(el);
+    });
+
+    /* rede de segurança: em qualquer navegador/condição estranha
+       onde o observer não dispare pra algum item (viewport
+       atípico, elemento com altura zero no momento da observação
+       etc.), força tudo visível depois de um tempo — nada fica
+       escondido pra sempre. */
+    window.setTimeout(function () {
+      document.querySelectorAll('.reveal.is-hidden').forEach(function (el) {
+        el.classList.remove('is-hidden');
+        el.classList.add('is-visible');
+      });
+    }, 4000);
   }
 
   /* =====================================================
@@ -750,17 +769,29 @@
     if (el) el.textContent = new Date().getFullYear();
   }
 
+  /* cada init roda isolado: um erro em um módulo (seletor que não
+     bate, dado inesperado etc.) não pode travar a cadeia e impedir
+     os próximos de rodar — em especial initReveal(), que é quem
+     faz o conteúdo aparecer. */
+  function safeInit(name, fn) {
+    try {
+      fn();
+    } catch (err) {
+      if (window.console && console.error) console.error('[' + name + ']', err);
+    }
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
-    initIntro();
-    initHeroVideo();
-    initVideoCarousel();
-    initVideoLightbox();
-    initTeamCarousel();
-    initJogo();
-    initHeader();
-    initMobileNav();
-    initScrollSpy();
-    initReveal();
-    initFooterYear();
+    safeInit('initIntro', initIntro);
+    safeInit('initHeroVideo', initHeroVideo);
+    safeInit('initVideoCarousel', initVideoCarousel);
+    safeInit('initVideoLightbox', initVideoLightbox);
+    safeInit('initTeamCarousel', initTeamCarousel);
+    safeInit('initJogo', initJogo);
+    safeInit('initHeader', initHeader);
+    safeInit('initMobileNav', initMobileNav);
+    safeInit('initScrollSpy', initScrollSpy);
+    safeInit('initReveal', initReveal);
+    safeInit('initFooterYear', initFooterYear);
   });
 })();

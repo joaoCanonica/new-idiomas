@@ -40,7 +40,7 @@
 
 /* ---------- reset ---------- */
 *, *::before, *::after { box-sizing: border-box; }
-html, body { height: 100%; }
+html, body { overflow-x: hidden; }
 html { scroll-behavior: smooth; }
 body {
   margin: 0;
@@ -88,11 +88,14 @@ html.intro-lock, html.intro-lock body { overflow: hidden; height: 100%; }
 .section-body { min-height: 1px; }
 
 /* ---------- reveal-on-scroll ---------- */
+/* visível por padrão — o JS só esconde (.is-hidden) um elemento
+   no exato momento em que já garantiu que vai observá-lo pra
+   revelar de novo; se o JS não rodar por qualquer motivo, o
+   conteúdo nunca fica preso em opacity:0. */
 .reveal {
-  opacity: 0;
-  transform: translateY(18px);
   transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
 }
+.reveal.is-hidden { opacity: 0; transform: translateY(18px); }
 .reveal.is-visible { opacity: 1; transform: translateY(0); }
 
 /* =========================================================

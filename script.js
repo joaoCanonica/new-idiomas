@@ -532,6 +532,45 @@
         if (ringMQ.matches) layoutRing();
       }, 150);
     });
+
+    /* ---- setas manuais: giram o anel (desktop) ou rolam a fileira (mobile) ---- */
+    var prevBtn = carousel.querySelector('[data-team-prev]');
+    var nextBtn = carousel.querySelector('[data-team-next]');
+
+    var animateRotationBy = function (delta) {
+      var start = rotation;
+      var startTime = null;
+      var DURATION = 550;
+      var ease = function (t) { return 1 - Math.pow(1 - t, 3); };
+      var frame = function (ts) {
+        if (!startTime) startTime = ts;
+        var t = Math.min(1, (ts - startTime) / DURATION);
+        rotation = start + delta * ease(t);
+        updateRingRotation();
+        if (t < 1) window.requestAnimationFrame(frame);
+      };
+      window.requestAnimationFrame(frame);
+    };
+
+    var teamStep = function () {
+      var card = stage.querySelector('.team-card');
+      if (!card) return 260;
+      var style = getComputedStyle(stage);
+      return card.getBoundingClientRect().width + parseFloat(style.columnGap || style.gap || 0);
+    };
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', function () {
+        if (ringMQ.matches) animateRotationBy(-angleStep);
+        else stage.scrollBy({ left: -teamStep(), behavior: reduceMotion ? 'auto' : 'smooth' });
+      });
+    }
+    if (nextBtn) {
+      nextBtn.addEventListener('click', function () {
+        if (ringMQ.matches) animateRotationBy(angleStep);
+        else stage.scrollBy({ left: teamStep(), behavior: reduceMotion ? 'auto' : 'smooth' });
+      });
+    }
   }
 
   /* =====================================================

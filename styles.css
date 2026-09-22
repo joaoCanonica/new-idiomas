@@ -1113,6 +1113,23 @@ html.no-intro #intro-screen { display: none !important; }
   z-index: 2;
 }
 
+.video-slide__context { padding-top: 0.9rem; }
+
+.video-slide__title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.0625rem;
+  line-height: 1.25;
+  color: var(--ink);
+}
+
+.video-slide__desc {
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--ink-45);
+  margin-top: 0.3rem;
+}
+
 .video-slide__video {
   position: absolute;
   inset: 0;
@@ -1182,7 +1199,8 @@ html.no-intro #intro-screen { display: none !important; }
 .carousel-arrow--next { right: clamp(0.5rem, 2vw, 1.5rem); }
 
 @media (hover: hover) and (pointer: fine) {
-  .video-carousel:hover .carousel-arrow {
+  .video-carousel:hover .carousel-arrow,
+  .team-carousel:hover .carousel-arrow {
     opacity: 1;
     visibility: visible;
   }

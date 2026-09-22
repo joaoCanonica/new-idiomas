@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New Idiomas — Escola de Idiomas</title>
+<meta name="description" content="New Idiomas — escola de idiomas. Inglês, espanhol, italiano e alemão.">
+<link rel="icon" href="logo.jpg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,340;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap">
+
+<link rel="stylesheet" href="styles.css">
+
+<script>
+(function () {
+  var seen = false;
+  try { seen = sessionStorage.getItem('niIntroSeen') === '1'; } catch (e) {}
+  var root = document.documentElement;
+  root.classList.add(seen ? 'no-intro' : 'intro-lock');
+})();
+</script>
+</head>
+<body>
+
+<!-- ======================================================= -->
+<!-- TELA DE ENTRADA (splash, padrão WAXLO — exibida 1x/sessão) -->
+<!-- ======================================================= -->
+<div id="intro-screen" aria-hidden="true">
+  <img class="intro-logo" src="logo-horizontal.png" alt="New Idiomas" width="681" height="211">
+</div>
+
+<!-- ======================================================= -->
+<!-- HEADER / NAV -->
+<!-- ======================================================= -->
+<header id="site-header" class="site-header">
+  <div class="container site-header__inner">
+    <a href="#hero" class="brand">
+      <img src="logo-horizontal.png" alt="New Idiomas" class="brand__logo">
+    </a>
+
+    <nav class="main-nav" id="main-nav">
+      <ul class="main-nav__list">
+        <li><a href="#idiomas">Idiomas</a></li>
+        <li><a href="#metodologia">Metodologia</a></li>
+        <li><a href="#videos">Vídeos</a></li>
+        <li><a href="#equipe">Equipe</a></li>
+        <li><a href="#depoimentos">Depoimentos</a></li>
+        <li><a href="#localizacao">Localização</a></li>
+      </ul>
+    </nav>
+
+    <div class="site-header__actions">
+      <a href="#cta-final" class="btn btn--ghost">Fale conosco</a>
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="Abrir menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main-content">
+
+  <!-- ===================================================== -->
+  <!-- 00 · HERO -->
+  <!-- ===================================================== -->
+  <section id="hero" class="section section--hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow reveal">Método com raiz nos Estados Unidos</span>
+        <h1 class="hero-title reveal">Inglês vivido,<br>não decorado.</h1>
+        <p class="hero-lead reveal">A New nasceu da vivência de quem morou 7 anos nos Estados Unidos e estudou em Harvard — um jeito de ensinar formado fora da sala de aula tradicional, não tirado de apostila.</p>
+        <div class="hero-actions reveal">
+          <a
+            class="btn btn--solid btn--whatsapp"
+            href="https://api.whatsapp.com/send?phone=5549984100055&text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20os%20cursos%20da%20New%20Idiomas."
+            target="_blank"
+            rel="noopener"
+          >
+            <svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path fill="currentColor" d="M17.47 14.38c-.29-.15-1.71-.85-1.98-.94-.27-.1-.46-.15-.66.15-.2.29-.76.94-.93 1.13-.17.2-.34.22-.63.07-.29-.15-1.22-.45-2.32-1.43-.86-.76-1.44-1.71-1.6-2-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.2-.29.29-.49.1-.2.05-.37-.02-.51-.07-.15-.66-1.59-.9-2.18-.24-.57-.48-.5-.66-.5h-.56c-.2 0-.51.07-.78.37-.27.29-1.02 1-1.02 2.43 0 1.43 1.04 2.82 1.19 3.01.15.2 2.05 3.13 4.96 4.39.69.3 1.23.48 1.65.61.69.22 1.32.19 1.82.11.55-.08 1.71-.7 1.96-1.37.24-.68.24-1.26.17-1.38-.07-.13-.27-.2-.56-.35z"/>
+              <path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.87.5 3.62 1.42 5.13L2 22l5.13-1.51a9.9 9.9 0 0 0 4.91 1.3h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm0 18.02h-.01a8.1 8.1 0 0 1-4.12-1.13l-.3-.18-3.05.9.91-2.98-.19-.31a8.08 8.08 0 0 1-1.25-4.4c0-4.46 3.63-8.09 8.1-8.09 2.16 0 4.19.85 5.72 2.38a8.05 8.05 0 0 1 2.37 5.72c0 4.46-3.63 8.09-8.18 8.09z"/>
+            </svg>
+            Falar no WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-media reveal">
+        <video
+          id="hero-video"
+          class="hero-video"
+          muted
+          loop
+          playsinline
+          preload="none"
+          poster="assets/hero-poster.jpg"
+          aria-hidden="true"
+        >
+          <source data-src="videos/mostrando-ambiente.mp4" type="video/mp4">
+        </video>
+        <img class="hero-still" src="assets/hero-poster.jpg" alt="Ambiente da New Idiomas" width="720" height="1280" loading="eager">
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== -->
+  <!-- 01 · IDIOMAS -->
+  <!-- ===================================================== -->
+  <section id="idiomas" class="section">
+    <div class="container section-inner">
+      <header class="section-head">
+        <span class="eyebrow reveal">01</span>
+        <h2 class="section-title reveal">Idiomas</h2>
+      </header>
+      <div class="section-body language-grid reveal">
+        <article class="language-card">
+          <img class="language-card__flag" src="assets/bandeira-eua.png" alt="Bandeira dos Estados Unidos" loading="lazy">
+          <h3 class="language-card__name">Inglês</h3>
+          <p class="language-card__line">Turmas presenciais, online e aulas VIP individuais.</p>
+        </article>
+        <article class="language-card">
+          <img class="language-card__flag" src="assets/bandeira-espanha.png" alt="Bandeira da Espanha" loading="lazy">
+          <h3 class="language-card__name">Espanhol</h3>
+          <p class="language-card__line">Foco em conversação para viagem, trabalho e Enem.</p>
+        </article>
+        <article class="language-card">
+          <img class="language-card__flag" src="assets/bandeira-alemanha.png" alt="Bandeira da Alemanha" loading="lazy">
+          <h3 class="language-card__name">Alemão</h3>
+          <p class="language-card__line">Preparação para intercâmbio e certificações internacionais.</p>
+        </article>
+        <article class="language-card">
+          <img class="language-card__flag" src="assets/bandeira-italia.png" alt="Bandeira da Itália" loading="lazy">
+          <h3 class="language-card__name">Italiano</h3>
+          <p class="language-card__line">Turmas reduzidas, ideais para o processo de cidadania italiana.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== -->
+  <!-- 02 · METODOLOGIA -->
+  <!-- ===================================================== -->
+  <section id="metodologia" class="section section--alt">
+    <div class="container section-inner">
+      <header class="section-head">
+        <span class="eyebrow reveal">02</span>
+        <h2 class="section-title reveal">Metodologia</h2>
+      </header>
+      <div class="section-body reveal">
+        <!-- Conteúdo da seção "Metodologia" entra aqui -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== -->
+  <!-- 03 · VÍDEOS -->
+  <!-- ===================================================== -->
+  <section id="videos" class="section">
+    <div class="container section-inner">
+      <header class="section-head">
+        <span class="eyebrow reveal">03</span>
+        <h2 class="section-title reveal">Vídeos</h2>
+      </header>
+
+      <div class="section-body reveal">
+        <div class="video-carousel" id="video-carousel">
+          <button type="button" class="carousel-arrow carousel-arrow--prev" data-carousel-prev aria-label="Vídeo anterior">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" d="M15 5l-7 7 7 7"/></svg>
+          </button>
+
+          <ul class="video-carousel__track" id="video-track">
+            <li class="video-slide" data-video-title="Mito ou verdade">
+              <div class="video-slide__frame" data-video-src="videos/Mito-ou-verdade.mp4">
+                <video class="video-slide__video" muted loop playsinline preload="none" poster="assets/video-posters/mito-ou-verdade.jpg" aria-hidden="true">
+                  <source data-src="videos/Mito-ou-verdade.mp4" type="video/mp4">
+                </video>
+                <span class="video-slide__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M8 5v14l11-7z"/></svg></span>
+                <button type="button" class="video-slide__hit" aria-label="Assistir: Mito ou verdade"></button>
+              </div>
+            </li>
+            <li class="video-slide" data-video-title="Aprender um novo idioma demora?">
+              <div class="video-slide__frame" data-video-src="videos/aprender-novo-idioma-demora.mp4">
+                <video class="video-slide__video" muted loop playsinline preload="none" poster="assets/video-posters/aprender-novo-idioma-demora.jpg" aria-hidden="true">
+                  <source data-src="videos/aprender-novo-idioma-demora.mp4" type="video/mp4">
+                </video>
+                <span class="video-slide__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M8 5v14l11-7z"/></svg></span>
+                <button type="button" class="video-slide__hit" aria-label="Assistir: Aprender um novo idioma demora?"></button>
+              </div>
+            </li>
+            <li class="video-slide" data-video-title="Aprender um novo idioma demora? — parte 2">
+              <div class="video-slide__frame" data-video-src="videos/aprender-novo-idioma-demora2.mp4">
+                <video class="video-slide__video" muted loop playsinline preload="none" poster="assets/video-posters/aprender-novo-idioma-demora2.jpg" aria-hidden="true">
+                  <source data-src="videos/aprender-novo-idioma-demora2.mp4" type="video/mp4">
+                </video>
+                <span class="video-slide__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M8 5v14l11-7z"/></svg></span>
+                <button type="button" class="video-slide__hit" aria-label="Assistir: Aprender um novo idioma demora? parte 2"></button>
+              </div>
+            </li>
+            <li class="video-slide" data-video-title="Travando ao aprender inglês">
+              <div class="video-slide__frame" data-video-src="videos/travando-aprendendo-ingles.mp4">
+                <video class="video-slide__video" muted loop playsinline preload="none" poster="assets/video-posters/travando-aprendendo-ingles.jpg" aria-hidden="true">
+                  <source data-src="videos/travando-aprendendo-ingles.mp4" type="video/mp4">
+                </video>
+                <span class="video-slide__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M8 5v14l11-7z"/></svg></span>
+                <button type="button" class="video-slide__hit" aria-label="Assistir: Travando ao aprender inglês"></button>
+              </div>
+            </li>
+            <li class="video-slide" data-video-title="Passaria numa entrevista de emprego em espanhol?">
+              <div class="video-slide__frame" data-video-src="videos/passaria-entrevista-emprego-espanhol.mp4">
+                <video class="video-slide__video" muted loop playsinline preload="none" poster="assets/video-posters/passaria-entrevista-emprego-espanhol.jpg" aria-hidden="true">
+                  <source data-src="videos/passaria-entrevista-emprego-espanhol.mp4" type="video/mp4">
+                </video>
+                <span class="video-slide__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M8 5v14l11-7z"/></svg></span>
+                <button type="button" class="video-slide__hit" aria-label="Assistir: Passaria numa entrevista de emprego em espanhol?"></button>
+              </div>
+            </li>
+            <li class="video-slide" data-video-title="Curso de italiano">
+              <div class="video-slide__frame" data-video-src="videos/curso-italiano.mp4">
+                <video class="video-slide__video" muted loop playsinline preload="none" poster="assets/video-posters/curso-italiano.jpg" aria-hidden="true">
+                  <source data-src="videos/curso-italiano.mp4" type="video/mp4">
+                </video>
+                <span class="video-slide__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M8 5v14l11-7z"/></svg></span>
+                <button type="button" class="video-slide__hit" aria-label="Assistir: Curso de italiano"></button>
+              </div>
+            </li>
+            <li class="video-slide" data-video-title="Relato de aluna">
+              <div class="video-slide__frame" data-video-src="videos/relato-aluna.mp4">
+                <video class="video-slide__video" muted loop playsinline preload="none" poster="assets/video-posters/relato-aluna.jpg" aria-hidden="true">
+                  <source data-src="videos/relato-aluna.mp4" type="video/mp4">
+                </video>
+                <span class="video-slide__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M8 5v14l11-7z"/></svg></span>
+                <button type="button" class="video-slide__hit" aria-label="Assistir: Relato de aluna"></button>
+              </div>
+            </li>
+          </ul>
+
+          <button type="button" class="carousel-arrow carousel-arrow--next" data-carousel-next aria-label="Próximo vídeo">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== -->
+  <!-- 04 · EQUIPE -->
+  <!-- ===================================================== -->
+  <section id="equipe" class="section section--alt">
+    <div class="container section-inner">
+      <header class="section-head">
+        <span class="eyebrow reveal">04</span>
+        <h2 class="section-title reveal">Equipe</h2>
+      </header>
+      <div class="section-body reveal">
+        <p class="team-hint">Passe o mouse ou toque em um card para ler a bio.</p>
+        <div class="team-carousel" id="team-carousel">
+          <div class="team-carousel__stage" id="team-stage" role="list" aria-label="Equipe da New Idiomas"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== -->
+  <!-- 05 · DEPOIMENTOS -->
+  <!-- ===================================================== -->
+  <section id="depoimentos" class="section">
+    <div class="container section-inner">
+      <header class="section-head">
+        <span class="eyebrow reveal">05</span>
+        <h2 class="section-title reveal">Depoimentos</h2>
+      </header>
+      <div class="section-body reveal">
+        <!-- Conteúdo da seção "Depoimentos" entra aqui -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== -->
+  <!-- 06 · LOCALIZAÇÃO -->
+  <!-- ===================================================== -->
+  <section id="localizacao" class="section section--alt">
+    <div class="container section-inner">
+      <header class="section-head">
+        <span class="eyebrow reveal">06</span>
+        <h2 class="section-title reveal">Localização</h2>
+      </header>
+      <div class="section-body location-grid reveal">
+        <div class="location-info">
+          <address class="location-address">
+            R. Caetano Vieira da Costa, 190 — Centro<br>
+            Lages – SC, 88502-070
+          </address>
+
+          <dl class="location-hours">
+            <div class="location-hours__row">
+              <dt>Seg – Sex</dt>
+              <dd>8h às 22h</dd>
+            </div>
+            <div class="location-hours__row">
+              <dt>Sábado</dt>
+              <dd>8h às 12h</dd>
+            </div>
+          </dl>
+
+          <div class="location-actions">
+            <a
+              class="btn btn--solid btn--whatsapp"
+              href="https://api.whatsapp.com/send?phone=5549984100055&text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es."
+              target="_blank"
+              rel="noopener"
+            >
+              <svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path fill="currentColor" d="M17.47 14.38c-.29-.15-1.71-.85-1.98-.94-.27-.1-.46-.15-.66.15-.2.29-.76.94-.93 1.13-.17.2-.34.22-.63.07-.29-.15-1.22-.45-2.32-1.43-.86-.76-1.44-1.71-1.6-2-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.2-.29.29-.49.1-.2.05-.37-.02-.51-.07-.15-.66-1.59-.9-2.18-.24-.57-.48-.5-.66-.5h-.56c-.2 0-.51.07-.78.37-.27.29-1.02 1-1.02 2.43 0 1.43 1.04 2.82 1.19 3.01.15.2 2.05 3.13 4.96 4.39.69.3 1.23.48 1.65.61.69.22 1.32.19 1.82.11.55-.08 1.71-.7 1.96-1.37.24-.68.24-1.26.17-1.38-.07-.13-.27-.2-.56-.35z"/>
+                <path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.87.5 3.62 1.42 5.13L2 22l5.13-1.51a9.9 9.9 0 0 0 4.91 1.3h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm0 18.02h-.01a8.1 8.1 0 0 1-4.12-1.13l-.3-.18-3.05.9.91-2.98-.19-.31a8.08 8.08 0 0 1-1.25-4.4c0-4.46 3.63-8.09 8.1-8.09 2.16 0 4.19.85 5.72 2.38a8.05 8.05 0 0 1 2.37 5.72c0 4.46-3.63 8.09-8.18 8.09z"/>
+              </svg>
+              Falar no WhatsApp
+            </a>
+            <a
+              class="btn btn--ghost"
+              href="https://www.google.com/maps?q=R.+Caetano+Vieira+da+Costa,+190,+Centro,+Lages+-+SC,+88502-070"
+              target="_blank"
+              rel="noopener"
+            >
+              Ver rota no mapa
+            </a>
+          </div>
+        </div>
+
+        <div class="location-map">
+          <iframe
+            src="https://www.google.com/maps?q=R.+Caetano+Vieira+da+Costa,+190,+Centro,+Lages+-+SC,+88502-070&output=embed"
+            title="Mapa — New Idiomas, R. Caetano Vieira da Costa, 190, Centro, Lages-SC"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== -->
+  <!-- 07 · CTA FINAL -->
+  <!-- ===================================================== -->
+  <section id="cta-final" class="section section--cta">
+    <div class="container section-inner">
+      <div class="cta-final__body">
+        <span class="eyebrow reveal">Matrícula aberta</span>
+        <h2 class="cta-final__title reveal">Comece a viver o idioma,<br>não a decorá-lo.</h2>
+        <p class="cta-final__lead reveal">Turmas de inglês, espanhol, alemão e italiano em Lages — presenciais, online ou em aulas VIP. Fale com a gente e encontre o horário certo pra você.</p>
+        <a
+          class="btn btn--solid btn--whatsapp cta-final__btn reveal"
+          href="https://api.whatsapp.com/send?phone=5549984100055&text=Ol%C3%A1!%20Quero%20fazer%20minha%20matr%C3%ADcula%20na%20New%20Idiomas."
+          target="_blank"
+          rel="noopener"
+        >
+          <svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path fill="currentColor" d="M17.47 14.38c-.29-.15-1.71-.85-1.98-.94-.27-.1-.46-.15-.66.15-.2.29-.76.94-.93 1.13-.17.2-.34.22-.63.07-.29-.15-1.22-.45-2.32-1.43-.86-.76-1.44-1.71-1.6-2-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.2-.29.29-.49.1-.2.05-.37-.02-.51-.07-.15-.66-1.59-.9-2.18-.24-.57-.48-.5-.66-.5h-.56c-.2 0-.51.07-.78.37-.27.29-1.02 1-1.02 2.43 0 1.43 1.04 2.82 1.19 3.01.15.2 2.05 3.13 4.96 4.39.69.3 1.23.48 1.65.61.69.22 1.32.19 1.82.11.55-.08 1.71-.7 1.96-1.37.24-.68.24-1.26.17-1.38-.07-.13-.27-.2-.56-.35z"/>
+            <path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.87.5 3.62 1.42 5.13L2 22l5.13-1.51a9.9 9.9 0 0 0 4.91 1.3h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm0 18.02h-.01a8.1 8.1 0 0 1-4.12-1.13l-.3-.18-3.05.9.91-2.98-.19-.31a8.08 8.08 0 0 1-1.25-4.4c0-4.46 3.63-8.09 8.1-8.09 2.16 0 4.19.85 5.72 2.38a8.05 8.05 0 0 1 2.37 5.72c0 4.46-3.63 8.09-8.18 8.09z"/>
+          </svg>
+          Fazer minha matrícula
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <img src="logo-horizontal.png" alt="New Idiomas" class="site-footer__logo">
+    <p class="site-footer__copy">&copy; <span id="year"></span> New Idiomas. Todos os direitos reservados.</p>
+  </div>
+</footer>
+
+<div class="video-lightbox" id="video-lightbox" aria-hidden="true">
+  <div class="video-lightbox__backdrop" data-lightbox-dismiss></div>
+  <div class="video-lightbox__panel" role="dialog" aria-modal="true" aria-label="Vídeo ampliado">
+    <button type="button" class="video-lightbox__close" data-lightbox-dismiss aria-label="Fechar vídeo">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <video class="video-lightbox__video" id="lightbox-video" controls playsinline>
+      <source id="lightbox-video-source" type="video/mp4">
+    </video>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New Idiomas — Escola de Idiomas</title>
+<meta name="description" content="New Idiomas — escola de idiomas. Inglês, espanhol, italiano e alemão.">
+<link rel="icon" href="logo.jpg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,340;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap">
+
+<link rel="stylesheet" href="styles.css">
+
+<script>
+(function () {
+  var seen = false;
+  try { seen = sessionStorage.getItem('niIntroSeen') === '1'; } catch (e) {}
+  var root = document.documentElement;
+  root.classList.add(seen ? 'no-intro' : 'intro-lock');
+})();
+</script>
+</head>
+<body>
+
+<!-- ======================================================= -->
+<!-- TELA DE ENTRADA (splash, padrão WAXLO — exibida 1x/sessão) -->
+<!-- ======================================================= -->
+<div id="intro-screen" aria-hidden="true">
+  <img class="intro-logo" src="logo-horizontal.png" alt="New Idiomas" width="681" height="211">
+</div>
+
+<!-- ======================================================= -->
+<!-- HEADER / NAV -->
+<!-- ======================================================= -->
+<header id="site-header" class="site-header">
+  <div class="container site-header__inner">
+    <a href="#hero" class="brand">
+      <img src="logo-horizontal.png" alt="New Idiomas" class="brand__logo">
+    </a>
+
+    <nav class="main-nav" id="main-nav">
+      <ul class="main-nav__list">
+        <li><a href="#idiomas">Idiomas</a></li>
+        <li><a href="#metodologia">Metodologia</a></li>
+        <li><a href="#videos">Vídeos</a></li>
+        <li><a href="#equipe">Equipe</a></li>
+        <li><a href="#depoimentos">Depoimentos</a></li>
+        <li><a href="#localizacao">Localização</a></li>
+      </ul>
+    </nav>
+
+    <div class="site-header__actions">
+      <a href="#cta-final" class="btn btn--ghost">Fale conosco</a>
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="Abrir menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main-content">
+
+  <!-- ===================================================== -->
+  <!-- 00 · HERO -->
+  <!-- ===================================================== -->
+  <section id="hero" class="section section--hero">
+    <div class="container section--hero__inner">
+      <span class="eyebrow reveal">Escola de idiomas</span>
+      <h1 class="hero-title reveal">New Idiomas</h1>
+      <div class="section-body section-body--hero reveal">
+        <!-- Conteúdo do Hero (subtítulo, CTA, imagem editorial) entra aqui -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== -->
+  <!-- 01 · IDIOMAS -->
+  <!-- ===================================================== -->
+  <section id="idiomas" class="section">
+    <div class="container section-inner">
+      <header class="section-head">
+        <span class="eyebrow reveal">01</span>
+        <h2 class="section-title reveal">Idiomas</h2>
+      </header>
+      <div class="section-body reveal">
+        <!-- Conteúdo da seção "Idiomas" entra aqui -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== -->
+  <!-- 02 · METODOLOGIA -->
+  <!-- ===================================================== -->
+  <section id="metodologia" class="section section--alt">
+    <div class="container section-inner">
+      <header class="section-head">
+        <span class="eyebrow reveal">02</span>
+        <h2 class="section-title reveal">Metodologia</h2>
+      </header>
+      <div class="section-body reveal">
+        <!-- Conteúdo da seção "Metodologia" entra aqui -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== -->
+  <!-- 03 · VÍDEOS -->
+  <!-- ===================================================== -->
+  <section id="videos" class="section">
+    <div class="container section-inner">
+      <header class="section-head">
+        <span class="eyebrow reveal">03</span>
+        <h2 class="section-title reveal">Vídeos</h2>
+      </header>
+      <div class="section-body reveal">
+        <!-- Conteúdo da seção "Vídeos" entra aqui -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== -->
+  <!-- 04 · EQUIPE -->
+  <!-- ===================================================== -->
+  <section id="equipe" class="section section--alt">
+    <div class="container section-inner">
+      <header class="section-head">
+        <span class="eyebrow reveal">04</span>
+        <h2 class="section-title reveal">Equipe</h2>
+      </header>
+      <div class="section-body reveal">
+        <!-- Conteúdo da seção "Equipe" entra aqui -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== -->
+  <!-- 05 · DEPOIMENTOS -->
+  <!-- ===================================================== -->
+  <section id="depoimentos" class="section">
+    <div class="container section-inner">
+      <header class="section-head">
+        <span class="eyebrow reveal">05</span>
+        <h2 class="section-title reveal">Depoimentos</h2>
+      </header>
+      <div class="section-body reveal">
+        <!-- Conteúdo da seção "Depoimentos" entra aqui -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== -->
+  <!-- 06 · LOCALIZAÇÃO -->
+  <!-- ===================================================== -->
+  <section id="localizacao" class="section section--alt">
+    <div class="container section-inner">
+      <header class="section-head">
+        <span class="eyebrow reveal">06</span>
+        <h2 class="section-title reveal">Localização</h2>
+      </header>
+      <div class="section-body reveal">
+        <!-- Conteúdo da seção "Localização" entra aqui -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== -->
+  <!-- 07 · CTA FINAL -->
+  <!-- ===================================================== -->
+  <section id="cta-final" class="section section--cta">
+    <div class="container section-inner">
+      <header class="section-head">
+        <span class="eyebrow reveal">07</span>
+        <h2 class="section-title reveal">CTA final</h2>
+      </header>
+      <div class="section-body reveal">
+        <!-- Conteúdo do CTA final entra aqui -->
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <img src="logo-horizontal.png" alt="New Idiomas" class="site-footer__logo">
+    <p class="site-footer__copy">&copy; <span id="year"></span> New Idiomas. Todos os direitos reservados.</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

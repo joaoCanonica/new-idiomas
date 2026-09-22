@@ -410,48 +410,22 @@ html.no-intro #intro-screen { display: none !important; }
 
 @media (max-width: 860px) {
   .hero-grid { grid-template-columns: 1fr; }
-  .section--hero { padding-top: 0; padding-bottom: 2.5rem; min-height: 0; align-items: flex-start; }
+  .section--hero { padding-top: 5.5rem; }
 
-  /* a foto de origem é vertical (still de story) — force-la num
-     recorte bem largo cortava o letreiro "NEW IDIOMAS" e sobrava
-     só céu. Aqui ela fica quase no enquadramento nativo, sangrando
-     até a borda da tela (sem moldura/cartão) e com um degradê que
-     dissolve direto no branco da página — não é mais uma "caixa"
-     de imagem, é a abertura do site. */
+  /* texto primeiro, vídeo/foto como cartão arredondado logo
+     abaixo, bandeiras em seguida — vídeo em tela cheia no topo
+     não funcionava no celular. A foto de origem é um still
+     vertical (9:16); um recorte mais próximo do formato nativo
+     (em vez de 16:11) evita sobrar céu e cortar o letreiro. */
   .hero-media {
     justify-self: stretch;
     max-width: none;
-    width: calc(100% + var(--side-pad) * 2);
-    margin-inline: calc(-1 * var(--side-pad));
-    margin-top: 0;
-    aspect-ratio: 4 / 5;
-    border-radius: 0;
-    box-shadow: none;
-    order: -1;
-  }
-  .hero-media::before {
-    content: '';
-    position: absolute;
-    z-index: 2;
-    inset: auto 0 0 0;
-    height: 55%;
-    background: linear-gradient(to top, var(--bg) 12%, rgba(255, 255, 255, 0) 100%);
-    pointer-events: none;
-  }
-  .hero-media::after {
-    content: '';
-    position: absolute;
-    z-index: 2;
-    inset: 0 0 auto 0;
-    height: 40%;
-    background: linear-gradient(to bottom, rgba(23, 19, 15, 0.28), rgba(23, 19, 15, 0));
-    pointer-events: none;
+    aspect-ratio: 4 / 3;
   }
   .hero-video,
   .hero-still {
-    object-position: center 30%;
+    object-position: center 28%;
   }
-  .hero-copy { padding-top: 1.75rem; }
 }
 
 /* =========================================================

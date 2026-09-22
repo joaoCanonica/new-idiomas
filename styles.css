@@ -745,9 +745,6 @@ html.no-intro #intro-screen { display: none !important; }
 /* =========================================================
    JOGO — desafio de 8 perguntas, dificuldade crescente
    ========================================================= */
-.section--jogo {
-  background: var(--bordo-tint);
-}
 
 .jogo-head {
   display: flex;

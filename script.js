@@ -45,6 +45,40 @@
   }
 
   /* =====================================================
+     HERO VIDEO — só carrega em telas maiores; mobile fica
+     no still (economia de dados)
+     ===================================================== */
+  function initHeroVideo() {
+    var video = document.getElementById('hero-video');
+    if (!video) return;
+
+    var source = video.querySelector('source');
+    var saveData = !!(navigator.connection && navigator.connection.saveData);
+    var mq = window.matchMedia('(min-width: 860px)');
+
+    var shouldPlay = function () {
+      return mq.matches && !reduceMotion && !saveData;
+    };
+
+    var apply = function () {
+      if (shouldPlay()) {
+        if (!video.dataset.loaded) {
+          source.src = source.dataset.src;
+          video.load();
+          video.dataset.loaded = '1';
+        }
+        video.play().catch(function () {});
+      } else if (video.dataset.loaded) {
+        video.pause();
+      }
+    };
+
+    apply();
+    if (mq.addEventListener) mq.addEventListener('change', apply);
+    else mq.addListener(apply);
+  }
+
+  /* =====================================================
      HEADER — estado sólido ao rolar
      ===================================================== */
   function initHeader() {
@@ -143,6 +177,7 @@
 
   document.addEventListener('DOMContentLoaded', function () {
     initIntro();
+    initHeroVideo();
     initHeader();
     initMobileNav();
     initScrollSpy();

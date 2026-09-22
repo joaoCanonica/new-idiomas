@@ -67,11 +67,41 @@
   <!-- 00 · HERO -->
   <!-- ===================================================== -->
   <section id="hero" class="section section--hero">
-    <div class="container section--hero__inner">
-      <span class="eyebrow reveal">Escola de idiomas</span>
-      <h1 class="hero-title reveal">New Idiomas</h1>
-      <div class="section-body section-body--hero reveal">
-        <!-- Conteúdo do Hero (subtítulo, CTA, imagem editorial) entra aqui -->
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow reveal">Método com raiz nos Estados Unidos</span>
+        <h1 class="hero-title reveal">Inglês vivido,<br>não decorado.</h1>
+        <p class="hero-lead reveal">A New nasceu da vivência de quem morou 7 anos nos Estados Unidos e estudou em Harvard — um jeito de ensinar formado fora da sala de aula tradicional, não tirado de apostila.</p>
+        <div class="hero-actions reveal">
+          <a
+            class="btn btn--solid btn--whatsapp"
+            href="https://api.whatsapp.com/send?phone=5549984100055&text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20os%20cursos%20da%20New%20Idiomas."
+            target="_blank"
+            rel="noopener"
+          >
+            <svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path fill="currentColor" d="M17.47 14.38c-.29-.15-1.71-.85-1.98-.94-.27-.1-.46-.15-.66.15-.2.29-.76.94-.93 1.13-.17.2-.34.22-.63.07-.29-.15-1.22-.45-2.32-1.43-.86-.76-1.44-1.71-1.6-2-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.2-.29.29-.49.1-.2.05-.37-.02-.51-.07-.15-.66-1.59-.9-2.18-.24-.57-.48-.5-.66-.5h-.56c-.2 0-.51.07-.78.37-.27.29-1.02 1-1.02 2.43 0 1.43 1.04 2.82 1.19 3.01.15.2 2.05 3.13 4.96 4.39.69.3 1.23.48 1.65.61.69.22 1.32.19 1.82.11.55-.08 1.71-.7 1.96-1.37.24-.68.24-1.26.17-1.38-.07-.13-.27-.2-.56-.35z"/>
+              <path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.87.5 3.62 1.42 5.13L2 22l5.13-1.51a9.9 9.9 0 0 0 4.91 1.3h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm0 18.02h-.01a8.1 8.1 0 0 1-4.12-1.13l-.3-.18-3.05.9.91-2.98-.19-.31a8.08 8.08 0 0 1-1.25-4.4c0-4.46 3.63-8.09 8.1-8.09 2.16 0 4.19.85 5.72 2.38a8.05 8.05 0 0 1 2.37 5.72c0 4.46-3.63 8.09-8.18 8.09z"/>
+            </svg>
+            Falar no WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-media reveal">
+        <video
+          id="hero-video"
+          class="hero-video"
+          muted
+          loop
+          playsinline
+          preload="none"
+          poster="assets/hero-poster.jpg"
+          aria-hidden="true"
+        >
+          <source data-src="videos/mostrando-ambiente.mp4" type="video/mp4">
+        </video>
+        <img class="hero-still" src="assets/hero-poster.jpg" alt="Ambiente da New Idiomas" width="720" height="1280" loading="eager">
       </div>
     </div>
   </section>
@@ -85,8 +115,27 @@
         <span class="eyebrow reveal">01</span>
         <h2 class="section-title reveal">Idiomas</h2>
       </header>
-      <div class="section-body reveal">
-        <!-- Conteúdo da seção "Idiomas" entra aqui -->
+      <div class="section-body language-grid reveal">
+        <article class="language-card">
+          <img class="language-card__flag" src="assets/bandeira-eua.png" alt="Bandeira dos Estados Unidos" loading="lazy">
+          <h3 class="language-card__name">Inglês</h3>
+          <p class="language-card__line">Turmas presenciais, online e aulas VIP individuais.</p>
+        </article>
+        <article class="language-card">
+          <img class="language-card__flag" src="assets/bandeira-espanha.png" alt="Bandeira da Espanha" loading="lazy">
+          <h3 class="language-card__name">Espanhol</h3>
+          <p class="language-card__line">Foco em conversação para viagem, trabalho e Enem.</p>
+        </article>
+        <article class="language-card">
+          <img class="language-card__flag" src="assets/bandeira-alemanha.png" alt="Bandeira da Alemanha" loading="lazy">
+          <h3 class="language-card__name">Alemão</h3>
+          <p class="language-card__line">Preparação para intercâmbio e certificações internacionais.</p>
+        </article>
+        <article class="language-card">
+          <img class="language-card__flag" src="assets/bandeira-italia.png" alt="Bandeira da Itália" loading="lazy">
+          <h3 class="language-card__name">Italiano</h3>
+          <p class="language-card__line">Turmas reduzidas, ideais para o processo de cidadania italiana.</p>
+        </article>
       </div>
     </div>
   </section>

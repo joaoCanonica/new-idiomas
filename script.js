@@ -343,15 +343,6 @@
       if (frame) openLightbox(frame.getAttribute('data-video-src'));
     });
 
-    /* vídeo de depoimento em destaque (fora do carrossel) usa o mesmo lightbox */
-    document.querySelectorAll('.testimonial-video__frame').forEach(function (frame) {
-      var hit = frame.querySelector('.video-slide__hit');
-      if (!hit) return;
-      hit.addEventListener('click', function () {
-        openLightbox(frame.getAttribute('data-video-src'));
-      });
-    });
-
     lightbox.querySelectorAll('[data-lightbox-dismiss]').forEach(function (el) {
       el.addEventListener('click', closeLightbox);
     });
@@ -453,44 +444,6 @@
     carousel.addEventListener('mouseenter', function () { isHovering = true; });
     carousel.addEventListener('mouseleave', function () { isHovering = false; });
 
-    /* ---- setas manuais: giram o anel (desktop) ou rolam a fileira (mobile) ---- */
-    var prevBtn = carousel.querySelector('[data-team-prev]');
-    var nextBtn = carousel.querySelector('[data-team-next]');
-
-    var animateRotationBy = function (delta) {
-      var start = rotation;
-      var startTime = null;
-      var DURATION = 550;
-      var ease = function (t) { return 1 - Math.pow(1 - t, 3); };
-      var frame = function (ts) {
-        if (!startTime) startTime = ts;
-        var t = Math.min(1, (ts - startTime) / DURATION);
-        rotation = start + delta * ease(t);
-        updateRingRotation();
-        if (t < 1) window.requestAnimationFrame(frame);
-      };
-      window.requestAnimationFrame(frame);
-    };
-
-    var teamStep = function () {
-      var card = stage.querySelector('.team-card');
-      if (!card) return 260;
-      var style = getComputedStyle(stage);
-      return card.getBoundingClientRect().width + parseFloat(style.columnGap || style.gap || 0);
-    };
-
-    var goPrev = function () {
-      if (ringMQ.matches) animateRotationBy(-angleStep);
-      else stage.scrollBy({ left: -teamStep(), behavior: reduceMotion ? 'auto' : 'smooth' });
-    };
-    var goNext = function () {
-      if (ringMQ.matches) animateRotationBy(angleStep);
-      else stage.scrollBy({ left: teamStep(), behavior: reduceMotion ? 'auto' : 'smooth' });
-    };
-
-    if (prevBtn) prevBtn.addEventListener('click', goPrev);
-    if (nextBtn) nextBtn.addEventListener('click', goNext);
-
     /* ---- posicionamento do anel 3D ---- */
     var computeRadius = function () {
       var w = carousel.clientWidth || 900;
@@ -579,6 +532,45 @@
         if (ringMQ.matches) layoutRing();
       }, 150);
     });
+
+    /* ---- setas manuais: giram o anel (desktop) ou rolam a fileira (mobile) ---- */
+    var prevBtn = carousel.querySelector('[data-team-prev]');
+    var nextBtn = carousel.querySelector('[data-team-next]');
+
+    var animateRotationBy = function (delta) {
+      var start = rotation;
+      var startTime = null;
+      var DURATION = 550;
+      var ease = function (t) { return 1 - Math.pow(1 - t, 3); };
+      var frame = function (ts) {
+        if (!startTime) startTime = ts;
+        var t = Math.min(1, (ts - startTime) / DURATION);
+        rotation = start + delta * ease(t);
+        updateRingRotation();
+        if (t < 1) window.requestAnimationFrame(frame);
+      };
+      window.requestAnimationFrame(frame);
+    };
+
+    var teamStep = function () {
+      var card = stage.querySelector('.team-card');
+      if (!card) return 260;
+      var style = getComputedStyle(stage);
+      return card.getBoundingClientRect().width + parseFloat(style.columnGap || style.gap || 0);
+    };
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', function () {
+        if (ringMQ.matches) animateRotationBy(-angleStep);
+        else stage.scrollBy({ left: -teamStep(), behavior: reduceMotion ? 'auto' : 'smooth' });
+      });
+    }
+    if (nextBtn) {
+      nextBtn.addEventListener('click', function () {
+        if (ringMQ.matches) animateRotationBy(angleStep);
+        else stage.scrollBy({ left: teamStep(), behavior: reduceMotion ? 'auto' : 'smooth' });
+      });
+    }
   }
 
   /* =====================================================
@@ -772,177 +764,40 @@
     var items = document.querySelectorAll('.reveal');
     if (!items.length) return;
 
-    if (!('IntersectionObserver' in window) || reduceMotion) {
-      items.forEach(function (el) { el.classList.add('is-visible'); });
-      return;
-    }
+    /* sem IntersectionObserver ou com prefers-reduced-motion, nem
+       tenta esconder — o conteúdo já está visível por padrão (CSS),
+       então basta não mexer em nada. */
+    if (!('IntersectionObserver' in window) || reduceMotion) return;
 
     var observer = new IntersectionObserver(function (entries, obs) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
+          entry.target.classList.remove('is-hidden');
           entry.target.classList.add('is-visible');
           obs.unobserve(entry.target);
         }
       });
     }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
 
-    items.forEach(function (el) { observer.observe(el); });
-  }
-
-  /* =====================================================
-     TESTE DE NÍVEL — questionário por idioma, com bandeiras
-     ===================================================== */
-  var quizData = {
-    ingles: {
-      label: 'Inglês',
-      questions: [
-        { prompt: 'Complete: I ___ from Brazil.', options: ['am', 'is', 'are'], correct: 0 },
-        { prompt: "Qual é o plural de 'child'?", options: ['childs', 'children', 'childes'], correct: 1 },
-        { prompt: 'Yesterday I ___ to the market.', options: ['go', 'went', 'goes'], correct: 1 },
-        { prompt: "Como se diz 'Eu gostaria de um café' em inglês?", options: ['I like a coffee', 'I would like a coffee', 'I liked a coffee'], correct: 1 },
-        { prompt: "'She is taller than her brother' usa qual estrutura?", options: ['Superlativo', 'Comparativo', 'Presente contínuo'], correct: 1 }
-      ]
-    },
-    espanhol: {
-      label: 'Espanhol',
-      questions: [
-        { prompt: 'Completa: Yo ___ estudiante.', options: ['soy', 'es', 'eres'], correct: 0 },
-        { prompt: "¿Cuál es el plural de 'el lápiz'?", options: ['los lápizes', 'los lápices', 'los lápiz'], correct: 1 },
-        { prompt: "Traduza: 'Eu vou ao mercado'", options: ['Yo voy al mercado', 'Yo va al mercado', 'Yo vas al mercado'], correct: 0 },
-        { prompt: 'Como se diz "Bom dia" em espanhol?', options: ['Buenas noches', 'Buenos días', 'Buenas tardes'], correct: 1 },
-        { prompt: "'Más alto que' é uma estrutura de:", options: ['Superlativo', 'Comparativo', 'Presente'], correct: 1 }
-      ]
-    },
-    alemao: {
-      label: 'Alemão',
-      questions: [
-        { prompt: 'Ergänze: Ich ___ Student.', options: ['bin', 'ist', 'sind'], correct: 0 },
-        { prompt: "Qual é o artigo correto de 'Haus' (casa)?", options: ['der', 'die', 'das'], correct: 2 },
-        { prompt: 'Como se diz "obrigado" em alemão?', options: ['Bitte', 'Danke', 'Tschüss'], correct: 1 },
-        { prompt: "O que significa 'Guten Morgen'?", options: ['Boa noite', 'Bom dia', 'Boa tarde'], correct: 1 },
-        { prompt: "'Wie ___ du?' (qual é o seu nome?)", options: ['heißt', 'heißen', 'heiße'], correct: 0 }
-      ]
-    },
-    italiano: {
-      label: 'Italiano',
-      questions: [
-        { prompt: 'Completa: Io ___ italiano.', options: ['sono', 'è', 'sei'], correct: 0 },
-        { prompt: 'Como se diz "obrigado" em italiano?', options: ['Prego', 'Grazie', 'Scusa'], correct: 1 },
-        { prompt: "'Buongiorno' significa:", options: ['Boa noite', 'Bom dia', 'Até logo'], correct: 1 },
-        { prompt: "Qual é o plural de 'il libro' (o livro)?", options: ['i libri', 'le libri', 'i libro'], correct: 0 },
-        { prompt: "Como se diz 'Eu gostaria de um café' em italiano?", options: ['Vorrei un caffè', 'Voglio un caffè', 'Ho un caffè'], correct: 0 }
-      ]
-    }
-  };
-
-  function initQuiz() {
-    var root = document.getElementById('language-quiz');
-    if (!root) return;
-
-    var langBlock = document.getElementById('quiz-langs');
-    var questionBlock = document.getElementById('quiz-question');
-    var resultBlock = document.getElementById('quiz-result');
-    var progressFill = document.getElementById('quiz-progress-fill');
-    var countEl = document.getElementById('quiz-count');
-    var promptEl = document.getElementById('quiz-prompt');
-    var optionsEl = document.getElementById('quiz-options');
-    var resultTitle = document.getElementById('quiz-result-title');
-    var resultText = document.getElementById('quiz-result-text');
-    var resultCta = document.getElementById('quiz-result-cta');
-    var retryBtn = document.getElementById('quiz-retry');
-    if (!langBlock || !questionBlock || !resultBlock) return;
-
-    var currentLang = null;
-    var currentIndex = 0;
-    var score = 0;
-    var answering = false;
-
-    var showQuestion = function () {
-      var set = quizData[currentLang];
-      var q = set.questions[currentIndex];
-      countEl.textContent = 'Pergunta ' + (currentIndex + 1) + ' de ' + set.questions.length + ' · ' + set.label;
-      promptEl.textContent = q.prompt;
-      progressFill.style.width = (currentIndex / set.questions.length * 100) + '%';
-      optionsEl.innerHTML = '';
-      answering = false;
-
-      q.options.forEach(function (opt, i) {
-        var btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = 'quiz__option';
-        btn.textContent = opt;
-        btn.addEventListener('click', function () { selectOption(i, btn); });
-        optionsEl.appendChild(btn);
-      });
-    };
-
-    var showResult = function () {
-      progressFill.style.width = '100%';
-      questionBlock.hidden = true;
-      resultBlock.hidden = false;
-
-      var set = quizData[currentLang];
-      var pct = score / set.questions.length;
-      var title, text;
-
-      if (pct >= 0.8) {
-        title = 'Você já manda bem!';
-        text = 'Acertou ' + score + ' de ' + set.questions.length + '. Você já tem base — falta destravar a conversação de verdade. Bora marcar uma aula experimental?';
-      } else if (pct >= 0.4) {
-        title = 'Você já tem uma base.';
-        text = 'Acertou ' + score + ' de ' + set.questions.length + '. Dá pra evoluir rápido com o método certo. Vamos te levar pra fluência?';
-      } else {
-        title = 'Perfeito pra começar do zero.';
-        text = 'Acertou ' + score + ' de ' + set.questions.length + '. Todo mundo começa assim — e com aula desde o dia 1 falando, o progresso é rápido.';
-      }
-
-      resultTitle.textContent = title;
-      resultText.textContent = text;
-      var msg = 'Olá! Fiz o teste de ' + set.label + ' no site e acertei ' + score + ' de ' + set.questions.length + '. Quero saber mais sobre as turmas.';
-      resultCta.href = 'https://api.whatsapp.com/send?phone=5549984100055&text=' + encodeURIComponent(msg);
-    };
-
-    var selectOption = function (i, btn) {
-      if (answering) return;
-      answering = true;
-      var set = quizData[currentLang];
-      var q = set.questions[currentIndex];
-      if (i === q.correct) score++;
-
-      Array.prototype.forEach.call(optionsEl.children, function (el, idx) {
-        el.disabled = true;
-        if (idx === q.correct) el.classList.add('is-correct');
-        else if (el === btn) el.classList.add('is-wrong');
-      });
-
-      window.setTimeout(function () {
-        currentIndex++;
-        if (currentIndex < set.questions.length) showQuestion();
-        else showResult();
-      }, reduceMotion ? 0 : 700);
-    };
-
-    root.querySelectorAll('.quiz__lang').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        currentLang = btn.getAttribute('data-lang');
-        currentIndex = 0;
-        score = 0;
-        langBlock.hidden = true;
-        resultBlock.hidden = true;
-        questionBlock.hidden = false;
-        root.setAttribute('data-state', 'question');
-        showQuestion();
-      });
+    /* só esconde um item depois que o observer já está pronto pra
+       vigiá-lo — nunca existe um momento em que algo fica
+       escondido sem alguém garantindo que vai revelar de novo. */
+    items.forEach(function (el) {
+      el.classList.add('is-hidden');
+      observer.observe(el);
     });
 
-    if (retryBtn) {
-      retryBtn.addEventListener('click', function () {
-        langBlock.hidden = false;
-        questionBlock.hidden = true;
-        resultBlock.hidden = true;
-        root.setAttribute('data-state', 'pick');
+    /* rede de segurança: em qualquer navegador/condição estranha
+       onde o observer não dispare pra algum item (viewport
+       atípico, elemento com altura zero no momento da observação
+       etc.), força tudo visível depois de um tempo — nada fica
+       escondido pra sempre. */
+    window.setTimeout(function () {
+      document.querySelectorAll('.reveal.is-hidden').forEach(function (el) {
+        el.classList.remove('is-hidden');
+        el.classList.add('is-visible');
       });
-    }
+    }, 4000);
   }
 
   /* =====================================================
@@ -953,18 +808,29 @@
     if (el) el.textContent = new Date().getFullYear();
   }
 
+  /* cada init roda isolado: um erro em um módulo (seletor que não
+     bate, dado inesperado etc.) não pode travar a cadeia e impedir
+     os próximos de rodar — em especial initReveal(), que é quem
+     faz o conteúdo aparecer. */
+  function safeInit(name, fn) {
+    try {
+      fn();
+    } catch (err) {
+      if (window.console && console.error) console.error('[' + name + ']', err);
+    }
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
-    initIntro();
-    initHeroVideo();
-    initVideoCarousel();
-    initVideoLightbox();
-    initTeamCarousel();
-    initJogo();
-    initHeader();
-    initMobileNav();
-    initScrollSpy();
-    initReveal();
-    initQuiz();
-    initFooterYear();
+    safeInit('initIntro', initIntro);
+    safeInit('initHeroVideo', initHeroVideo);
+    safeInit('initVideoCarousel', initVideoCarousel);
+    safeInit('initVideoLightbox', initVideoLightbox);
+    safeInit('initTeamCarousel', initTeamCarousel);
+    safeInit('initJogo', initJogo);
+    safeInit('initHeader', initHeader);
+    safeInit('initMobileNav', initMobileNav);
+    safeInit('initScrollSpy', initScrollSpy);
+    safeInit('initReveal', initReveal);
+    safeInit('initFooterYear', initFooterYear);
   });
 })();

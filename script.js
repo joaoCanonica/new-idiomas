@@ -17,90 +17,62 @@
     { foto: 'assets/10-funcionarios.png', nome: 'Suelen Medeiros', cargo: 'Gestora administrativa', bio: '20+ anos de experiência em atendimento e rotinas administrativas' }
   ];
 
-  /* 8 perguntas, dificuldade crescente, misturando bandeira e texto */
-  var perguntas = [
-    {
-      nivel: 'Fácil', tipo: 'flag',
-      texto: 'Qual bandeira representa o idioma inglês?',
-      opcoes: [
-        { rotulo: 'Estados Unidos', flag: 'assets/bandeira-eua.png', correta: true },
-        { rotulo: 'Espanha', flag: 'assets/bandeira-espanha.png' },
-        { rotulo: 'Alemanha', flag: 'assets/bandeira-alemanha.png' },
-        { rotulo: 'Itália', flag: 'assets/bandeira-italia.png' }
+  /* Desafio: a pessoa escolhe o idioma pela bandeira, depois encara
+     8 perguntas daquele idioma, ficando mais difícil a cada rodada. */
+  var idiomasQuiz = {
+    ingles: {
+      nome: 'Inglês', bandeira: 'assets/bandeira-eua.png', cor: '#2E4374',
+      perguntas: [
+        { nivel: 'Fácil', texto: 'Como se diz "obrigado" em inglês?', opcoes: [{ rotulo: 'Thank you', correta: true }, { rotulo: 'Danke' }, { rotulo: 'Grazie' }, { rotulo: 'Gracias' }] },
+        { nivel: 'Fácil', texto: 'Qual é o plural de "cat"?', opcoes: [{ rotulo: 'cats', correta: true }, { rotulo: 'cates' }, { rotulo: "cat's" }, { rotulo: 'caties' }] },
+        { nivel: 'Fácil', texto: 'Como se diz "bom dia" em inglês?', opcoes: [{ rotulo: 'Good morning', correta: true }, { rotulo: 'Good night' }, { rotulo: 'Goodbye' }, { rotulo: 'Good evening' }] },
+        { nivel: 'Médio', texto: 'Qual é o plural de "child"?', opcoes: [{ rotulo: 'children', correta: true }, { rotulo: 'childs' }, { rotulo: 'childes' }, { rotulo: 'childrens' }] },
+        { nivel: 'Médio', texto: 'Complete: "She ___ to school every day."', opcoes: [{ rotulo: 'goes', correta: true }, { rotulo: 'go' }, { rotulo: 'going' }, { rotulo: 'gone' }] },
+        { nivel: 'Médio', texto: 'Qual frase está correta?', opcoes: [{ rotulo: 'I have been living here for 10 years', correta: true }, { rotulo: 'I am living here since 10 years' }, { rotulo: 'I live here since 10 years' }, { rotulo: 'I have live here for 10 years' }] },
+        { nivel: 'Difícil', texto: 'Qual phrasal verb significa "desistir"?', opcoes: [{ rotulo: 'give up', correta: true }, { rotulo: 'give in' }, { rotulo: 'give out' }, { rotulo: 'give off' }] },
+        { nivel: 'Difícil', texto: 'Qual frase está gramaticalmente correta?', opcoes: [{ rotulo: 'If I had known, I would have gone', correta: true }, { rotulo: 'If I would have known, I had gone' }, { rotulo: 'If I have known, I would go' }, { rotulo: 'If I knew, I would have go' }] }
       ]
     },
-    {
-      nivel: 'Fácil', tipo: 'texto',
-      texto: 'Como se diz "obrigado" em inglês?',
-      opcoes: [
-        { rotulo: 'Thank you', correta: true },
-        { rotulo: 'Danke' },
-        { rotulo: 'Grazie' },
-        { rotulo: 'Gracias' }
+    espanhol: {
+      nome: 'Espanhol', bandeira: 'assets/bandeira-espanha.png', cor: '#AD1519',
+      perguntas: [
+        { nivel: 'Fácil', texto: 'Como se diz "obrigado" em espanhol?', opcoes: [{ rotulo: 'Gracias', correta: true }, { rotulo: 'Grazie' }, { rotulo: 'Danke' }, { rotulo: 'Thank you' }] },
+        { nivel: 'Fácil', texto: 'Como se diz "bom dia" em espanhol?', opcoes: [{ rotulo: 'Buenos días', correta: true }, { rotulo: 'Buenas noches' }, { rotulo: 'Buenas tardes' }, { rotulo: 'Hasta luego' }] },
+        { nivel: 'Fácil', texto: 'Qual é o plural de "papel"?', opcoes: [{ rotulo: 'papeles', correta: true }, { rotulo: 'papels' }, { rotulo: 'papeis' }, { rotulo: 'papes' }] },
+        { nivel: 'Médio', texto: 'Complete: "Yo ___ estudiante."', opcoes: [{ rotulo: 'soy', correta: true }, { rotulo: 'estoy' }, { rotulo: 'eres' }, { rotulo: 'es' }] },
+        { nivel: 'Médio', texto: 'Qual é a tradução correta de "Eu gostaria de uma xícara de café"?', opcoes: [{ rotulo: 'Me gustaría una taza de café', correta: true }, { rotulo: 'Me gustaría una copa de café' }, { rotulo: 'Yo quiero un café taza' }, { rotulo: 'Quisiera una taza para café' }] },
+        { nivel: 'Médio', texto: 'Qual é o diminutivo correto de "casa"?', opcoes: [{ rotulo: 'casita', correta: true }, { rotulo: 'casina' }, { rotulo: 'casilla' }, { rotulo: 'casuca' }] },
+        { nivel: 'Difícil', texto: 'Qual frase usa corretamente o subjuntivo?', opcoes: [{ rotulo: 'Espero que tengas un buen día', correta: true }, { rotulo: 'Espero que tienes un buen día' }, { rotulo: 'Espero que tenías un buen día' }, { rotulo: 'Espero que tendrás un buen día' }] },
+        { nivel: 'Difícil', texto: 'Qual é a tradução certa pra "Se eu tivesse tempo, viajaria mais"?', opcoes: [{ rotulo: 'Si tuviera tiempo, viajaría más', correta: true }, { rotulo: 'Si tengo tiempo, viajaría más' }, { rotulo: 'Si tuviese tiempo, viajo más' }, { rotulo: 'Si tendría tiempo, viajaría más' }] }
       ]
     },
-    {
-      nivel: 'Fácil', tipo: 'flag',
-      texto: 'Essa bandeira representa qual idioma?',
-      flagPergunta: 'assets/bandeira-italia.png',
-      opcoes: [
-        { rotulo: 'Italiano', correta: true },
-        { rotulo: 'Espanhol' },
-        { rotulo: 'Alemão' },
-        { rotulo: 'Inglês' }
+    alemao: {
+      nome: 'Alemão', bandeira: 'assets/bandeira-alemanha.png', cor: '#1A1A1A',
+      perguntas: [
+        { nivel: 'Fácil', texto: 'Como se diz "obrigado" em alemão?', opcoes: [{ rotulo: 'Danke', correta: true }, { rotulo: 'Gracias' }, { rotulo: 'Grazie' }, { rotulo: 'Thank you' }] },
+        { nivel: 'Fácil', texto: 'Como se diz "bom dia" em alemão?', opcoes: [{ rotulo: 'Guten Morgen', correta: true }, { rotulo: 'Gute Nacht' }, { rotulo: 'Guten Abend' }, { rotulo: 'Auf Wiedersehen' }] },
+        { nivel: 'Fácil', texto: 'Qual é o artigo definido correto para "Haus" (casa)?', opcoes: [{ rotulo: 'das', correta: true }, { rotulo: 'der' }, { rotulo: 'die' }, { rotulo: 'den' }] },
+        { nivel: 'Médio', texto: 'Complete: "Ich ___ Student."', opcoes: [{ rotulo: 'bin', correta: true }, { rotulo: 'bist' }, { rotulo: 'ist' }, { rotulo: 'sind' }] },
+        { nivel: 'Médio', texto: 'Qual é o plural de "Kind" (criança)?', opcoes: [{ rotulo: 'Kinder', correta: true }, { rotulo: 'Kinds' }, { rotulo: 'Kindes' }, { rotulo: 'Kinden' }] },
+        { nivel: 'Médio', texto: 'Qual frase está gramaticalmente correta?', opcoes: [{ rotulo: 'Ich habe einen Hund', correta: true }, { rotulo: 'Ich habe ein Hund' }, { rotulo: 'Ich hat einen Hund' }, { rotulo: 'Ich haben einen Hund' }] },
+        { nivel: 'Difícil', texto: 'Qual frase está no caso dativo correto?', opcoes: [{ rotulo: 'Ich gebe dem Mann das Buch', correta: true }, { rotulo: 'Ich gebe der Mann das Buch' }, { rotulo: 'Ich gebe den Mann das Buch' }, { rotulo: 'Ich gebe des Mannes das Buch' }] },
+        { nivel: 'Difícil', texto: 'Qual é a ordem certa das palavras?', opcoes: [{ rotulo: 'Ich habe gestern das Buch gelesen', correta: true }, { rotulo: 'Ich gestern habe das Buch gelesen' }, { rotulo: 'Habe gestern ich das Buch gelesen' }, { rotulo: 'Gestern ich habe das Buch gelesen' }] }
       ]
     },
-    {
-      nivel: 'Médio', tipo: 'texto',
-      texto: 'O que significa "Buongiorno" em italiano?',
-      opcoes: [
-        { rotulo: 'Bom dia', correta: true },
-        { rotulo: 'Boa noite' },
-        { rotulo: 'Obrigado' },
-        { rotulo: 'Por favor' }
-      ]
-    },
-    {
-      nivel: 'Médio', tipo: 'texto',
-      texto: 'Complete em alemão: "Ich ___ Student."',
-      opcoes: [
-        { rotulo: 'bin', correta: true },
-        { rotulo: 'bist' },
-        { rotulo: 'ist' },
-        { rotulo: 'sind' }
-      ]
-    },
-    {
-      nivel: 'Médio', tipo: 'texto',
-      texto: 'Qual é o plural de "child" em inglês?',
-      opcoes: [
-        { rotulo: 'children', correta: true },
-        { rotulo: 'childs' },
-        { rotulo: 'childes' },
-        { rotulo: 'childrens' }
-      ]
-    },
-    {
-      nivel: 'Difícil', tipo: 'texto',
-      texto: 'Qual é a tradução correta pro espanhol de "Eu gostaria de uma xícara de café"?',
-      opcoes: [
-        { rotulo: 'Me gustaría una taza de café', correta: true },
-        { rotulo: 'Me gustaría una copa de café' },
-        { rotulo: 'Yo quiero un café taza' },
-        { rotulo: 'Quisiera una taza para café' }
-      ]
-    },
-    {
-      nivel: 'Difícil', tipo: 'texto',
-      texto: 'Qual frase está gramaticalmente correta em alemão?',
-      opcoes: [
-        { rotulo: 'Ich habe einen Hund', correta: true },
-        { rotulo: 'Ich habe ein Hund' },
-        { rotulo: 'Ich hat einen Hund' },
-        { rotulo: 'Ich haben einen Hund' }
+    italiano: {
+      nome: 'Italiano', bandeira: 'assets/bandeira-italia.png', cor: '#1E7A3D',
+      perguntas: [
+        { nivel: 'Fácil', texto: 'Como se diz "obrigado" em italiano?', opcoes: [{ rotulo: 'Grazie', correta: true }, { rotulo: 'Danke' }, { rotulo: 'Gracias' }, { rotulo: 'Thank you' }] },
+        { nivel: 'Fácil', texto: 'Como se diz "bom dia" em italiano?', opcoes: [{ rotulo: 'Buongiorno', correta: true }, { rotulo: 'Buonasera' }, { rotulo: 'Buonanotte' }, { rotulo: 'Arrivederci' }] },
+        { nivel: 'Fácil', texto: 'Qual é o plural de "libro" (livro)?', opcoes: [{ rotulo: 'libri', correta: true }, { rotulo: 'libros' }, { rotulo: 'libris' }, { rotulo: 'libres' }] },
+        { nivel: 'Médio', texto: 'Complete: "Io ___ italiano."', opcoes: [{ rotulo: 'sono', correta: true }, { rotulo: 'sei' }, { rotulo: 'è' }, { rotulo: 'siamo' }] },
+        { nivel: 'Médio', texto: 'Como se diz "Eu gostaria de um café" em italiano?', opcoes: [{ rotulo: 'Vorrei un caffè', correta: true }, { rotulo: 'Voglio un caffè per favore' }, { rotulo: 'Mi piace un caffè' }, { rotulo: 'Prendo un caffè grazie' }] },
+        { nivel: 'Médio', texto: 'Qual é o artigo definido correto para "amico" (amigo)?', opcoes: [{ rotulo: "l'amico", correta: true }, { rotulo: 'il amico' }, { rotulo: 'lo amico' }, { rotulo: 'la amico' }] },
+        { nivel: 'Difícil', texto: 'Qual frase está no passato prossimo correto?', opcoes: [{ rotulo: 'Ho mangiato la pizza ieri', correta: true }, { rotulo: 'Ho mangiare la pizza ieri' }, { rotulo: 'Sono mangiato la pizza ieri' }, { rotulo: 'Ha mangiato la pizza ieri' }] },
+        { nivel: 'Difícil', texto: 'Qual frase usa corretamente o congiuntivo?', opcoes: [{ rotulo: 'Penso che tu abbia ragione', correta: true }, { rotulo: 'Penso che tu hai ragione' }, { rotulo: 'Penso che tu avevi ragione' }, { rotulo: 'Penso che tu avrai ragione' }] }
       ]
     }
-  ];
+  };
 
   /* =====================================================
      TELA DE ENTRADA — exibida uma vez por sessão
@@ -363,22 +335,19 @@
     if (!carousel || !stage || !equipe.length) return;
 
     var AUTO_SPEED = 0.06;
-    var SCROLL_SENSITIVITY = 0.35;
     var MIN_OPACITY = 0.3;
 
     var ringMQ = window.matchMedia('(min-width: 768px)');
     var angleStep = 360 / equipe.length;
     var rotation = 0;
     var radius = 260;
-    var isScrolling = false;
     var isHovering = false;
+    var isDragging = false;
     var hasOpenCard = false;
-    /* só reage ao scroll quando o carrossel está perto da tela —
-       sem isso, rolar a página longe da Equipe ainda girava o
-       anel, porque o listener de scroll não checava visibilidade. */
+    /* auto-rotate e auto-avanço só ligam quando o carrossel está
+       perto da tela, pra não gastar ciclo animando fora de vista. */
     var isNearViewport = false;
-    var lastScrollY = window.scrollY;
-    var scrollTimer = null;
+    var lastInteraction = 0;
     var rafId = null;
 
     if ('IntersectionObserver' in window) {
@@ -386,7 +355,6 @@
         function (entries) {
           entries.forEach(function (entry) {
             isNearViewport = entry.isIntersecting;
-            if (isNearViewport) lastScrollY = window.scrollY;
           });
         },
         { rootMargin: '35% 0px 35% 0px' }
@@ -478,27 +446,13 @@
       stage.style.transform = '';
     };
 
-    /* ---- scroll: atualiza rotação pelo delta, só quando perto da tela ---- */
-    var onScroll = function () {
-      var y = window.scrollY;
-      if (!ringMQ.matches || !isNearViewport) {
-        lastScrollY = y;
-        return;
-      }
-      var delta = y - lastScrollY;
-      lastScrollY = y;
-      rotation += delta * SCROLL_SENSITIVITY;
-      updateRingRotation();
-
-      isScrolling = true;
-      window.clearTimeout(scrollTimer);
-      scrollTimer = window.setTimeout(function () { isScrolling = false; }, 150);
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-
-    /* ---- auto-rotate via requestAnimationFrame quando parado ---- */
+    /* ---- auto-rotate via requestAnimationFrame quando parado ----
+       a rotação nunca mais é ligada ao scroll da página: era isso
+       que fazia rolar rápido ou até longe da seção "pegar" o anel
+       e girar de forma brusca. Agora só gira sozinho (ambient) ou
+       por interação direta (setas/arraste). */
     var tick = function () {
-      if (ringMQ.matches && isNearViewport && !isScrolling && !isHovering && !hasOpenCard && !reduceMotion) {
+      if (ringMQ.matches && isNearViewport && !isDragging && !isHovering && !hasOpenCard && !reduceMotion) {
         rotation += AUTO_SPEED;
         updateRingRotation();
       }
@@ -571,6 +525,62 @@
         else stage.scrollBy({ left: teamStep(), behavior: reduceMotion ? 'auto' : 'smooth' });
       });
     }
+
+    /* ---- arrastar com o dedo/mouse gira o anel (modo desktop/tablet).
+       Em modo linear (mobile) não faz nada aqui — o scroll nativo com
+       scroll-snap já deixa passar o dedo por cima dos cards sozinho. */
+    var drag = null;
+    carousel.addEventListener('pointerdown', function (e) {
+      if (!ringMQ.matches) return;
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
+      drag = { lastX: e.clientX, moved: false };
+      isDragging = true;
+      if (carousel.setPointerCapture) {
+        try { carousel.setPointerCapture(e.pointerId); } catch (err) {}
+      }
+    });
+    carousel.addEventListener('pointermove', function (e) {
+      if (!drag) return;
+      var dx = e.clientX - drag.lastX;
+      drag.lastX = e.clientX;
+      if (Math.abs(dx) > 1) drag.moved = true;
+      rotation -= dx * 0.35;
+      updateRingRotation();
+    });
+    var endDrag = function (e) {
+      if (!drag) return;
+      var moved = drag.moved;
+      drag = null;
+      isDragging = false;
+      if (moved) {
+        /* impede que o "soltar" do arraste seja lido como clique
+           e abra a bio do card logo abaixo do dedo/cursor. */
+        var suppressClick = function (ev) {
+          ev.stopPropagation();
+          ev.preventDefault();
+          carousel.removeEventListener('click', suppressClick, true);
+        };
+        carousel.addEventListener('click', suppressClick, true);
+      }
+    };
+    carousel.addEventListener('pointerup', endDrag);
+    carousel.addEventListener('pointercancel', endDrag);
+
+    /* ---- modo linear (mobile): desliza sozinho a cada poucos
+       segundos, pausando quando a pessoa mexe na fileira na mão. */
+    var markInteraction = function () { lastInteraction = Date.now(); };
+    stage.addEventListener('pointerdown', markInteraction, { passive: true });
+    stage.addEventListener('touchstart', markInteraction, { passive: true });
+    stage.addEventListener('wheel', markInteraction, { passive: true });
+
+    if (!reduceMotion) {
+      window.setInterval(function () {
+        if (ringMQ.matches || !isNearViewport) return;
+        if (Date.now() - lastInteraction < 4000) return;
+        var atEnd = stage.scrollLeft + stage.clientWidth >= stage.scrollWidth - 4;
+        stage.scrollTo({ left: atEnd ? 0 : stage.scrollLeft + teamStep(), behavior: 'smooth' });
+      }, 3200);
+    }
   }
 
   /* =====================================================
@@ -579,8 +589,10 @@
      ===================================================== */
   function initJogo() {
     var card = document.getElementById('jogo-card');
-    if (!card || !perguntas.length) return;
+    var idiomasKeys = Object.keys(idiomasQuiz);
+    if (!card || !idiomasKeys.length) return;
 
+    var langKey = null;
     var index = 0;
     var score = 0;
     var answered = false;
@@ -591,49 +603,78 @@
       });
     };
 
-    var renderIntro = function () {
+    /* embaralha as opções a cada pergunta — nos dados a resposta
+       certa sempre vem primeiro (mais fácil de escrever/revisar),
+       então sem isso dava pra "ganhar" só clicando sempre na
+       primeira opção. */
+    var shuffle = function (arr) {
+      for (var i = arr.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+      }
+      return arr;
+    };
+
+    /* logotipo do jogo — identidade própria, tipo "modo jogo",
+       separada da tipografia editorial do resto do site */
+    var jogoLogoHtml =
+      '<div class="jogo-logo">' +
+        '<span class="jogo-logo__badge">' +
+          '<svg viewBox="0 0 24 24" fill="none"><path d="M12 21c4.97 0 9-3.58 9-8s-4.03-8-9-8-9 3.58-9 8c0 1.85.68 3.55 1.83 4.93L4 21l4.5-1.31A10 10 0 0 0 12 21Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>' +
+        '</span>' +
+        'Desafio <strong>New</strong>' +
+      '</div>';
+
+    var renderLangSelect = function () {
+      var tilesHtml = idiomasKeys.map(function (key) {
+        var lang = idiomasQuiz[key];
+        return (
+          '<button type="button" class="jogo-lang" data-lang="' + key + '" style="--lang-cor:' + lang.cor + '">' +
+            '<span class="jogo-lang__flag"><img src="' + lang.bandeira + '" alt="" loading="lazy"></span>' +
+            '<span class="jogo-lang__nome">' + escapeHtml(lang.nome) + '</span>' +
+          '</button>'
+        );
+      }).join('');
+
       card.innerHTML =
-        '<div class="jogo-intro">' +
-          '<span class="jogo-intro__icon">' +
-            '<svg viewBox="0 0 24 24" fill="none"><path d="M12 21c4.97 0 9-3.58 9-8s-4.03-8-9-8-9 3.58-9 8c0 1.85.68 3.55 1.83 4.93L4 21l4.5-1.31A10 10 0 0 0 12 21Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M8.5 11h.01M12 11h.01M15.5 11h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>' +
-          '</span>' +
-          '<h3 class="jogo-intro__title">Pronto pra jogar?</h3>' +
-          '<p class="jogo-intro__text">8 perguntas sobre inglês, espanhol, alemão e italiano — começa fácil e vai ficando mais difícil. Não vale colar.</p>' +
-          '<button type="button" class="btn btn--solid" id="jogo-start">Começar desafio</button>' +
+        '<div class="jogo-select">' +
+          jogoLogoHtml +
+          '<h3 class="jogo-select__title">Escolha seu idioma</h3>' +
+          '<p class="jogo-select__text">8 perguntas, começando fácil e ficando mais difícil. Não vale colar.</p>' +
+          '<div class="jogo-langs">' + tilesHtml + '</div>' +
         '</div>';
-      var startBtn = document.getElementById('jogo-start');
-      if (startBtn) startBtn.addEventListener('click', function () { index = 0; score = 0; renderQuestion(); });
+
+      card.querySelectorAll('.jogo-lang').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          langKey = btn.getAttribute('data-lang');
+          index = 0;
+          score = 0;
+          renderQuestion();
+        });
+      });
     };
 
     var renderQuestion = function () {
       answered = false;
+      var lang = idiomasQuiz[langKey];
+      var perguntas = lang.perguntas;
       var q = perguntas[index];
+      var opcoes = shuffle(q.opcoes.slice());
       var pct = Math.round((index / perguntas.length) * 100);
 
-      var optionsHtml = q.opcoes.map(function (opt, i) {
-        if (q.tipo === 'flag' && opt.flag) {
-          return (
-            '<button type="button" class="jogo-option jogo-option--flag" data-i="' + i + '">' +
-              '<span class="jogo-option__flag"><img src="' + opt.flag + '" alt="" loading="lazy"></span>' +
-              '<span>' + escapeHtml(opt.rotulo) + '</span>' +
-            '</button>'
-          );
-        }
+      var optionsHtml = opcoes.map(function (opt, i) {
         return '<button type="button" class="jogo-option" data-i="' + i + '">' + escapeHtml(opt.rotulo) + '</button>';
       }).join('');
 
-      var flagPerguntaHtml = q.flagPergunta
-        ? '<div class="jogo-option__flag" style="width:72px;height:72px;margin-bottom:1rem;"><img src="' + q.flagPergunta + '" alt="" loading="lazy"></div>'
-        : '';
-
+      card.style.setProperty('--lang-cor', lang.cor);
       card.innerHTML =
         '<div class="jogo-progress">' +
-          '<span class="jogo-progress__count">' + (index + 1) + ' / ' + perguntas.length + '</span>' +
+          '<span class="jogo-progress__lang"><img src="' + lang.bandeira + '" alt="" loading="lazy">' + escapeHtml(lang.nome) + '</span>' +
           '<span class="jogo-progress__track"><span class="jogo-progress__fill" style="width:' + pct + '%"></span></span>' +
-          '<span class="jogo-progress__difficulty">' + escapeHtml(q.nivel) + '</span>' +
+          '<span class="jogo-progress__count">' + (index + 1) + '/' + perguntas.length + '</span>' +
         '</div>' +
         '<div class="jogo-question">' +
-          flagPerguntaHtml +
+          '<span class="jogo-progress__difficulty">' + escapeHtml(q.nivel) + '</span>' +
           '<p class="jogo-question__text">' + escapeHtml(q.texto) + '</p>' +
           '<div class="jogo-options">' + optionsHtml + '</div>' +
         '</div>';
@@ -643,12 +684,12 @@
           if (answered) return;
           answered = true;
           var i = Number(btn.getAttribute('data-i'));
-          var correct = q.opcoes[i].correta === true;
+          var correct = opcoes[i].correta === true;
           if (correct) score++;
 
           card.querySelectorAll('.jogo-option').forEach(function (b, bi) {
             b.setAttribute('disabled', 'true');
-            if (q.opcoes[bi].correta) b.classList.add('is-correct');
+            if (opcoes[bi].correta) b.classList.add('is-correct');
             else if (bi === i) b.classList.add('is-wrong');
           });
 
@@ -662,18 +703,20 @@
     };
 
     var renderResult = function () {
-      var total = perguntas.length;
+      var lang = idiomasQuiz[langKey];
+      var total = lang.perguntas.length;
       var msg;
       if (score >= 7) msg = 'Mandou muito bem! Bora colocar isso pra funcionar de verdade numa conversa?';
       else if (score >= 4) msg = 'Você já tem base — falta destravar a fala. É exatamente aí que a gente entra.';
       else msg = 'Todo mundo começa de algum lugar. Bora montar um plano pra você sair do zero de verdade?';
 
-      var waText = encodeURIComponent('Olá! Fiz o desafio de idiomas no site e tirei ' + score + '/' + total + ' — quero saber mais sobre as aulas.');
+      var waText = encodeURIComponent('Olá! Fiz o desafio de ' + lang.nome.toLowerCase() + ' no site e tirei ' + score + '/' + total + ' — quero saber mais sobre as aulas.');
 
       card.innerHTML =
         '<div class="jogo-result">' +
+          '<span class="jogo-result__flag"><img src="' + lang.bandeira + '" alt="" loading="lazy"></span>' +
           '<span class="jogo-result__score">' + score + '/' + total + '</span>' +
-          '<h3 class="jogo-result__title">Resultado</h3>' +
+          '<h3 class="jogo-result__title">Resultado em ' + escapeHtml(lang.nome) + '</h3>' +
           '<p class="jogo-result__msg">' + msg + '</p>' +
           '<a class="btn btn--solid btn--whatsapp jogo-result__cta" target="_blank" rel="noopener" href="https://api.whatsapp.com/send?phone=5549984100055&text=' + waText + '">' +
             '<svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
@@ -682,14 +725,19 @@
             '</svg>' +
             'Falar no WhatsApp' +
           '</a>' +
-          '<button type="button" class="jogo-result__retry" id="jogo-retry">Jogar de novo</button>' +
+          '<div class="jogo-result__actions">' +
+            '<button type="button" class="jogo-result__retry" id="jogo-retry">Jogar de novo</button>' +
+            '<button type="button" class="jogo-result__retry" id="jogo-outro">Tentar outro idioma</button>' +
+          '</div>' +
         '</div>';
 
       var retryBtn = document.getElementById('jogo-retry');
-      if (retryBtn) retryBtn.addEventListener('click', renderIntro);
+      if (retryBtn) retryBtn.addEventListener('click', function () { index = 0; score = 0; renderQuestion(); });
+      var outroBtn = document.getElementById('jogo-outro');
+      if (outroBtn) outroBtn.addEventListener('click', renderLangSelect);
     };
 
-    renderIntro();
+    renderLangSelect();
   }
 
   /* =====================================================

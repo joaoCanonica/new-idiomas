@@ -140,31 +140,14 @@ html.no-intro #intro-screen { display: none !important; }
   inset-inline: 0;
   top: 0;
   z-index: 500;
-  padding-block: 1.1rem;
+  padding-block: 1.6rem;
+  background: var(--bordo);
   transition: padding 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
 }
 
-/* backdrop-filter fica num pseudo-elemento: aplicá-lo direto em
-   .site-header criaria um containing block novo para os filhos com
-   position:fixed (o overlay do menu mobile), encolhendo-o à altura
-   do header em vez de tela cheia. */
-.site-header::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background-color: transparent;
-  transition: background-color 0.4s var(--ease-out);
-}
-
 .site-header.is-scrolled {
-  padding-block: 0.7rem;
-  box-shadow: 0 1px 0 var(--ink-12);
-}
-
-.site-header.is-scrolled::before {
-  background-color: rgba(255, 255, 255, 0.92);
-  backdrop-filter: saturate(140%) blur(10px);
+  padding-block: 1.1rem;
+  box-shadow: 0 12px 30px -18px rgba(0, 0, 0, 0.45);
 }
 
 .site-header__inner {
@@ -174,7 +157,7 @@ html.no-intro #intro-screen { display: none !important; }
   gap: 1.5rem;
 }
 
-.brand__logo { height: 30px; width: auto; }
+.brand__logo { height: 42px; width: auto; }
 
 .main-nav__list {
   display: flex;
@@ -185,7 +168,7 @@ html.no-intro #intro-screen { display: none !important; }
 .main-nav__list a {
   font-size: 0.9375rem;
   font-weight: 500;
-  color: var(--ink-70);
+  color: rgba(255, 255, 255, 0.8);
   position: relative;
   padding-block: 0.25rem;
   transition: color 0.3s var(--ease-out);
@@ -197,7 +180,7 @@ html.no-intro #intro-screen { display: none !important; }
   left: 0; bottom: -2px;
   width: 100%;
   height: 1px;
-  background: var(--bordo);
+  background: var(--white);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.35s var(--ease-out);
@@ -205,7 +188,7 @@ html.no-intro #intro-screen { display: none !important; }
 
 .main-nav__list a:hover,
 .main-nav__list a.is-active {
-  color: var(--ink);
+  color: var(--white);
 }
 .main-nav__list a:hover::after,
 .main-nav__list a.is-active::after { transform: scaleX(1); }
@@ -213,6 +196,18 @@ html.no-intro #intro-screen { display: none !important; }
 .site-header__actions { display: flex; align-items: center; gap: 1rem; }
 
 .main-nav__cta.btn { display: none; }
+
+/* CTAs dentro do header (desktop e overlay mobile) ficam invertidos —
+   branco sólido sobre o fundo vermelho, nunca vermelho sobre vermelho. */
+.site-header .btn--solid {
+  background: var(--white);
+  color: var(--bordo);
+  box-shadow: 0 10px 22px -14px rgba(0, 0, 0, 0.45);
+}
+.site-header .btn--solid:hover {
+  background: rgba(255, 255, 255, 0.88);
+  color: var(--bordo-dark);
+}
 
 /* buttons */
 .btn {
@@ -222,7 +217,7 @@ html.no-intro #intro-screen { display: none !important; }
   padding: 0.75rem 1.6rem;
   font-size: 0.9375rem;
   font-weight: 600;
-  border-radius: 999px;
+  border-radius: 10px;
   transition: background-color 0.35s var(--ease-out), color 0.35s var(--ease-out), border-color 0.35s var(--ease-out), transform 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out);
   white-space: nowrap;
 }
@@ -264,7 +259,7 @@ html.no-intro #intro-screen { display: none !important; }
 .nav-toggle span {
   display: block;
   height: 1.5px;
-  background: var(--ink);
+  background: var(--white);
   transition: transform 0.3s var(--ease-out), opacity 0.3s var(--ease-out);
 }
 
@@ -273,7 +268,7 @@ html.no-intro #intro-screen { display: none !important; }
     position: fixed;
     inset: 0;
     top: 0;
-    background: var(--bg);
+    background: var(--bordo);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -580,13 +575,18 @@ html.no-intro #intro-screen { display: none !important; }
 }
 
 /* =========================================================
-   DEPOIMENTOS — citações grandes, sem molduras de card
+   DEPOIMENTOS — citações grandes, sem molduras de card.
+   Seção compacta de propósito: não precisa da altura padrão
+   de seção pra caber o que já é real (vídeo + Google) — mais
+   espaço aqui só voltaria a parecer um bloco isolado.
    ========================================================= */
+.section--depoimentos { padding-block: clamp(2.5rem, 4vw, 3.5rem); }
+
 .depoimentos-head {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  margin-bottom: clamp(1.75rem, 3vw, 2.5rem);
+  margin-bottom: clamp(1.5rem, 3vw, 2rem);
 }
 
 .depoimentos-title {
@@ -611,7 +611,7 @@ html.no-intro #intro-screen { display: none !important; }
 
 .depoimentos-video .video-slide__frame {
   width: 100%;
-  max-width: 320px;
+  max-width: 250px;
   aspect-ratio: 9 / 16;
 }
 
@@ -711,6 +711,23 @@ html.no-intro #intro-screen { display: none !important; }
   margin-top: 0.25rem;
 }
 
+/* menção ao Instagram: link de texto, não outro botão-pílula —
+   é um convite pra seguir, não uma terceira ação com o mesmo peso
+   do WhatsApp/mapa. */
+.location-instagram {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-top: 1.1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ink-70);
+  transition: color 0.3s var(--ease-out);
+}
+.location-instagram svg { width: 20px; height: 20px; flex-shrink: 0; color: var(--bordo); }
+.location-instagram span { color: var(--ink-45); font-weight: 500; }
+.location-instagram:hover { color: var(--bordo); }
+
 .location-title {
   font-family: var(--font-display);
   font-weight: 500;
@@ -773,50 +790,120 @@ html.no-intro #intro-screen { display: none !important; }
 .jogo-body { display: flex; justify-content: center; }
 
 .jogo-card {
+  --lang-cor: var(--bordo);
   width: 100%;
   max-width: 620px;
   min-height: 420px;
   background: var(--bg);
-  border-radius: 20px;
+  border-radius: 24px;
   box-shadow: 0 40px 80px -36px rgba(23, 19, 15, 0.35);
   padding: clamp(1.75rem, 4vw, 3rem);
   display: flex;
   flex-direction: column;
 }
 
-/* ---- tela inicial ---- */
-.jogo-intro {
-  margin: auto;
+/* ---- logotipo do jogo — identidade própria, tipo "modo jogo" ---- */
+.jogo-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 0.9375rem;
+  letter-spacing: -0.01em;
+  color: var(--ink-45);
+  margin-bottom: 1.25rem;
+}
+.jogo-logo strong { color: var(--bordo); font-weight: 800; }
+.jogo-logo__badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  background: var(--bordo);
+  color: var(--white);
+}
+.jogo-logo__badge svg { width: 15px; height: 15px; }
+
+/* ---- tela de seleção de idioma ---- */
+.jogo-select {
+  margin: auto 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 1.25rem;
 }
-.jogo-intro__icon {
-  width: 56px;
-  height: 56px;
-  color: var(--bordo);
-}
-.jogo-intro__title {
+.jogo-select__title {
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: 1.625rem;
+  font-size: 1.75rem;
   color: var(--ink);
 }
-.jogo-intro__text {
+.jogo-select__text {
   font-size: 0.9375rem;
   color: var(--ink-70);
-  max-width: 26rem;
+  max-width: 24rem;
+  margin-top: 0.5rem;
+}
+
+.jogo-langs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.jogo-lang {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.25rem 1rem;
+  border: 2px solid var(--ink-12);
+  border-radius: 18px;
+  background: var(--bg);
+  cursor: pointer;
+  transition: border-color 0.25s var(--ease-out), transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out);
+}
+.jogo-lang:hover {
+  border-color: var(--lang-cor);
+  transform: translateY(-3px);
+  box-shadow: 0 16px 28px -18px rgba(23, 19, 15, 0.4);
+}
+.jogo-lang__flag {
+  width: 64px;
+  height: 64px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 18px -10px rgba(23, 19, 15, 0.4);
+}
+.jogo-lang__flag img { width: 100%; height: 100%; object-fit: cover; }
+.jogo-lang__nome {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--ink);
 }
 
 /* ---- barra de progresso + dificuldade ---- */
 .jogo-progress {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.85rem;
   margin-bottom: clamp(1.5rem, 3vw, 2rem);
 }
+.jogo-progress__lang {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.jogo-progress__lang img { width: 18px; height: 18px; border-radius: 4px; object-fit: cover; }
 .jogo-progress__count {
   font-size: 0.8125rem;
   font-weight: 700;
@@ -825,18 +912,19 @@ html.no-intro #intro-screen { display: none !important; }
 }
 .jogo-progress__track {
   flex: 1;
-  height: 5px;
+  height: 8px;
   background: var(--ink-12);
-  border-radius: 3px;
+  border-radius: 999px;
   overflow: hidden;
 }
 .jogo-progress__fill {
   height: 100%;
-  background: var(--bordo);
-  border-radius: 3px;
+  background: var(--lang-cor);
+  border-radius: 999px;
   transition: width 0.5s var(--ease-out);
 }
 .jogo-progress__difficulty {
+  display: inline-block;
   font-size: 0.6875rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -846,9 +934,12 @@ html.no-intro #intro-screen { display: none !important; }
   background: var(--bordo-tint);
   color: var(--bordo);
   white-space: nowrap;
+  margin-bottom: 1rem;
 }
 
-/* ---- pergunta ---- */
+/* ---- pergunta — botões estilo "jogo", com sombra inferior tipo
+   Duolingo (comprime ao clicar) em vez do tom editorial do resto
+   do site: aqui é modo jogo de propósito. ---- */
 .jogo-question__text {
   font-family: var(--font-display);
   font-weight: 500;
@@ -867,41 +958,27 @@ html.no-intro #intro-screen { display: none !important; }
 .jogo-option {
   display: flex;
   align-items: center;
-  gap: 0.7rem;
-  border: 1.5px solid var(--ink-12);
+  border: 2px solid var(--ink-12);
+  border-bottom-width: 4px;
   border-radius: 14px;
   padding: 0.9rem 1.1rem;
   text-align: left;
   font-family: var(--font-body);
   font-size: 0.9375rem;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--ink);
   background: var(--bg);
   cursor: pointer;
-  transition: border-color 0.3s var(--ease-out), background-color 0.3s var(--ease-out), transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
+  transition: border-color 0.15s var(--ease-out), background-color 0.15s var(--ease-out), transform 0.1s var(--ease-out);
 }
 .jogo-option:hover:not([disabled]) {
-  border-color: var(--bordo);
-  transform: translateY(-2px);
-  box-shadow: 0 14px 26px -18px rgba(23, 19, 15, 0.35);
+  border-color: var(--lang-cor);
+}
+.jogo-option:active:not([disabled]) {
+  border-bottom-width: 2px;
+  transform: translateY(2px);
 }
 .jogo-option[disabled] { cursor: default; }
-
-.jogo-option--flag {
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 0.6rem;
-  padding: 1rem;
-}
-.jogo-option__flag {
-  width: 56px;
-  height: 56px;
-  border-radius: 8px;
-  overflow: hidden;
-  flex-shrink: 0;
-}
-.jogo-option__flag img { width: 100%; height: 100%; object-fit: cover; }
 
 .jogo-option.is-correct {
   border-color: #2b7a4b;
@@ -925,13 +1002,22 @@ html.no-intro #intro-screen { display: none !important; }
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 1rem;
+  gap: 0.5rem;
 }
+.jogo-result__flag {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+  box-shadow: 0 8px 18px -10px rgba(23, 19, 15, 0.4);
+}
+.jogo-result__flag img { width: 100%; height: 100%; object-fit: cover; }
 .jogo-result__score {
   font-family: var(--font-display);
   font-weight: 500;
   font-size: clamp(2.25rem, 1.8rem + 1.5vw, 3rem);
-  color: var(--bordo);
+  color: var(--lang-cor);
 }
 .jogo-result__title {
   font-family: var(--font-display);
@@ -943,6 +1029,7 @@ html.no-intro #intro-screen { display: none !important; }
   font-size: 0.9375rem;
   color: var(--ink-70);
   max-width: 28rem;
+  margin-bottom: 0.5rem;
 }
 
 .jogo-result__cta {
@@ -954,6 +1041,13 @@ html.no-intro #intro-screen { display: none !important; }
   50% { box-shadow: 0 0 0 16px rgba(109, 1, 1, 0); }
 }
 .jogo-result__cta:hover { animation-play-state: paused; }
+
+.jogo-result__actions {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-top: 0.5rem;
+}
 
 .jogo-result__retry {
   font-size: 0.875rem;
@@ -1040,17 +1134,27 @@ html.no-intro #intro-screen { display: none !important; }
 }
 .site-footer__nav a:hover { color: var(--white); }
 
-.site-footer__whatsapp {
+.site-footer__contact {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  height: fit-content;
+}
+
+.site-footer__whatsapp,
+.site-footer__instagram {
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
   font-size: 0.9375rem;
   font-weight: 600;
   color: var(--white);
-  height: fit-content;
+  transition: color 0.3s var(--ease-out);
 }
-.site-footer__whatsapp svg { width: 20px; height: 20px; }
-.site-footer__whatsapp:hover { color: var(--bordo-bright); }
+.site-footer__whatsapp svg,
+.site-footer__instagram svg { width: 20px; height: 20px; flex-shrink: 0; }
+.site-footer__whatsapp:hover,
+.site-footer__instagram:hover { color: var(--bordo-bright); }
 
 .site-footer__copy {
   font-size: 0.8125rem;
@@ -1412,6 +1516,11 @@ html.no-intro #intro-screen { display: none !important; }
 
   .team-carousel[data-mode="ring"] {
     perspective: 1600px;
+    cursor: grab;
+    touch-action: pan-y;
+  }
+  .team-carousel[data-mode="ring"]:active {
+    cursor: grabbing;
   }
 
   .team-carousel[data-mode="ring"] .team-carousel__stage {

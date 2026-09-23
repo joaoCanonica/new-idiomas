@@ -321,6 +321,15 @@ html.no-intro #intro-screen { display: none !important; }
   gap: clamp(2rem, 5vw, 4.5rem);
 }
 
+/* sem min-width:0 os itens do grid usam min-width:auto — o par
+   de botões em .hero-actions não quebra linha e força uma
+   largura mínima maior que a tela, estourando a página inteira
+   em rolagem horizontal nos celulares mais estreitos. */
+.hero-copy,
+.hero-media {
+  min-width: 0;
+}
+
 .hero-copy { display: flex; flex-direction: column; gap: 1.5rem; max-width: 40rem; }
 
 /* entrada em cascata (não tudo de uma vez) — cada elemento do
@@ -366,7 +375,11 @@ html.no-intro #intro-screen { display: none !important; }
   color: var(--ink-45);
 }
 
-.hero-actions { display: flex; align-items: center; gap: 1rem; margin-top: 0.5rem; }
+/* flex-wrap: os dois botões lado a lado, sem quebra, forçavam o
+   .btn--solid (overflow:hidden + conteúdo centralizado) a
+   encolher abaixo da largura do próprio texto em telas estreitas
+   — cortava "Conhecer os cursos" simetricamente dos dois lados. */
+.hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; margin-top: 0.5rem; }
 
 .btn--whatsapp { gap: 0.6rem; padding-inline: 1.75rem; }
 .btn__icon { width: 19px; height: 19px; flex-shrink: 0; }
@@ -1555,6 +1568,15 @@ html.no-intro #intro-screen { display: none !important; }
   align-items: start;
 }
 
+/* grid items têm min-width:auto por padrão — sem isso, a foto
+   (aspect-ratio + max-height) força o conteúdo a exigir uma
+   largura maior que a track, e a coluna inteira estoura a
+   página (rolagem horizontal travada no mobile). */
+.equipe-painel,
+.equipe-indice-wrap {
+  min-width: 0;
+}
+
 .equipe-painel {
   display: flex;
   flex-direction: column;
@@ -1713,7 +1735,10 @@ html.no-intro #intro-screen { display: none !important; }
 
 @media (max-width: 860px) {
   .equipe-mesa { grid-template-columns: 1fr; }
-  .equipe-painel__foto { max-width: none; aspect-ratio: 4 / 3; }
+  /* as fotos são retrato (perto de 3:4) — forçar 4:3 (paisagem)
+     aqui cortava o rosto inteiro, sobrando só ombro/crachá. Mantém
+     a proporção retrato, só limita a altura em telas mais largas. */
+  .equipe-painel__foto { max-width: none; width: 100%; max-height: 60vh; margin-inline: auto; }
 
   .equipe-indice {
     display: flex;

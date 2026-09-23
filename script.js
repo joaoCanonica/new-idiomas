@@ -204,6 +204,18 @@
     var items = Array.prototype.slice.call(rail.querySelectorAll('.videos-rail__item'));
     if (!items.length) return;
 
+    /* o <source> vem só com data-src (sem src) pra garantir zero
+       rede antes do JS rodar; sem isso o <video> fica sem nenhuma
+       fonte de fato e o botão nativo de play não faz nada no
+       primeiro vídeo — só passava a funcionar depois de trocar
+       pra outro vídeo e voltar, porque só loadVideo() seta o src.
+       Aqui já deixamos o src pronto (preload="none" evita o download
+       antecipado, só registra a fonte). */
+    if (!mainSource.getAttribute('src')) {
+      mainSource.src = mainSource.getAttribute('data-src');
+      mainVideo.load();
+    }
+
     var loadVideo = function (btn, moveFocus) {
       var src = btn.getAttribute('data-video-src');
       var poster = btn.getAttribute('data-video-poster');

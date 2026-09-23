@@ -246,14 +246,16 @@
       }
     });
 
+    /* só pausa ao sair da tela — nunca retoma sozinho ao voltar.
+       Retomar automaticamente ao rolar de volta pro player fazia o
+       vídeo tocar/pausar repetidas vezes enquanto a pessoa rolava
+       a página pra cima e pra baixo, e como preload="none" ele
+       raramente tinha buffer pronto — cada play() interrompido
+       deixava o vídeo travado. Agora só o clique inicia. */
     if ('IntersectionObserver' in window) {
       var observer = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            if (!reduceMotion && mainSource.src) mainVideo.play().catch(function () {});
-          } else {
-            mainVideo.pause();
-          }
+          if (!entry.isIntersecting) mainVideo.pause();
         });
       }, { threshold: 0.25 });
       observer.observe(mainVideo);
@@ -327,7 +329,6 @@
     if (!mesa || !indice || !painel || !equipe.length) return;
 
     var fotoImg = document.getElementById('equipe-painel-foto');
-    var fotoWebp = document.getElementById('equipe-painel-webp');
     var numEl = document.getElementById('equipe-painel-num');
     var nomeEl = document.getElementById('equipe-painel-nome');
     var cargoEl = document.getElementById('equipe-painel-cargo');
@@ -381,9 +382,12 @@
       painel.setAttribute('aria-labelledby', tabs[activeIndex].id);
 
       var swap = function () {
-        fotoImg.src = person.foto;
+        /* <img> direto, sem <picture>/<source> — troca de srcset via
+           JS é inconsistente entre navegadores (fotos ficavam presas
+           na primeira pessoa em alguns casos); .src num único <img>
+           é o jeito confiável de garantir a troca. */
+        fotoImg.src = person.foto.replace('.png', '.webp');
         fotoImg.alt = person.nome;
-        if (fotoWebp) fotoWebp.srcset = person.foto.replace('.png', '.webp');
         numEl.textContent = pad2(activeIndex + 1);
         nomeEl.textContent = person.nome;
         cargoEl.textContent = person.cargo;

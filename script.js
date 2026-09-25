@@ -29,7 +29,7 @@
         { nivel: 'Médio', texto: 'Qual é o plural de "child"?', opcoes: [{ rotulo: 'children', correta: true }, { rotulo: 'childs' }, { rotulo: 'childes' }, { rotulo: 'childrens' }] },
         { nivel: 'Médio', texto: 'Complete: "She ___ to school every day."', opcoes: [{ rotulo: 'goes', correta: true }, { rotulo: 'go' }, { rotulo: 'going' }, { rotulo: 'gone' }] },
         { nivel: 'Médio', texto: 'Qual frase está correta?', opcoes: [{ rotulo: 'I have been living here for 10 years', correta: true }, { rotulo: 'I am living here since 10 years' }, { rotulo: 'I live here since 10 years' }, { rotulo: 'I have live here for 10 years' }] },
-        { nivel: 'Difícil', texto: 'Qual phrasal verb significa "desistir"?', opcoes: [{ rotulo: 'give up', correta: true }, { rotulo: 'give in' }, { rotulo: 'give out' }, { rotulo: 'give off' }] },
+        { nivel: 'Difícil', texto: 'Qual phrasal verb significa "desistir"?', opcoes: [{ rotulo: 'give up', correta: true }, { rotulo: 'give away' }, { rotulo: 'give out' }, { rotulo: 'give off' }] },
         { nivel: 'Difícil', texto: 'Qual frase está gramaticalmente correta?', opcoes: [{ rotulo: 'If I had known, I would have gone', correta: true }, { rotulo: 'If I would have known, I had gone' }, { rotulo: 'If I have known, I would go' }, { rotulo: 'If I knew, I would have go' }] }
       ]
     },
@@ -40,7 +40,7 @@
         { nivel: 'Fácil', texto: 'Como se diz "bom dia" em espanhol?', opcoes: [{ rotulo: 'Buenos días', correta: true }, { rotulo: 'Buenas noches' }, { rotulo: 'Buenas tardes' }, { rotulo: 'Hasta luego' }] },
         { nivel: 'Fácil', texto: 'Qual é o plural de "papel"?', opcoes: [{ rotulo: 'papeles', correta: true }, { rotulo: 'papels' }, { rotulo: 'papeis' }, { rotulo: 'papes' }] },
         { nivel: 'Médio', texto: 'Complete: "Yo ___ estudiante."', opcoes: [{ rotulo: 'soy', correta: true }, { rotulo: 'estoy' }, { rotulo: 'eres' }, { rotulo: 'es' }] },
-        { nivel: 'Médio', texto: 'Qual é a tradução correta de "Eu gostaria de uma xícara de café"?', opcoes: [{ rotulo: 'Me gustaría una taza de café', correta: true }, { rotulo: 'Me gustaría una copa de café' }, { rotulo: 'Yo quiero un café taza' }, { rotulo: 'Quisiera una taza para café' }] },
+        { nivel: 'Médio', texto: 'Qual é a tradução correta de "Eu gostaria de uma xícara de café"?', opcoes: [{ rotulo: 'Me gustaría una taza de café', correta: true }, { rotulo: 'Me gustaría una copa de café' }, { rotulo: 'Yo quiero un café taza' }, { rotulo: 'Me gustaría un plato de café' }] },
         { nivel: 'Médio', texto: 'Qual é o diminutivo correto de "casa"?', opcoes: [{ rotulo: 'casita', correta: true }, { rotulo: 'casina' }, { rotulo: 'casilla' }, { rotulo: 'casuca' }] },
         { nivel: 'Difícil', texto: 'Qual frase usa corretamente o subjuntivo?', opcoes: [{ rotulo: 'Espero que tengas un buen día', correta: true }, { rotulo: 'Espero que tienes un buen día' }, { rotulo: 'Espero que tenías un buen día' }, { rotulo: 'Espero que tendrás un buen día' }] },
         { nivel: 'Difícil', texto: 'Qual é a tradução certa pra "Se eu tivesse tempo, viajaria mais"?', opcoes: [{ rotulo: 'Si tuviera tiempo, viajaría más', correta: true }, { rotulo: 'Si tengo tiempo, viajaría más' }, { rotulo: 'Si tuviese tiempo, viajo más' }, { rotulo: 'Si tendría tiempo, viajaría más' }] }
@@ -66,9 +66,9 @@
         { nivel: 'Fácil', texto: 'Como se diz "bom dia" em italiano?', opcoes: [{ rotulo: 'Buongiorno', correta: true }, { rotulo: 'Buonasera' }, { rotulo: 'Buonanotte' }, { rotulo: 'Arrivederci' }] },
         { nivel: 'Fácil', texto: 'Qual é o plural de "libro" (livro)?', opcoes: [{ rotulo: 'libri', correta: true }, { rotulo: 'libros' }, { rotulo: 'libris' }, { rotulo: 'libres' }] },
         { nivel: 'Médio', texto: 'Complete: "Io ___ italiano."', opcoes: [{ rotulo: 'sono', correta: true }, { rotulo: 'sei' }, { rotulo: 'è' }, { rotulo: 'siamo' }] },
-        { nivel: 'Médio', texto: 'Como se diz "Eu gostaria de um café" em italiano?', opcoes: [{ rotulo: 'Vorrei un caffè', correta: true }, { rotulo: 'Voglio un caffè per favore' }, { rotulo: 'Mi piace un caffè' }, { rotulo: 'Prendo un caffè grazie' }] },
+        { nivel: 'Médio', texto: 'Qual é a forma verbal de "querer" no condicional (equivalente a "gostaria"), usada em "___ un caffè"?', opcoes: [{ rotulo: 'Vorrei', correta: true }, { rotulo: 'Voglio' }, { rotulo: 'Piace' }, { rotulo: 'Volevo' }] },
         { nivel: 'Médio', texto: 'Qual é o artigo definido correto para "amico" (amigo)?', opcoes: [{ rotulo: "l'amico", correta: true }, { rotulo: 'il amico' }, { rotulo: 'lo amico' }, { rotulo: 'la amico' }] },
-        { nivel: 'Difícil', texto: 'Qual frase está no passato prossimo correto?', opcoes: [{ rotulo: 'Ho mangiato la pizza ieri', correta: true }, { rotulo: 'Ho mangiare la pizza ieri' }, { rotulo: 'Sono mangiato la pizza ieri' }, { rotulo: 'Ha mangiato la pizza ieri' }] },
+        { nivel: 'Difícil', texto: 'Complete no passato prossimo: "Io ___ la pizza ieri."', opcoes: [{ rotulo: 'ho mangiato', correta: true }, { rotulo: 'ho mangiare' }, { rotulo: 'sono mangiato' }, { rotulo: 'avevo mangiato' }] },
         { nivel: 'Difícil', texto: 'Qual frase usa corretamente o congiuntivo?', opcoes: [{ rotulo: 'Penso che tu abbia ragione', correta: true }, { rotulo: 'Penso che tu hai ragione' }, { rotulo: 'Penso che tu avevi ragione' }, { rotulo: 'Penso che tu avrai ragione' }] }
       ]
     }
@@ -216,6 +216,12 @@
       mainVideo.load();
     }
 
+    /* trocar de vídeo no trilho só troca a fonte/poster — nunca
+       chama play() sozinho. Tocar automaticamente ao selecionar
+       (ou retomar via IntersectionObserver ao rolar) deixava o
+       vídeo travado com preload="none" em conexões mais lentas.
+       Igual ao vídeo de depoimento: só o clique da pessoa no
+       próprio vídeo (botão nativo de play) inicia a reprodução. */
     var loadVideo = function (btn, moveFocus) {
       var src = btn.getAttribute('data-video-src');
       var poster = btn.getAttribute('data-video-poster');
@@ -226,7 +232,6 @@
       mainSource.src = src;
       mainVideo.poster = poster;
       mainVideo.load();
-      if (!reduceMotion) mainVideo.play().catch(function () {});
 
       if (titleEl) titleEl.textContent = title;
       if (descEl) descEl.textContent = desc;
@@ -257,21 +262,6 @@
         loadVideo(items[(i - 1 + items.length) % items.length], true);
       }
     });
-
-    /* só pausa ao sair da tela — nunca retoma sozinho ao voltar.
-       Retomar automaticamente ao rolar de volta pro player fazia o
-       vídeo tocar/pausar repetidas vezes enquanto a pessoa rolava
-       a página pra cima e pra baixo, e como preload="none" ele
-       raramente tinha buffer pronto — cada play() interrompido
-       deixava o vídeo travado. Agora só o clique inicia. */
-    if ('IntersectionObserver' in window) {
-      var observer = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (!entry.isIntersecting) mainVideo.pause();
-        });
-      }, { threshold: 0.25 });
-      observer.observe(mainVideo);
-    }
   }
 
   /* =====================================================

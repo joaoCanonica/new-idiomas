@@ -187,13 +187,6 @@ html.no-intro #intro-screen { display: none !important; }
   transition: transform 0.35s var(--ease-out);
 }
 
-.main-nav__list a:hover,
-.main-nav__list a.is-active {
-  color: var(--white);
-}
-.main-nav__list a:hover::after,
-.main-nav__list a.is-active::after { transform: scaleX(1); }
-
 .site-header__actions { display: flex; align-items: center; gap: 1rem; }
 
 .main-nav__cta.btn { display: none; }
@@ -204,10 +197,6 @@ html.no-intro #intro-screen { display: none !important; }
   background: var(--white);
   color: var(--bordo);
   box-shadow: 0 10px 22px -14px rgba(0, 0, 0, 0.45);
-}
-.site-header .btn--solid:hover {
-  background: rgba(255, 255, 255, 0.88);
-  color: var(--bordo-dark);
 }
 
 /* buttons */
@@ -228,11 +217,6 @@ html.no-intro #intro-screen { display: none !important; }
   border: 1.5px solid var(--ink-12);
   color: var(--ink);
 }
-.btn--ghost:hover {
-  border-color: var(--bordo);
-  color: var(--bordo);
-  transform: translateY(-2px);
-}
 
 .btn--solid {
   position: relative;
@@ -251,12 +235,6 @@ html.no-intro #intro-screen { display: none !important; }
   transform: translateX(-120%);
   transition: transform 0.7s var(--ease-out);
   pointer-events: none;
-}
-.btn--solid:hover::before { transform: translateX(120%); }
-.btn--solid:hover {
-  background: var(--bordo-dark);
-  transform: translateY(-2px);
-  box-shadow: 0 16px 30px -12px rgba(109, 1, 1, 0.6);
 }
 
 /* mobile nav toggle */
@@ -479,8 +457,6 @@ html.no-intro #intro-screen { display: none !important; }
   transition: background-color 0.3s var(--ease-out);
 }
 .idiomas-trilha__item:last-child { border-right: none; }
-.idiomas-trilha__item:hover { background-color: var(--bg-tint); }
-.idiomas-trilha__item:hover .idiomas-trilha__flag { transform: scale(1.12); }
 
 .idiomas-trilha__flag {
   width: 30px;
@@ -512,7 +488,6 @@ html.no-intro #intro-screen { display: none !important; }
   color: var(--bordo);
   margin-top: auto;
 }
-.idiomas-trilha__link:hover { text-decoration: underline; text-underline-offset: 3px; }
 
 /* uma linha só, sempre — no desktop os 4 cabem lado a lado; abaixo
    de 700px (onde 4 colunas ficariam espremidas) ela vira um trilho
@@ -620,8 +595,6 @@ html.no-intro #intro-screen { display: none !important; }
   transition: background-color 0.3s var(--ease-out);
 }
 .metodologia-item:last-child { border-bottom: 1px solid var(--ink-12); }
-.metodologia-item:hover { background-color: var(--bg-tint); }
-.metodologia-item:hover .metodologia-item__num { color: var(--bordo); }
 
 /* índice pequeno — nunca deve competir com o título ao lado */
 .metodologia-item__num {
@@ -755,8 +728,6 @@ html.no-intro #intro-screen { display: none !important; }
   opacity: 0.55;
 }
 .videos-rail__item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s var(--ease-out); }
-.videos-rail__item:hover { opacity: 0.85; transform: translateY(-3px); }
-.videos-rail__item:hover img { transform: scale(1.08); }
 .videos-rail__item.is-active { opacity: 1; outline-color: var(--bordo); }
 .videos-rail__item:focus-visible { opacity: 1; outline-color: var(--bordo); }
 
@@ -939,7 +910,6 @@ html.no-intro #intro-screen { display: none !important; }
 }
 .location-instagram svg { width: 20px; height: 20px; flex-shrink: 0; color: var(--bordo); }
 .location-instagram span { color: var(--ink-45); font-weight: 500; }
-.location-instagram:hover { color: var(--bordo); }
 
 .location-title {
   font-family: var(--font-display);
@@ -992,9 +962,7 @@ html.no-intro #intro-screen { display: none !important; }
   font-weight: 600;
   transition: background-color 0.3s var(--ease-out);
 }
-.location-map__placeholder:hover { background: var(--bordo-tint); }
 .location-map__placeholder svg { animation: map-pin-bounce 2.4s ease-in-out infinite; }
-.location-map__placeholder:hover svg { animation-play-state: paused; transform: translateY(-3px); }
 @keyframes map-pin-bounce {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-5px); }
@@ -1138,11 +1106,6 @@ html.no-intro #intro-screen { display: none !important; }
   cursor: pointer;
   transition: border-color 0.25s var(--ease-out), transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out);
 }
-.jogo-lang:hover {
-  border-color: var(--lang-cor);
-  transform: translateY(-3px);
-  box-shadow: 0 12px 22px -16px rgba(23, 19, 15, 0.35);
-}
 .jogo-lang__flag {
   width: 52px;
   height: 52px;
@@ -1242,9 +1205,6 @@ html.no-intro #intro-screen { display: none !important; }
   cursor: pointer;
   transition: border-color 0.15s var(--ease-out), background-color 0.15s var(--ease-out), transform 0.1s var(--ease-out);
 }
-.jogo-option:hover:not([disabled]) {
-  border-color: var(--lang-cor);
-}
 .jogo-option:active:not([disabled]) {
   border-bottom-width: 2px;
   transform: translateY(2px);
@@ -1311,7 +1271,6 @@ html.no-intro #intro-screen { display: none !important; }
   0%, 100% { box-shadow: 0 0 0 0 rgba(109, 1, 1, 0.55); }
   50% { box-shadow: 0 0 0 16px rgba(109, 1, 1, 0); }
 }
-.jogo-result__cta:hover { animation-play-state: paused; }
 
 .jogo-result__actions {
   display: flex;
@@ -1327,7 +1286,6 @@ html.no-intro #intro-screen { display: none !important; }
   text-decoration: underline;
   text-underline-offset: 3px;
 }
-.jogo-result__retry:hover { color: var(--bordo); }
 
 /* =========================================================
    CTA FINAL
@@ -1363,7 +1321,6 @@ html.no-intro #intro-screen { display: none !important; }
 
 .cta-final__btn { margin-top: 0.5rem; }
 .cta-final__btn.btn--solid { background: var(--white); color: var(--bordo); box-shadow: 0 14px 30px -14px rgba(0, 0, 0, 0.35); }
-.cta-final__btn.btn--solid:hover { background: rgba(255, 255, 255, 0.9); }
 
 /* =========================================================
    FOOTER
@@ -1403,7 +1360,6 @@ html.no-intro #intro-screen { display: none !important; }
   transition: color 0.3s var(--ease-out);
   width: fit-content;
 }
-.site-footer__nav a:hover { color: var(--white); }
 
 .site-footer__contact {
   display: flex;
@@ -1424,8 +1380,6 @@ html.no-intro #intro-screen { display: none !important; }
 }
 .site-footer__whatsapp svg,
 .site-footer__instagram svg { width: 20px; height: 20px; flex-shrink: 0; }
-.site-footer__whatsapp:hover,
-.site-footer__instagram:hover { color: var(--bordo-bright); }
 
 .site-footer__copy {
   font-size: 0.8125rem;
@@ -1480,10 +1434,6 @@ html.no-intro #intro-screen { display: none !important; }
 .video-slide__frame.is-playing .video-slide__play {
   opacity: 0;
   transform: translate(-50%, -50%) scale(0.8);
-}
-
-.video-slide__frame:hover .video-slide__play {
-  background: rgba(109, 1, 1, 0.85);
 }
 
 .video-slide__hit {
@@ -1551,8 +1501,6 @@ html.no-intro #intro-screen { display: none !important; }
   transition: border-color 0.3s var(--ease-out), background-color 0.3s var(--ease-out), transform 0.3s var(--ease-out);
 }
 .video-lightbox__close svg { width: 18px; height: 18px; }
-.video-lightbox__close:hover { background: rgba(255, 255, 255, 0.12); border-color: var(--bordo-bright); transform: rotate(90deg); }
-
 
 /* =========================================================
    EQUIPE — "Mesa da equipe": painel do integrante ativo +
@@ -1597,7 +1545,6 @@ html.no-intro #intro-screen { display: none !important; }
   object-fit: cover;
   transition: opacity 0.35s var(--ease-out), transform 0.35s var(--ease-out);
 }
-.equipe-painel__foto:hover img { transform: scale(1.045); }
 
 .equipe-painel__info { max-width: 26rem; }
 
@@ -1643,6 +1590,101 @@ html.no-intro #intro-screen { display: none !important; }
   transform: translateY(10px);
 }
 
+
+/* =========================================================
+   HOVER — todo :hover do site fica atrás de (hover: hover) e
+   (pointer: fine). Sem isso, navegadores mobile aplicam um
+   "hover fantasma" no elemento que cai sob o dedo depois do
+   toque — como o jogo troca as opções de pergunta a cada
+   clique, esse hover preso ficava marcando uma opção aleatória
+   com a cor de destaque antes de qualquer resposta, parecendo
+   uma "dica". Em telas sem mouse de verdade, nenhum destes
+   estilos deve aparecer — :active já cobre o feedback de toque.
+   ========================================================= */
+@media (hover: hover) and (pointer: fine) {
+  .main-nav__list a:hover,
+  .main-nav__list a.is-active {
+    color: var(--white);
+  }
+
+  .main-nav__list a:hover::after,
+  .main-nav__list a.is-active::after { transform: scaleX(1); }
+
+  .site-header .btn--solid:hover {
+    background: rgba(255, 255, 255, 0.88);
+    color: var(--bordo-dark);
+  }
+
+  .btn--ghost:hover {
+    border-color: var(--bordo);
+    color: var(--bordo);
+    transform: translateY(-2px);
+  }
+
+  .btn--solid:hover::before { transform: translateX(120%); }
+
+  .btn--solid:hover {
+    background: var(--bordo-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 16px 30px -12px rgba(109, 1, 1, 0.6);
+  }
+
+  .idiomas-trilha__item:hover { background-color: var(--bg-tint); }
+
+  .idiomas-trilha__item:hover .idiomas-trilha__flag { transform: scale(1.12); }
+
+  .idiomas-trilha__link:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .metodologia-item:hover { background-color: var(--bg-tint); }
+
+  .metodologia-item:hover .metodologia-item__num { color: var(--bordo); }
+
+  .videos-rail__item:hover { opacity: 0.85; transform: translateY(-3px); }
+
+  .videos-rail__item:hover img { transform: scale(1.08); }
+
+  .location-instagram:hover { color: var(--bordo); }
+
+  .location-map__placeholder:hover { background: var(--bordo-tint); }
+
+  .location-map__placeholder:hover svg { animation-play-state: paused; transform: translateY(-3px); }
+
+  .jogo-lang:hover {
+    border-color: var(--lang-cor);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 22px -16px rgba(23, 19, 15, 0.35);
+  }
+
+  .jogo-option:hover:not([disabled]) {
+    border-color: var(--lang-cor);
+  }
+
+  .jogo-result__cta:hover { animation-play-state: paused; }
+
+  .jogo-result__retry:hover { color: var(--bordo); }
+
+  .cta-final__btn.btn--solid:hover { background: rgba(255, 255, 255, 0.9); }
+
+  .site-footer__nav a:hover { color: var(--white); }
+
+  .site-footer__whatsapp:hover,
+  .site-footer__instagram:hover { color: var(--bordo-bright); }
+
+  .video-slide__frame:hover .video-slide__play {
+    background: rgba(109, 1, 1, 0.85);
+  }
+
+  .video-lightbox__close:hover { background: rgba(255, 255, 255, 0.12); border-color: var(--bordo-bright); transform: rotate(90deg); }
+
+  .equipe-painel__foto:hover img { transform: scale(1.045); }
+
+  .equipe-nav-btn:hover { border-color: var(--bordo); color: var(--bordo); }
+
+  .equipe-indice__item:hover { transform: translateX(3px); gap: 0.8rem; }
+
+  .equipe-indice__item:hover .equipe-indice__nome { color: var(--ink); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .equipe-painel.is-transitioning .equipe-painel__foto img,
   .equipe-painel.is-transitioning .equipe-painel__nome,
@@ -1680,7 +1722,6 @@ html.no-intro #intro-screen { display: none !important; }
   color: var(--ink);
   transition: border-color 0.25s var(--ease-out), color 0.25s var(--ease-out);
 }
-.equipe-nav-btn:hover { border-color: var(--bordo); color: var(--bordo); }
 .equipe-nav-btn:focus-visible { outline: 2px solid var(--bordo); outline-offset: 2px; }
 .equipe-nav-btn svg { width: 18px; height: 18px; }
 
@@ -1702,7 +1743,6 @@ html.no-intro #intro-screen { display: none !important; }
   min-height: 44px;
   transition: transform 0.25s var(--ease-out), gap 0.25s var(--ease-out);
 }
-.equipe-indice__item:hover { transform: translateX(3px); gap: 0.8rem; }
 
 .equipe-indice__num {
   font-size: 0.75rem;
@@ -1730,7 +1770,6 @@ html.no-intro #intro-screen { display: none !important; }
 .equipe-indice__item[aria-selected="true"] .equipe-indice__num {
   color: var(--bordo);
 }
-.equipe-indice__item:hover .equipe-indice__nome { color: var(--ink); }
 .equipe-indice__item:focus-visible { outline: 2px solid var(--bordo); outline-offset: 2px; }
 
 @media (max-width: 860px) {
